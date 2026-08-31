@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WAGC Philippines — Play Your Way to the World Stage</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1B2A4A;
+      --navy2: #162240;
+      --gold:  #C9A227;
+      --gold2: #B8921E;
+      --white: #FFFFFF;
+      --light: #F4F6F9;
+      --gray:  #6B7280;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-sub:  'Outfit', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--navy); background: #fff; }
+
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ── BUTTONS ─────────────────────────────── */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-gold   { background: var(--gold);  color: var(--navy); }
+    .btn-gold:hover { background: var(--gold2); }
+    .btn-red    { background: #C0392B; color: var(--white); }
+    .btn-red:hover { background: #a93226; }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--navy); }
+    .btn-navy   { background: var(--navy);  color: var(--white); }
+    .btn-navy:hover { background: var(--navy2); }
+
+    /* ── NAV ─────────────────────────────────── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo .logo-icon {
+      width: 44px;
+      height: 44px;
+      position: relative;
+    }
+    /* SVG logo placeholder */
+    .nav-logo .logo-svg {
+      width: 44px;
+      height: 44px;
+    }
+    .nav-logo .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nav-logo .brand-wagc {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo .brand-sub {
+      font-size: 0.55rem;
+      color: #aab4c8;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #ccd4e0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-cta { padding: 10px 22px; font-size: 0.82rem; }
+
+    /* ── HERO ────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 580px;
+      display: flex;
+      align-items: center;
+      background: url('images/hero.png') center/cover no-repeat;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(13,27,53,0.85) 45%, rgba(13,27,53,0.2) 100%);
+    }
+    /* Decorative golf silhouette when no image */
+    .hero-silhouette {
+      position: absolute;
+      right: 5%;
+      bottom: 0;
+      height: 90%;
+      opacity: 0.15;
+      z-index: 0;
+      font-size: 18rem;
+      line-height: 1;
+      color: #fff;
+      display: flex;
+      align-items: flex-end;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 60px 60px;
+      max-width: 680px;
+    }
+    .hero-content h1 {
+      font-family: var(--font-head);
+      font-size: 5rem;
+      font-weight: 900;
+      line-height: 0.95;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .hero-content h1 span { color: var(--gold); }
+    .hero-content p {
+      color: #c8d4e8;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 20px 0 30px;
+      max-width: 420px;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 36px;
+    }
+    .hero-stat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+    }
+    .hero-stat i {
+      font-size: 1.6rem;
+      color: var(--gold);
+    }
+    .hero-stat .stat-num {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .hero-stat .stat-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #aab4c8;
+      line-height: 1.3;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── EMAIL BAR ───────────────────────────── */
+    .email-bar {
+      background: var(--white);
+      padding: 28px 60px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .email-bar-icon {
+      width: 56px;
+      height: 56px;
+      border: 2px solid rgba(27,42,74,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .email-bar-icon i { color: var(--gold); font-size: 1.3rem; }
+    .email-bar-text h3 {
+      font-family: var(--font-sub);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .email-bar-text p { color: var(--gray); font-size: 0.85rem; margin-top: 3px; }
+    .email-form {
+      display: flex;
+      gap: 10px;
+      flex: 1;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+    }
+    .email-form input {
+      padding: 13px 18px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      border: 1px solid #d0d8e8;
+      background: var(--light);
+      color: var(--navy);
+      outline: none;
+      width: 200px;
+    }
+    .email-form input::placeholder { color: #9aaac0; }
+    .email-form input:focus { border-color: var(--navy); background: var(--white); }
+
+    /* ── SECTION COMMONS ─────────────────────── */
+    .section { padding: 72px 60px; }
+    .section-title {
+      font-family: var(--font-sub);
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: center;
+      color: var(--navy);
+      margin-bottom: 48px;
+    }
+
+    /* ── PATH SECTION ────────────────────────── */
+    /* ── CHAMPIONSHIP + PATH COMBINED ───────── */
+    .championship-section { background: var(--white); }
+    .champ-header {
+      background: var(--navy);
+      padding: 48px 60px;
+      text-align: center;
+    }
+    .champ-header h2 {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 40px;
+    }
+    .champ-stats {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .champ-stat {
+      flex: 1;
+      text-align: center;
+      padding: 0 32px;
+    }
+    .champ-stat i {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .champ-stat .cs-num {
+      font-family: var(--font-sub);
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+    .champ-stat .cs-desc {
+      font-size: 0.82rem;
+      color: #8da0be;
+      line-height: 1.6;
+    }
+    .champ-divider {
+      width: 1px;
+      background: rgba(255,255,255,0.15);
+      align-self: stretch;
+      flex-shrink: 0;
+    }
+    .champ-path {
+      background: var(--light);
+      padding: 60px 60px;
+      text-align: center;
+    }
+    .champ-path h3 {
+      font-family: var(--font-sub);
+      font-size: 2.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 52px;
+    }
+    .path-steps-new {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .path-steps-new::before {
+      content: '';
+      position: absolute;
+      top: 56px;
+      left: calc(16.66% + 28px);
+      right: calc(16.66% + 28px);
+      height: 3px;
+      background: var(--gold);
+      z-index: 0;
+    }
+    .path-step-new {
+      flex: 1;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-illustration {
+      width: 112px;
+      height: 112px;
+      border-radius: 50%;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      box-shadow: 0 4px 16px rgba(27,42,74,0.18);
+    }
+    .step-illustration i {
+      font-size: 2.4rem;
+      color: var(--gold);
+    }
+    .step-dot {
+      width: 32px;
+      height: 32px;
+      background: var(--gold);
+      color: var(--navy);
+      border-radius: 50%;
+      font-family: var(--font-sub);
+      font-size: 1rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 14px auto 16px;
+      border: 3px solid var(--light);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+    .path-step-new h3 {
+      font-family: var(--font-sub);
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .path-step-new p { font-size: 0.87rem; color: var(--gray); line-height: 1.6; }
+
+    /* ── QUALIFIER TABLE ─────────────────────── */
+    .qualifier-section { background: var(--light); }
+    .qualifier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .qualifier-header h2 {
+      font-family: var(--font-sub);
+      font-size: 1.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .view-link {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .view-link:hover { color: var(--gold); }
+    .qualifier-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .qualifier-table th:nth-child(1), .qualifier-table td:nth-child(1) { width: 6%; }
+    .qualifier-table th:nth-child(2), .qualifier-table td:nth-child(2) { width: 16%; }
+    .qualifier-table th:nth-child(3), .qualifier-table td:nth-child(3) { width: 46%; }
+    .qualifier-table th:nth-child(4), .qualifier-table td:nth-child(4) { width: 32%; }
+    .qualifier-table thead {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .qualifier-table thead th {
+      padding: 14px 20px;
+      text-align: left;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+    .qualifier-table tbody tr {
+      background: var(--white);
+      border-bottom: 1px solid #e5e9f0;
+      transition: background 0.15s;
+    }
+    .qualifier-table tbody tr:hover { background: #f0f4fa; }
+    .qualifier-table tbody td {
+      padding: 14px 20px;
+      color: #374151;
+    }
+    .qualifier-table .reg-link {
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .qualifier-table .reg-link:hover { color: var(--gold); }
+    .table-scroll-wrap {
+      border: 1px solid #e5e9f0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .table-scroll-wrap .qualifier-table thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .table-scroll-wrap tbody {
+      display: block;
+      max-height: 392px; /* ~8 rows */
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--navy) #e5e9f0;
+    }
+    .table-scroll-wrap thead tr,
+    .table-scroll-wrap tbody tr { display: table; width: 100%; table-layout: fixed; }
+    .table-scroll-wrap tbody::-webkit-scrollbar { width: 6px; }
+    .table-scroll-wrap tbody::-webkit-scrollbar-track { background: #e5e9f0; }
+    .table-scroll-wrap tbody::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 3px; }
+    .btn-outline-navy {
+      background: transparent;
+      color: var(--navy);
+      border: 2px solid var(--navy);
+      padding: 12px 32px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .btn-outline-navy:hover { background: var(--navy); color: var(--white); }
+
+    /* ── WHAT YOU GET ────────────────────────── */
+    .benefits-section {
+      background: var(--navy);
+      padding: 72px 60px;
+    }
+    .benefits-section .section-title { color: var(--white); }
+    .benefits-grid {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .benefit-item {
+      text-align: center;
+      flex: 1;
+      min-width: 140px;
+      max-width: 180px;
+    }
+    .benefit-icon {
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .benefit-item h3 {
+      font-family: var(--font-sub);
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+    .benefit-item p {
+      font-size: 0.8rem;
+      color: #8da0be;
+      line-height: 1.5;
+    }
+
+    /* ── FOR ALL LEVELS + TESTIMONIALS ───────── */
+    .social-section {
+      background: var(--white);
+      padding: 72px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .levels-card {
+      background: #EEF2F8;
+      border-radius: 12px;
+      padding: 40px 0 0 40px;
+      display: flex;
+      align-items: flex-end;
+      gap: 0;
+      overflow: hidden;
+      min-height: 340px;
+    }
+    .levels-text { flex: 1; padding-bottom: 40px; }
+    .levels-card h2 {
+      font-family: var(--font-sub);
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--navy);
+    }
+    .levels-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .levels-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.4;
+    }
+    .levels-list li i {
+      color: var(--navy);
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .levels-image {
+      flex-shrink: 0;
+      align-self: flex-end;
+    }
+    .levels-image img {
+      height: 300px;
+      width: auto;
+      display: block;
+    }
+    .testimonials-col h2 {
+      font-family: var(--font-sub);
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .testimonial-card { text-align: center; }
+    .testimonial-photo {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+    .testimonial-card blockquote {
+      font-size: 0.75rem;
+      color: #374151;
+      line-height: 1.5;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+    .testimonial-card cite {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--navy);
+      font-style: normal;
+      display: block;
+    }
+    .testimonial-card .cite-sub {
+      font-size: 0.7rem;
+      color: var(--gray);
+    }
+    .carousel-dots {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #d0d8e8;
+    }
+    .dot.active { background: var(--navy); }
+
+    /* ── GROUP PHOTO STRIP ───────────────────── */
+    .group-photo-strip {
+      width: 100%;
+      line-height: 0;
+    }
+    .group-photo-strip img {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* ── ABOUT ───────────────────────────────── */
+    .about-section {
+      background: var(--light);
+      padding: 60px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 48px;
+      align-items: center;
+    }
+    .about-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .about-logo .logo-box {
+      width: 72px;
+      height: 72px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-logo .logo-box span {
+      font-family: var(--font-sub);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    .about-logo p {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      text-align: center;
+    }
+    .about-text h3 {
+      font-family: var(--font-sub);
+      font-size: 1.2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+    .about-text p { font-size: 0.88rem; color: #374151; line-height: 1.7; }
+    .about-stats {
+      display: flex;
+      gap: 36px;
+    }
+    .about-stat { text-align: center; }
+    .about-stat .num {
+      font-family: var(--font-head);
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .about-stat i { color: var(--gold); font-size: 1.4rem; display: block; margin-bottom: 6px; }
+    .about-stat .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray);
+      margin-top: 4px;
+    }
+
+    /* ── CONTACT DETAILS ─────────────────────── */
+    .contact-details {
+      background: var(--light);
+      padding: 32px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 40px;
+      flex: 1;
+      min-width: 220px;
+    }
+    .contact-item i {
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .contact-item .contact-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      margin-bottom: 3px;
+    }
+    .contact-item a, .contact-item span {
+      font-size: 0.92rem;
+      color: var(--navy);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+    .contact-item a:hover { color: var(--gold); }
+    .contact-divider {
+      width: 1px;
+      height: 48px;
+      background: #d0d8e8;
+      flex-shrink: 0;
+    }
+
+    /* ── STAY IN LOOP ────────────────────────── */
+    .loop-section {
+      background: var(--navy);
+      padding: 40px 60px;
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .loop-text { flex: 1; }
+    .loop-text h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .loop-text p { color: #8da0be; font-size: 0.85rem; margin-top: 4px; }
+    .loop-form {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .loop-form input {
+      padding: 13px 18px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.07);
+      color: var(--white);
+      outline: none;
+      width: 200px;
+    }
+    .loop-form input::placeholder { color: #7a8caa; }
+    .loop-form input:focus { border-color: var(--gold); }
+
+    /* ── JOURNEY CTA ─────────────────────────── */
+    .journey-section {
+      position: relative;
+      padding: 80px 60px;
+      text-align: center;
+      background: url('images/journey-bg.jpg') center/cover no-repeat;
+      overflow: hidden;
+    }
+    .journey-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(13,27,53,0.65);
+    }
+    .journey-content { position: relative; z-index: 1; }
+    .journey-content h2 {
+      font-family: var(--font-head);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .journey-content p {
+      color: #c8d4e8;
+      font-size: 1rem;
+      margin-bottom: 32px;
+    }
+
+    /* ── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--navy2);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .copy {
+      font-size: 0.8rem;
+      color: #6b7f9e;
+    }
+    .footer-social {
+      display: flex;
+      gap: 16px;
+    }
+    .footer-social a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8da0be;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: #6b7f9e;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── HAMBURGER ───────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--navy2);
+      padding: 16px 24px 24px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: #ccd4e0;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .btn-gold { margin-top: 16px; text-align: center; }
+
+    /* ── TABLET (max 1024px) ─────────────────── */
+    @media (max-width: 1024px) {
+      .hero-content h1 { font-size: 4rem; }
+      .benefits-grid { gap: 24px; }
+      .about-section { gap: 28px; }
+    }
+
+    /* ── MOBILE/TABLET (max 900px) ───────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .hero { min-height: 480px; }
+      .hero-content { padding: 48px 24px; max-width: 100%; }
+      .hero-content h1 { font-size: 3.2rem; }
+      .hero-content p { max-width: 100%; }
+      .hero-stats { flex-wrap: wrap; gap: 20px; }
+      .hero-btns { flex-direction: column; align-items: flex-start; }
+
+      .email-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px 24px;
+        gap: 20px;
+      }
+      .email-form { width: 100%; justify-content: flex-start; }
+      .email-form input { flex: 1; min-width: 0; width: auto; }
+
+      .section, .qualifier-section { padding: 48px 24px; }
+      .champ-header { padding: 40px 24px; }
+      .champ-header h2 { font-size: 1.8rem; margin-bottom: 28px; }
+      .champ-stats { flex-direction: column; gap: 24px; }
+      .champ-divider { width: 100%; height: 1px; align-self: auto; }
+      .champ-path { padding: 40px 24px; }
+      .path-steps-new { flex-direction: column; align-items: center; gap: 32px; }
+      .path-steps-new::before { display: none; }
+      .path-step-new { max-width: 260px; }
+
+      .benefits-section { padding: 48px 24px; }
+      .benefits-grid { gap: 32px; }
+      .benefit-item { min-width: 120px; }
+
+      .social-section {
+        grid-template-columns: 1fr;
+        padding: 48px 24px;
+        gap: 32px;
+      }
+      .levels-card {
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 32px 0;
+        min-height: unset;
+      }
+      .levels-text { padding-bottom: 0; }
+      .levels-image img {
+        height: auto;
+        width: 70%;
+        max-width: 280px;
+        margin: 20px auto 0;
+      }
+      .testimonials-grid { grid-template-columns: 1fr; gap: 24px; }
+
+      .about-section {
+        grid-template-columns: 1fr;
+        padding: 48px 24px;
+        gap: 28px;
+      }
+      .about-stats { justify-content: center; flex-wrap: wrap; }
+
+      .contact-details { padding: 24px; flex-direction: column; gap: 8px; }
+      .contact-item { padding: 12px 0; min-width: unset; }
+      .contact-divider { width: 100%; height: 1px; }
+      .loop-section {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 32px 24px;
+        gap: 20px;
+      }
+      .loop-form { width: 100%; }
+      .loop-form input { flex: 1; min-width: 0; width: auto; }
+
+      .journey-section { padding: 60px 24px; }
+      .journey-content h2 { font-size: 2.2rem; }
+
+      footer {
+        padding: 20px 24px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      .group-photo-strip img { height: 220px; }
+    }
+
+    /* ── SMALL MOBILE (max 480px) ────────────── */
+    @media (max-width: 480px) {
+      .hero-content h1 { font-size: 2.6rem; }
+      .hero-stats { gap: 16px; }
+      .qualifier-table thead th:nth-child(4),
+      .qualifier-table tbody td:nth-child(4) { display: none; }
+      .benefits-grid { grid-template-columns: 1fr 1fr; display: grid; }
+      .journey-content h2 { font-size: 1.8rem; }
+      .about-stats { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══════════════════════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <img src="images/wagc-logo-white.png" alt="WAGC — We Golf the World" height="44" />
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="tournament-format.html">Tournament Format</a></li>
+    <li><a href="#qualifiers">Schedule</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <a href="#qualifiers" class="btn btn-gold nav-cta">View Tournaments</a>
+  <button class="nav-hamburger" onclick="document.querySelector('.nav-mobile').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile">
+  <a href="#about" onclick="this.closest('.nav-mobile').classList.remove('open')">About</a>
+  <a href="#format" onclick="this.closest('.nav-mobile').classList.remove('open')">Tournament Format</a>
+  <a href="#qualifiers" onclick="this.closest('.nav-mobile').classList.remove('open')">Schedule</a>
+  <a href="#contact" onclick="this.closest('.nav-mobile').classList.remove('open')">Contact</a>
+  <a href="#qualifiers" class="btn btn-gold" onclick="this.closest('.nav-mobile').classList.remove('open')">View Tournaments</a>
+</div>
+
+<!-- ══ HERO ═════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-silhouette"><i class="fas fa-golf-ball-tee"></i></div>
+  <div class="hero-content">
+    <h1>Play Your Way<br><span>To The World Stage</span></h1>
+    <p>Compete in the World Amateur Golfers Championship. Win your division and represent the Philippines on the global stage.</p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <i class="fas fa-globe"></i>
+        <div>
+          <div class="stat-num">30+</div>
+          <div class="stat-label">Qualifiers<br>Nationwide</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <i class="fas fa-trophy"></i>
+        <div>
+          <div class="stat-num">All</div>
+          <div class="stat-label">Skill Levels<br>Welcome</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <i class="fas fa-users"></i>
+        <div>
+          <div class="stat-num">46+</div>
+          <div class="stat-label">Countries<br>Worldwide</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-btns">
+      <a href="#qualifiers" class="btn btn-red">View Qualifying Tournaments</a>
+      <a href="#about" class="btn btn-outline">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EMAIL BAR ════════════════════════════════ -->
+<div class="email-bar">
+  <div class="email-bar-icon"><i class="fas fa-envelope"></i></div>
+  <div class="email-bar-text">
+    <h3>Get Early Access to Tournaments &amp; Exclusive Slots</h3>
+    <p>Be the first to know when new qualifiers open near you.</p>
+  </div>
+  <form class="email-form" onsubmit="return false;">
+    <input type="text" placeholder="First Name" />
+    <input type="email" placeholder="Email Address" />
+    <button type="submit" class="btn btn-red">Get Updates</button>
+  </form>
+</div>
+
+<!-- ══ PATH TO WORLD FINALS ═════════════════════ -->
+<section class="championship-section" id="format">
+
+  <!-- Dark stats header -->
+  <div class="champ-header">
+    <h2>World's Largest Amateur Golf Championship</h2>
+    <div class="champ-stats">
+      <div class="champ-stat">
+        <i class="fas fa-globe"></i>
+        <div class="cs-num">46+</div>
+        <div class="cs-desc">Countries home to the world's best amateur golf championships.</div>
+      </div>
+      <div class="champ-divider"></div>
+      <div class="champ-stat">
+        <i class="fas fa-circle-check"></i>
+        <div class="cs-num">USGA Approved</div>
+        <div class="cs-desc">WAGC International is an Official Affiliate Partner of the PGA Tour.</div>
+      </div>
+      <div class="champ-divider"></div>
+      <div class="champ-stat">
+        <i class="fas fa-calendar-days"></i>
+        <div class="cs-num">7th Season</div>
+        <div class="cs-desc">Our 7th Season in the Philippines features prestigious tournaments nationwide.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Path to World Finals -->
+  <div class="champ-path">
+    <h3>Your Path to the World Finals</h3>
+    <div class="path-steps-new">
+      <div class="path-step-new">
+        <div class="step-illustration"><i class="fas fa-flag"></i></div>
+        <div class="step-dot">1</div>
+        <h3>Local Qualifiers</h3>
+        <p>Compete in regional qualifiers to secure your spot.</p>
+      </div>
+      <div class="path-step-new">
+        <div class="step-illustration"><i class="fas fa-trophy"></i></div>
+        <div class="step-dot">2</div>
+        <h3>National Finals</h3>
+        <p>Top contenders compete to represent Team Philippines.</p>
+      </div>
+      <div class="path-step-new">
+        <div class="step-illustration"><i class="fas fa-globe"></i></div>
+        <div class="step-dot">3</div>
+        <h3>World Finals</h3>
+        <p>Travel to the global stage and compete for the world title.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══ QUALIFIER TABLE ══════════════════════════ -->
+<section class="section qualifier-section" id="qualifiers">
+  <div class="qualifier-header">
+    <h2>Find Your Qualifier</h2>
+    <a href="#" class="view-link">View Full Calendar &rarr;</a>
+  </div>
+
+  <div class="table-scroll-wrap">
+    <table class="qualifier-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Event Date</th>
+          <th>Name</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Jan 14–15</td><td>Barako Cup</td><td>Summit Point</td></tr>
+        <tr><td>2</td><td>Jan 16</td><td>IloIlo Club Tournament</td><td>Iloilo Golf Club</td></tr>
+        <tr><td>3</td><td>Jan 31 – Feb 7</td><td>Mango Tee</td><td>Alabang Country Club</td></tr>
+        <tr><td>4</td><td>Feb 22</td><td>Swing For Love</td><td>Vineyard</td></tr>
+        <tr><td>5</td><td>Mar 12–13</td><td>GOLFCON Invitational</td><td>Intramuros Golf Club</td></tr>
+        <tr><td>6</td><td>Mar 19–20</td><td>Sugar Tee</td><td>Negros Occidental Golf &amp; CC</td></tr>
+        <tr><td>7</td><td>Mar 21</td><td>Quarterly Member Tournament (Q1)</td><td>Ayala Greenfield</td></tr>
+        <tr><td>8</td><td>Mar 21</td><td>Members Monthly Medal</td><td>Pueblo De Oro, CDO</td></tr>
+        <tr><td>9</td><td>Mar 27</td><td>SPGA Quarterly Tournament</td><td>Summit Point</td></tr>
+        <tr><td>10</td><td>Apr 9</td><td>Mimosa Masters</td><td>Mimosa Plus Golf &amp; CC</td></tr>
+        <tr><td>11</td><td>Apr 11–12</td><td>Quarterly Member Tournament (Q2)</td><td>Veterans Golf Club</td></tr>
+        <tr><td>12</td><td>Apr 18</td><td>4th Owen Rosal Golf Cup</td><td>Palm Resort, Malaysia</td></tr>
+        <tr><td>13</td><td>Apr 26</td><td>Members Monthly Tournament</td><td>Sherwood Hills</td></tr>
+        <tr><td>14</td><td>Apr 24</td><td>Cebu ECCP Golf Cup</td><td>Mactan Island Golf Club</td></tr>
+        <tr><td>15</td><td>May 1–2</td><td>Estivale Tournament</td><td>Dakak Golf Club &amp; Resort</td></tr>
+        <tr><td>16</td><td>May 14</td><td>Mavis Cup</td><td>Camp Aguinaldo Golf Club</td></tr>
+        <tr><td>17</td><td>May 15–16</td><td>Chairman's Tee</td><td>Liloan Golf Club</td></tr>
+        <tr><td>18</td><td>May 16</td><td>Jaqueline Lim Invitational</td><td>The Els Club, Desaru Malaysia</td></tr>
+        <tr><td>19</td><td>May 20–23</td><td>International Amateur Golf Team Challenge</td><td>Guam, USA</td></tr>
+        <tr><td>20</td><td>Jun 18</td><td>Let's Golf Six</td><td>Manila Southwoods</td></tr>
+        <tr><td>21</td><td>Jun 21</td><td>Forever Golf</td><td>Rancho Palos Verdes</td></tr>
+        <tr><td>22</td><td>Jun 27</td><td>Lakewood Club Tournament (Q2)</td><td>Lakewood Golf &amp; CC</td></tr>
+        <tr><td>23</td><td>Jul 10</td><td>The Hamptons Cup</td><td>Caliraya Golf &amp; CC</td></tr>
+        <tr><td>24</td><td>Jul 17</td><td>MAG Fest</td><td>Summit Point Golf and CC</td></tr>
+        <tr><td>25</td><td>Jul 18</td><td>Vexcolt</td><td>Batam, Indonesia</td></tr>
+        <tr><td>26</td><td>Jul 18</td><td>TGA Golf Tournament</td><td>Holbrook Golf Course, New York</td></tr>
+        <tr><td>27</td><td>Jul 25</td><td>TGA Golf Tournament</td><td>Crab Meadows Golf, New York</td></tr>
+        <tr><td>28</td><td>TBD</td><td>Dapitan Fiesta</td><td>Dakak Golf Club &amp; Resort</td></tr>
+        <tr><td>29</td><td>Aug 7–9</td><td>BBMI 6th Friendship Cup</td><td>Negros Occidental Golf &amp; CC</td></tr>
+        <tr><td>30</td><td>Sep 5</td><td>The Final Stand</td><td>TBD</td></tr>
+        <tr style="background:#f0f4fa; font-weight:700;"><td>31</td><td>Sep 11–12</td><td>🏆 WAGC Philippines National Finals</td><td>Caliraya Golf &amp; CC</td></tr>
+        <tr style="background:#1B2A4A; color:#C9A227; font-weight:700;"><td>32</td><td>Oct 23–31</td><td>🌏 WAGC World Finals</td><td>Johor, Malaysia</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══ WHAT YOU GET ══════════════════════════════ -->
+<section class="benefits-section">
+  <div class="section-title">What You Get</div>
+  <div class="benefits-grid">
+    <div class="benefit-item">
+      <div class="benefit-icon"><i class="fas fa-flag"></i></div>
+      <h3>Represent the Philippines</h3>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon"><i class="fas fa-plane"></i></div>
+      <h3>All Expense Paid World Finals Trip</h3>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon"><i class="fas fa-shirt"></i></div>
+      <h3>Official Team Bag and Uniform</h3>
+    </div>
+    <div class="benefit-item">
+      <div class="benefit-icon"><i class="fas fa-globe"></i></div>
+      <h3>World Class Global Competition</h3>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOR ALL LEVELS + TESTIMONIALS ═══════════ -->
+<section class="social-section">
+  <!-- Left card: Built for all levels + golfer cutout -->
+  <div class="levels-card">
+    <div class="levels-text">
+      <h2>Built for Golfers<br>of All Levels</h2>
+      <ul class="levels-list">
+        <li><i class="fas fa-circle-check"></i> Handicap-based divisions for fair competition</li>
+        <li><i class="fas fa-circle-check"></i> From weekend golfers to serious competitors</li>
+        <li><i class="fas fa-circle-check"></i> A place for everyone who loves the game</li>
+      </ul>
+    </div>
+    <div class="levels-image">
+      <img src="images/wagc-golfers-group.png" alt="WAGC golfer swinging" />
+    </div>
+  </div>
+
+  <!-- Right: Testimonials -->
+  <div class="testimonials-col">
+    <h2>Hear from<br>Our Players</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <img class="testimonial-photo" src="images/pete-polo.jpg" alt="Pete Polo" />
+        <blockquote>"Representing the Philippines at the World Finals was the highlight of my golfing journey."</blockquote>
+        <cite>— Pete Polo</cite>
+        <span class="cite-sub">Cebu &nbsp;·&nbsp; 2024 World Finalist</span>
+      </div>
+      <div class="testimonial-card">
+        <img class="testimonial-photo" src="images/vanj-bradley.jpg" alt="Vanj Bradley" />
+        <blockquote>"The organization, the courses, the people — everything was world-class."</blockquote>
+        <cite>— Vanj Bradley</cite>
+        <span class="cite-sub">Manila &nbsp;·&nbsp; 2025 National Finalist</span>
+      </div>
+      <div class="testimonial-card">
+        <img class="testimonial-photo" src="images/raymond-dabao.jpg" alt="Raymond Dabao" />
+        <blockquote>"I've made friends from all over the world. It's more than just a tournament."</blockquote>
+        <cite>— Raymond Dabao</cite>
+        <span class="cite-sub">Bacolod &nbsp;·&nbsp; 2024 National Finalist</span>
+      </div>
+    </div>
+    <div class="carousel-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GROUP PHOTO ══════════════════════════════ -->
+<!-- ══ ABOUT ══════════════════════════════════════ -->
+<section class="about-section" id="about">
+  <div class="about-logo">
+    <img src="images/wagc-logo-dark.png" alt="WAGC — We Golf the World" height="56" />
+  </div>
+  <div class="about-text">
+    <h3>About the World Amateur Golfers Championship</h3>
+    <p>The WAGC is the world's largest amateur golf competition with over 46+ countries participating, governed by the Rules of Golf as approved by the USGA. It brings together golfers of all skill levels to compete, connect, and celebrate the game globally.</p>
+  </div>
+  <div class="about-stats">
+    <div class="about-stat">
+      <i class="fas fa-globe"></i>
+      <div class="num">46+</div>
+      <div class="label">Countries</div>
+    </div>
+    <div class="about-stat">
+      <i class="fas fa-users"></i>
+      <div class="num">25,000+</div>
+      <div class="label">Players Worldwide</div>
+    </div>
+    <div class="about-stat">
+      <i class="fas fa-trophy"></i>
+      <div class="num">6</div>
+      <div class="label">Seasons in<br>the Philippines</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ STAY IN LOOP ══════════════════════════════ -->
+<div class="loop-section" id="contact">
+  <div class="loop-text">
+    <h3>Don't Miss Out. Stay in the Loop.</h3>
+    <p>Join our mailing list for the latest tournament updates, exclusive invites, and early bird registration.</p>
+  </div>
+  <form class="loop-form" onsubmit="return false;">
+    <input type="text" placeholder="First Name" />
+    <input type="email" placeholder="Email Address" />
+    <button type="submit" class="btn btn-red">Join the List</button>
+  </form>
+</div>
+
+<!-- ══ JOURNEY CTA ════════════════════════════════ -->
+<section class="journey-section">
+  <div class="journey-content">
+    <h2>Your Journey Starts Here</h2>
+    <p>Find a qualifier, take your shot, and compete on the world stage.</p>
+    <a href="#qualifiers" class="btn btn-gold">View Tournaments</a>
+  </div>
+</section>
+
+<!-- ══ FOOTER ════════════════════════════════════ -->
+<footer>
+  <span class="copy">&copy; 2025 WAGC Philippines. All Rights Reserved.</span>
+  <div class="footer-social">
+    <a href="https://web.facebook.com/WAGCPhilippines/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/wagcphilippines/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@WAGCPhilippines" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+  <div class="footer-links">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
+    <a href="#">Contact Us</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — WAGC Philippines</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:  #1B2A4A;
+      --navy2: #162240;
+      --gold:  #C9A227;
+      --gold2: #B8921E;
+      --white: #FFFFFF;
+      --light: #F4F6F9;
+      --gray:  #6B7280;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--navy); background: #fff; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold2); }
+    .btn-outline { background: transparent; color: var(--white); border: 2px solid var(--white); }
+    .btn-outline:hover { background: var(--white); color: var(--navy); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      height: 68px;
+    }
+    .nav-logo img { height: 44px; display: block; }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: #ccd4e0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-cta { padding: 10px 22px; font-size: 0.82rem; }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+    }
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      background: var(--navy2);
+      padding: 16px 24px 24px;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: #ccd4e0;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .btn-gold { margin-top: 16px; text-align: center; }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: var(--navy);
+      padding: 64px 60px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .page-hero .eyebrow {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      max-width: 720px;
+    }
+    .page-hero p {
+      color: #8da0be;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 600px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--gold);
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1;
+    }
+    .stat-item .label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--navy);
+      margin-top: 4px;
+      opacity: 0.75;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding: 72px 60px; }
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+    .section-title.centered { text-align: center; }
+    .body-text {
+      font-size: 1rem;
+      color: #374151;
+      line-height: 1.8;
+      max-width: 720px;
+    }
+    .body-text p { margin-bottom: 16px; }
+    .body-text p:last-child { margin-bottom: 0; }
+
+    /* ── INTRO SECTION ── */
+    .intro-section {
+      background: var(--white);
+      padding: 72px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .intro-right {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .intro-fact {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .intro-fact-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--navy);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .intro-fact-icon i { color: var(--gold); font-size: 1rem; }
+    .intro-fact-text strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 3px;
+    }
+    .intro-fact-text span { font-size: 0.85rem; color: var(--gray); line-height: 1.5; }
+
+    /* ── QUOTE ── */
+    .quote-section {
+      background: var(--navy);
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .quote-photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 420px;
+    }
+    .quote-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .quote-photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(13,27,53,0.85));
+      padding: 20px 24px 16px;
+      font-size: 0.78rem;
+      color: #c8d4e8;
+      font-style: italic;
+    }
+    .quote-text {
+      padding: 72px 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .quote-mark {
+      font-family: Georgia, serif;
+      font-size: 5rem;
+      color: var(--gold);
+      line-height: 0.5;
+      margin-bottom: 24px;
+      opacity: 0.6;
+    }
+    .quote-section blockquote {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .quote-section cite {
+      font-size: 0.9rem;
+      color: var(--gold);
+      font-weight: 700;
+      font-style: normal;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .quote-section .cite-sub {
+      display: block;
+      font-size: 0.8rem;
+      color: #8da0be;
+      margin-top: 4px;
+      font-style: normal;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── UNIQUE SECTION ── */
+    .unique-section { background: var(--light); padding: 72px 60px; }
+    .unique-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .unique-card {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 36px;
+      border-top: 4px solid var(--gold);
+    }
+    .unique-card-icon {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .unique-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .unique-card p {
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.7;
+    }
+
+    /* ── PATRONS ── */
+    .patrons-section {
+      background: var(--white);
+      padding: 72px 60px;
+    }
+    .patrons-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .patron-card {
+      text-align: center;
+      padding: 32px 24px;
+      border: 1px solid #e5e9f0;
+      border-radius: 8px;
+    }
+    .patron-icon {
+      width: 64px;
+      height: 64px;
+      background: var(--light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .patron-icon i { font-size: 1.6rem; color: var(--navy); }
+    .patron-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .patron-card .role {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+    .patron-card p {
+      font-size: 0.85rem;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+    .pga-banner {
+      margin-top: 48px;
+      background: var(--light);
+      border-radius: 8px;
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .pga-banner i { font-size: 2rem; color: var(--navy); flex-shrink: 0; }
+    .pga-banner-text { flex: 1; }
+    .pga-banner-text strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .pga-banner-text span { font-size: 0.88rem; color: var(--gray); line-height: 1.6; }
+    .pga-banner a.pga-link {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 2px solid var(--gold);
+      padding-bottom: 2px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .pga-banner a.pga-link:hover { color: var(--gold); }
+
+    /* ── CONTACT DETAILS ── */
+    .contact-details {
+      background: var(--light);
+      padding: 32px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 40px;
+      flex: 1;
+      min-width: 220px;
+    }
+    .contact-item i { font-size: 1.2rem; color: var(--gold); margin-top: 2px; flex-shrink: 0; }
+    .contact-item .contact-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      margin-bottom: 3px;
+    }
+    .contact-item a, .contact-item span { font-size: 0.92rem; color: var(--navy); font-weight: 600; line-height: 1.5; }
+    .contact-item a:hover { color: var(--gold); }
+    .contact-divider { width: 1px; height: 48px; background: #d0d8e8; flex-shrink: 0; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: url('images/journey-bg.jpg') center/cover no-repeat;
+      position: relative;
+      padding: 80px 60px;
+      text-align: center;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(13, 27, 53, 0.72);
+    }
+    .cta-content { position: relative; z-index: 1; }
+    .cta-content h2 {
+      font-family: var(--font-head);
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+    .cta-content p { color: #c8d4e8; font-size: 1rem; margin-bottom: 32px; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy2);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .copy { font-size: 0.8rem; color: #6b7f9e; }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8da0be;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.78rem; color: #6b7f9e; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-hero { padding: 48px 24px; }
+      .page-hero h1 { font-size: 2.4rem; }
+      .stats-bar { padding: 24px; gap: 20px; }
+      .intro-section { grid-template-columns: 1fr; padding: 48px 24px; gap: 36px; }
+      .quote-section { grid-template-columns: 1fr; }
+      .quote-photo { min-height: 280px; }
+      .quote-text { padding: 48px 24px; }
+      .quote-section blockquote { font-size: 1.3rem; }
+      .unique-section { padding: 48px 24px; }
+      .unique-grid { grid-template-columns: 1fr; }
+      .patrons-section { padding: 48px 24px; }
+      .patrons-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 60px 24px; }
+      .cta-content h2 { font-size: 2rem; }
+      footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <a href="index.html">
+      <img src="images/wagc-logo-white.png" alt="WAGC Philippines" />
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="index.html#format">Tournament Format</a></li>
+    <li><a href="index.html#qualifiers">Schedule</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#qualifiers" class="btn btn-gold nav-cta">View Tournaments</a>
+  <button class="nav-hamburger" onclick="document.querySelector('.nav-mobile').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile">
+  <a href="about.html">About</a>
+  <a href="index.html#format" onclick="this.closest('.nav-mobile').classList.remove('open')">Tournament Format</a>
+  <a href="index.html#qualifiers" onclick="this.closest('.nav-mobile').classList.remove('open')">Schedule</a>
+  <a href="index.html#contact" onclick="this.closest('.nav-mobile').classList.remove('open')">Contact</a>
+  <a href="index.html#qualifiers" class="btn btn-gold">View Tournaments</a>
+</div>
+
+<!-- ── PAGE HERO ── -->
+<div class="page-hero">
+  <div class="eyebrow">Our Story</div>
+  <h1>Golf Without Borders</h1>
+  <p>The World Amateur Golfers Championship gives every Filipino golfer — regardless of age, gender, or handicap — the chance to compete, represent their country, and experience what it feels like to play on the world stage.</p>
+</div>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="num">46+</div>
+    <div class="label">Countries Worldwide</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">6th</div>
+    <div class="label">Season in the Philippines</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">36</div>
+    <div class="label">Qualifiers in 2025</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">5</div>
+    <div class="label">Handicap Divisions</div>
+  </div>
+  <div class="stat-item">
+    <div class="num">25,000+</div>
+    <div class="label">Players Worldwide</div>
+  </div>
+</div>
+
+<!-- ── INTRO ── -->
+<section class="intro-section">
+  <div class="intro-left">
+    <div class="section-label">About WAGC Philippines</div>
+    <h2 class="section-title">The World's Largest Amateur Golf Championship</h2>
+    <div class="body-text">
+      <p>The World Amateur Golfers Championship (WAGC) is one of the most prestigious international amateur golf competitions in the world, held across 46+ countries and governed by the Rules of Golf as approved by the United States Golf Association (USGA).</p>
+      <p>Now in its 6th season in the Philippines, WAGC is proud to host 36 qualifying tournaments in 2025 — spanning Luzon, Visayas, and Mindanao — giving passionate amateur golfers from all corners of the country the chance to compete at the highest level.</p>
+      <p>The top performers from each regional qualifier advance to the Philippines National Finals, where the best in each division compete for the title of Category Champion. The 5 Category Champions then earn the ultimate honor: representing the Philippines at the WAGC World Finals in Jeju Island, Korea — all expenses paid.</p>
+    </div>
+  </div>
+  <div class="intro-right">
+    <div class="intro-fact">
+      <div class="intro-fact-icon"><i class="fas fa-globe"></i></div>
+      <div class="intro-fact-text">
+        <strong>International Competition</strong>
+        <span>Compete against players from 46+ countries at the World Finals in Jeju Island, Korea.</span>
+      </div>
+    </div>
+    <div class="intro-fact">
+      <div class="intro-fact-icon"><i class="fas fa-trophy"></i></div>
+      <div class="intro-fact-text">
+        <strong>USGA-Governed Rules</strong>
+        <span>All events follow the official Rules of Golf as approved by the USGA — the same standard as the pros.</span>
+      </div>
+    </div>
+    <div class="intro-fact">
+      <div class="intro-fact-icon"><i class="fas fa-users"></i></div>
+      <div class="intro-fact-text">
+        <strong>5 Handicap Divisions</strong>
+        <span>Compete against golfers at your exact skill level — from beginners to low-handicap players.</span>
+      </div>
+    </div>
+    <div class="intro-fact">
+      <div class="intro-fact-icon"><i class="fas fa-flag"></i></div>
+      <div class="intro-fact-text">
+        <strong>Represent the Philippines</strong>
+        <span>Category Champions wear the Philippine colors on an international stage — a moment like no other.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUOTE ── -->
+<section class="quote-section">
+  <div class="quote-photo">
+    <img src="images/sven-arnold.webp" alt="Sven Tumba and Arnold Palmer" />
+    <div class="quote-photo-caption">WAGC Founder Sven Tumba with Tournament Patron Arnold Palmer</div>
+  </div>
+  <div class="quote-text">
+    <div class="quote-mark">"</div>
+    <blockquote>The ultimate Olympic experience for the average person. To give the opportunity to those regardless of age, gender, or skill level, the honor of playing for one's country and the pride of wearing its colors. That dream is the World Golfers Championship.</blockquote>
+    <cite>Sven Tumba</cite>
+    <span class="cite-sub">WAGC Founder &amp; 4-Time Olympic Gold Medalist</span>
+  </div>
+</section>
+
+<!-- ── WHAT MAKES IT UNIQUE ── -->
+<section class="unique-section">
+  <div style="text-align:center;">
+    <div class="section-label">Why WAGC</div>
+    <h2 class="section-title centered">What Makes WAGC So Unique</h2>
+  </div>
+  <div class="unique-grid">
+    <div class="unique-card">
+      <div class="unique-card-icon"><i class="fas fa-users"></i></div>
+      <h3>Open to All Skill Levels</h3>
+      <p>WAGC uses 5 divisions based on your Handicap Index Rating, so you compete against players at your exact level. Whether you're a weekend golfer or a seasoned amateur, there's a place for you on the course.</p>
+    </div>
+    <div class="unique-card">
+      <div class="unique-card-icon"><i class="fas fa-flag-checkered"></i></div>
+      <h3>A Pro-Level Experience</h3>
+      <p>Enjoy a 4-day competition across world-class championship courses, using full USGA scoring and format. This is what it feels like to play like the pros — and you earned it.</p>
+    </div>
+    <div class="unique-card">
+      <div class="unique-card-icon"><i class="fas fa-flag"></i></div>
+      <h3>Play for Your Country</h3>
+      <p>WAGC is one of the few competitions where an amateur golfer can genuinely represent the Philippines on an international stage — going head-to-head against players from over 46 countries worldwide.</p>
+    </div>
+    <div class="unique-card">
+      <div class="unique-card-icon"><i class="fas fa-plane"></i></div>
+      <h3>All-Expense-Paid World Finals</h3>
+      <p>Category Champions receive a fully sponsored trip to the WAGC World Finals — flights, 5-star accommodations, matching team uniforms, and team bags all included. Win here, and the world is yours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── RECOGNIZED GLOBALLY ── -->
+<section class="patrons-section">
+  <div class="section-label">Global Recognition</div>
+  <h2 class="section-title">Recognized All Across the Globe</h2>
+  <div class="body-text" style="margin-bottom:0;">
+    <p>The World Amateur Golfers Championship is the largest amateur golf tournament in the world, having been commemorated 22 times across numerous countries. WAGC has earned the support and patronage of some of the most legendary names in the history of golf.</p>
+  </div>
+
+  <div class="patrons-grid">
+    <div class="patron-card">
+      <div class="patron-icon"><i class="fas fa-star"></i></div>
+      <h3>Arnold Palmer</h3>
+      <div class="role">Tournament Patron (Former)</div>
+      <p>The King himself was a Tournament Patron of WAGC for over a decade, lending the championship a legacy of excellence that endures to this day.</p>
+    </div>
+    <div class="patron-card">
+      <div class="patron-icon"><i class="fas fa-star"></i></div>
+      <h3>Severiano Ballesteros</h3>
+      <div class="role">Tournament Patron (Former)</div>
+      <p>Seve Ballesteros, one of the most beloved golfers in history, was a proud Tournament Patron of WAGC for over a decade before his passing.</p>
+    </div>
+    <div class="patron-card">
+      <div class="patron-icon"><i class="fas fa-star"></i></div>
+      <h3>Jesper Parnevik</h3>
+      <div class="role">Current Tournament Patron</div>
+      <p>Following Arnold Palmer's passing in 2016, PGA Tour veteran Jesper Parnevik stepped in as Tournament Patron, continuing the tradition of world-class support.</p>
+    </div>
+    <div class="patron-card" style="grid-column: 1 / -1; max-width: 360px; margin: 0 auto;">
+      <div class="patron-icon"><i class="fas fa-trophy"></i></div>
+      <h3>Annika Sorenstam</h3>
+      <div class="role">Honorary Chairman</div>
+      <p>One of the greatest female golfers of all time, Annika Sorenstam serves as the current Honorary Chairman of WAGC — a testament to the championship's commitment to golf at every level.</p>
+    </div>
+  </div>
+
+  <div class="pga-banner">
+    <i class="fas fa-handshake"></i>
+    <div class="pga-banner-text">
+      <strong>Official PGA Tour Partner</strong>
+      <span>WAGC is proud to be an official partner of the PGA Tour, the highest level of professional golf in the world.</span>
+    </div>
+    <a href="https://www.pgatour.com/partner-sites" target="_blank" class="pga-link">View PGA Tour Partners &rarr;</a>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<div class="contact-details" id="contact">
+  <div class="contact-item">
+    <i class="fas fa-phone"></i>
+    <div>
+      <span class="contact-label">Mobile</span>
+      <a href="tel:+639176734653">+63 917 673 4653</a>
+    </div>
+  </div>
+  <div class="contact-divider"></div>
+  <div class="contact-item">
+    <i class="fas fa-envelope"></i>
+    <div>
+      <span class="contact-label">Email</span>
+      <a href="mailto:Team@wagcphilippines.com">Team@wagcphilippines.com</a>
+    </div>
+  </div>
+  <div class="contact-divider"></div>
+  <div class="contact-item">
+    <i class="fas fa-location-dot"></i>
+    <div>
+      <span class="contact-label">Address</span>
+      <span>eMerge Space Hollywood Square, 33 West Ave, Brgy. Nayong Kanluran, Quezon City, 1104</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<section class="cta-section">
+  <div class="cta-content">
+    <h2>Your Journey Starts Here</h2>
+    <p>Find a qualifier near you and take your first step toward representing the Philippines on the world stage.</p>
+    <div class="cta-btns">
+      <a href="index.html#qualifiers" class="btn btn-gold">View Qualifying Tournaments</a>
+      <a href="index.html#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <span class="copy">&copy; 2025 WAGC Philippines. All Rights Reserved.</span>
+  <div class="footer-social">
+    <a href="https://web.facebook.com/WAGCPhilippines/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/wagcphilippines/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@WAGCPhilippines" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+  <div class="footer-links">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
+    <a href="index.html#contact">Contact Us</a>
+  </div>
+</footer>
+
+</body>
+</html>
