@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Official 2026 WAGC Philippines National Finals Tournament Conditions and Rules." />
+  <title>2026 National Finals Tournament Conditions — WAGC Philippines</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&amp;family=Barlow:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1B2A4A;
+      --navy2: #162240;
+      --gold: #C9A227;
+      --gold2: #B8921E;
+      --white: #FFFFFF;
+      --light: #F4F6F9;
+      --gray: #6B7280;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--navy); background: var(--white); }
+    a { text-decoration: none; color: inherit; }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 22px;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold2); }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 60px;
+      height: 68px;
+    }
+    .nav-logo img { height: 44px; display: block; }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: #ccd4e0;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+    .nav-mobile { display: none; flex-direction: column; background: var(--navy2); padding: 16px 24px 24px; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      color: #ccd4e0;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-mobile a:last-child { border-bottom: none; }
+    .nav-mobile .btn-gold { margin-top: 16px; text-align: center; }
+
+    .page-hero {
+      background: var(--navy);
+      padding: 64px 60px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-inner { max-width: 1080px; margin: 0 auto; }
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .page-hero h1 {
+      font-family: var(--font-head);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      max-width: 900px;
+      margin-bottom: 14px;
+    }
+    .page-hero .subtitle { color: #c6d0df; font-size: 1.05rem; line-height: 1.7; }
+    .event-facts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      max-width: 900px;
+      margin-top: 28px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .event-fact { padding: 16px 18px; background: rgba(255,255,255,0.04); }
+    .event-fact span {
+      display: block;
+      color: var(--gold);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .event-fact strong { color: var(--white); font-size: 0.92rem; line-height: 1.45; }
+
+    .page-body {
+      display: grid;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 44px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px;
+      align-items: start;
+    }
+    .sidebar { position: sticky; top: 88px; max-height: calc(100vh - 108px); overflow-y: auto; padding-right: 8px; }
+    .sidebar-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+    .sidebar-nav { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .sidebar-nav a {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6b7f9e;
+      padding: 6px 11px;
+      border-left: 2px solid #e5e9f0;
+      transition: color 0.2s, border-color 0.2s;
+      line-height: 1.25;
+    }
+    .sidebar-nav a:hover { color: var(--navy); border-color: var(--gold); }
+    .content { min-width: 0; }
+
+    .notice-box, .callout {
+      background: var(--light);
+      border-left: 4px solid var(--gold);
+      padding: 18px 20px;
+      margin-bottom: 36px;
+      font-size: 0.92rem;
+      color: #374151;
+      line-height: 1.7;
+    }
+    .notice-box strong, .callout strong { color: var(--navy); }
+    .callout { margin: 16px 0; background: #FFF8E7; border-radius: 0 6px 6px 0; }
+    .callout-title {
+      display: block;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: #765600;
+      margin-bottom: 4px;
+    }
+
+    .rule-section { margin-bottom: 48px; scroll-margin-top: 88px; }
+    .rule-section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--gold);
+    }
+    .rule-num {
+      width: 36px;
+      height: 36px;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 900;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .rule-section h2 {
+      font-family: var(--font-head);
+      font-size: 1.4rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--navy);
+    }
+    .rule-body { display: flex; flex-direction: column; gap: 11px; }
+    .rule-body p, .rule-body li { font-size: 0.95rem; color: #374151; line-height: 1.8; }
+    .rule-body ul, .rule-body ol { padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+    .rule-body li::marker { color: var(--gold); font-weight: 700; }
+    .rule-body h3 {
+      font-family: var(--font-head);
+      font-size: 1.08rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 10px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.9rem;
+    }
+    .data-table thead { background: var(--navy); color: var(--white); }
+    .data-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.76rem;
+    }
+    .data-table tbody tr { border-bottom: 1px solid #e5e9f0; }
+    .data-table tbody tr:nth-child(even) { background: var(--light); }
+    .data-table td { padding: 11px 16px; color: #374151; }
+    .division-badge {
+      display: inline-block;
+      min-width: 30px;
+      text-align: center;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 900;
+      padding: 2px 10px;
+      border-radius: 4px;
+    }
+    .pickup-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .pickup-card { background: var(--light); border-radius: 6px; padding: 16px; text-align: center; }
+    .pickup-card span { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gray); margin-bottom: 6px; }
+    .pickup-card strong { font-family: var(--font-head); font-size: 2rem; font-weight: 900; color: var(--navy); }
+    .committee-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .committee-member { background: var(--light); border-radius: 5px; padding: 13px 15px; }
+    .committee-member strong { display: block; color: var(--navy); margin-bottom: 2px; }
+    .committee-member span { color: var(--gray); font-size: 0.84rem; }
+    .steps { counter-reset: step; list-style: none !important; padding-left: 0 !important; }
+    .steps li { position: relative; padding: 12px 12px 12px 48px; border-bottom: 1px solid #e5e9f0; }
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 6px;
+      top: 12px;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-head);
+      font-weight: 900;
+    }
+
+    footer {
+      background: var(--navy2);
+      padding: 20px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    footer .copy { font-size: 0.8rem; color: #6b7f9e; }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #8da0be;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .footer-social a:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.78rem; color: #6b7f9e; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-links, .btn.nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .page-hero { padding: 40px 24px; }
+      .page-hero h1 { font-size: 2.2rem; }
+      .event-facts { grid-template-columns: 1fr; }
+      .page-body { grid-template-columns: 1fr; padding: 32px 24px; }
+      .sidebar { display: none; }
+      footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 560px) {
+      .pickup-grid, .committee-list { grid-template-columns: 1fr; }
+      .data-table { font-size: 0.84rem; }
+      .data-table th, .data-table td { padding: 10px 9px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <a href="index.html"><img src="images/wagc-logo-white.png" alt="WAGC Philippines" /></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="about.html">About</a></li>
+    <li><a href="tournament-format.html" class="active">Tournament Format</a></li>
+    <li><a href="index.html#qualifiers">Schedule</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="index.html#qualifiers" class="btn btn-gold nav-cta">View Tournaments</a>
+  <button class="nav-hamburger" onclick="document.querySelector('.nav-mobile').classList.toggle('open')" aria-label="Menu" aria-controls="mobile-menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="nav-mobile" id="mobile-menu">
+  <a href="about.html">About</a>
+  <a href="tournament-format.html">Tournament Format</a>
+  <a href="index.html#qualifiers" onclick="this.closest('.nav-mobile').classList.remove('open')">Schedule</a>
+  <a href="index.html#contact" onclick="this.closest('.nav-mobile').classList.remove('open')">Contact</a>
+  <a href="index.html#qualifiers" class="btn btn-gold">View Tournaments</a>
+</div>
+
+<header class="page-hero">
+  <div class="hero-inner">
+    <div class="eyebrow">World Amateur Golfers Championship Philippines</div>
+    <h1>Official 2026 WAGC National Finals<br />Tournament Conditions and Rules</h1>
+    <p class="subtitle">World Amateur Golfers Championship Philippines</p>
+    <div class="event-facts">
+      <div class="event-fact"><span>Dates</span><strong>September 11–12, 2026</strong></div>
+      <div class="event-fact"><span>Venue</span><strong>Caliraya Springs Golf &amp; Country Club<br />Cavinti, Laguna</strong></div>
+      <div class="event-fact"><span>Courses</span><strong>Lakeside and Upland Falls</strong></div>
+    </div>
+  </div>
+</header>
+
+<main class="page-body">
+  <aside class="sidebar" aria-label="Table of contents">
+    <div class="sidebar-title">Jump to Section</div>
+    <ul class="sidebar-nav">
+      <li><a href="#committee">1. Tournament Committee</a></li>
+      <li><a href="#schedule">2. Schedule &amp; Eligibility</a></li>
+      <li><a href="#format">3. Format &amp; Scoring</a></li>
+      <li><a href="#rules">4. Rules of Golf</a></li>
+      <li><a href="#double-par">5. Double Par &amp; Hole Out</a></li>
+      <li><a href="#tees-rangefinders">6. Tees &amp; Range Finders</a></li>
+      <li><a href="#scorecards">7. Scorecards</a></li>
+      <li><a href="#pace">8. Pace of Play</a></li>
+      <li><a href="#bunkers">9. Bunkers Under Repair</a></li>
+      <li><a href="#assistants">10. Personal Assistants</a></li>
+      <li><a href="#e5">11. Lost Ball / Out of Bounds</a></li>
+      <li><a href="#preferred-lies">12. Preferred Lies</a></li>
+      <li><a href="#putting-green">13. Caddie Restrictions</a></li>
+      <li><a href="#ties">14. Ties</a></li>
+      <li><a href="#conduct">15. Dress &amp; Conduct</a></li>
+      <li><a href="#weather">16. Bad Weather</a></li>
+      <li><a href="#tee-times">17. Tee Times &amp; Punctuality</a></li>
+      <li><a href="#cancellation">18. Cancellation &amp; No Shows</a></li>
+      <li><a href="#handicap-adjustment">19. Handicap Adjustment</a></li>
+      <li><a href="#classification">20. Flight Classification</a></li>
+      <li><a href="#caddie-cart">21. Caddie &amp; Golf Cart</a></li>
+      <li><a href="#disputes">22. Disputes</a></li>
+      <li><a href="#committee-authority">23. The Committee</a></li>
+    </ul>
+  </aside>
+
+  <div class="content">
+    <div class="notice-box">
+      These conditions apply to the <strong>2026 WAGC Philippines National Finals</strong>. Players are responsible for knowing and following the conditions below throughout the event.
+    </div>
+
+    <section class="rule-section" id="committee">
+      <div class="rule-section-header"><div class="rule-num">1</div><h2>Tournament Committee</h2></div>
+      <div class="rule-body">
+        <div class="committee-list">
+          <div class="committee-member"><strong>Jesse Guerrero</strong><span>Tournament Director</span></div>
+          <div class="committee-member"><strong>Garry Viajante</strong><span>Head Marshal</span></div>
+          <div class="committee-member"><strong>Santiago Go</strong><span>Head Marshal</span></div>
+          <div class="committee-member"><strong>Jocelyn</strong><span>Official Scorer &amp; WHS Index</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rule-section" id="schedule">
+      <div class="rule-section-header"><div class="rule-num">2</div><h2>Event Schedule and Eligibility</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>The National Finals will be held September 11–12, 2026.</li>
+          <li>The event is played over two days using the Lakeside and Upland Falls courses.</li>
+          <li>The Tournament Committee will announce the final course order.</li>
+          <li>Participation is for qualified qualifier winners and eligible invitees approved by the Tournament Committee.</li>
+          <li>A slot is confirmed only after registration and payment, subject to capacity.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="format">
+      <div class="rule-section-header"><div class="rule-num">3</div><h2>Format and Scoring</h2></div>
+      <div class="rule-body">
+        <p>The competition format is <strong>Net Stroke Play</strong>.</p>
+        <ul>
+          <li><strong>Net Score = Gross Score minus Course Handicap.</strong> Example: Gross 95, Course HCP 20 = Net 75.</li>
+          <li><strong>Overall Score = Day 1 Net + Day 2 Net.</strong> Example: 75 + 71 = 146.</li>
+          <li>The lowest total Net Score wins, subject to the tie rules in these conditions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="rules">
+      <div class="rule-section-header"><div class="rule-num">4</div><h2>Rules of Golf</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>Play is governed by the current Rules of Golf approved by The R&amp;A and USGA.</li>
+          <li>The Official WAGC Referee governs play.</li>
+          <li>Competition disputes go first to the Official Referee and, if the referee is unavailable, second to the Tournament Director.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="double-par">
+      <div class="rule-section-header"><div class="rule-num">5</div><h2>Double Par Pickup and Holing Out</h2></div>
+      <div class="rule-body">
+        <p>The following maximum score applies to each hole:</p>
+        <div class="pickup-grid">
+          <div class="pickup-card"><span>Par 3</span><strong>6</strong></div>
+          <div class="pickup-card"><span>Par 4</span><strong>8</strong></div>
+          <div class="pickup-card"><span>Par 5</span><strong>10</strong></div>
+        </div>
+        <h3>Players Must Hole Out</h3>
+        <p>The ball must enter the cup to complete the hole. Failure to hole out may result in the maximum strokes for the hole.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="tees-rangefinders">
+      <div class="rule-section-header"><div class="rule-num">6</div><h2>Tee Boxes and Range Finders</h2></div>
+      <div class="rule-body">
+        <h3>Tee Boxes</h3>
+        <ul><li>Men: Blue Tees</li><li>Women: Red Tees</li></ul>
+        <h3>Range Finders</h3>
+        <p>Distance-measuring devices are allowed only with slope turned <strong>OFF</strong>. Failure to disable slope may result in disqualification. Players may ask the Official Referee to check the device.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="scorecards">
+      <div class="rule-section-header"><div class="rule-num">7</div><h2>Cross Scoring and Scorecards</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>Players exchange scorecards with another player in the group.</li>
+          <li>The scorecard must have at least four signatures unless the flight has fewer than four players.</li>
+          <li>Players must personally submit their own card at the designated booths.</li>
+          <li>Cards must be submitted immediately after the round.</li>
+        </ul>
+        <div class="callout"><span class="callout-title">Important — Scorecard Deadline</span><strong>Failure to submit a scorecard within 20 minutes may result in disqualification.</strong></div>
+      </div>
+    </section>
+
+    <section class="rule-section" id="pace">
+      <div class="rule-section-header"><div class="rule-num">8</div><h2>Pace of Play</h2></div>
+      <div class="rule-body">
+        <div class="callout"><span class="callout-title">Pace Standard</span><strong>Expected maximum time for 18 holes: 4 hours 54 minutes.</strong> Players are encouraged to make each stroke within 40 seconds.</div>
+        <ul>
+          <li>If a flight is out of pace and a player is observed violating the rule, the entire flight receives a warning.</li>
+          <li>A later violation by any player in that same flight on a different hole results in a two-stroke penalty to the entire flight.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="bunkers">
+      <div class="rule-section-header"><div class="rule-num">9</div><h2>Bunkers Under Repair</h2></div>
+      <div class="rule-body">
+        <p>When a bunker or a portion of a bunker is marked Ground Under Repair (GUR), the player receives free relief:</p>
+        <ul>
+          <li>Outside the bunker, at the nearest point of complete relief;</li>
+          <li>No nearer the hole;</li>
+          <li>By dropping within one club-length.</li>
+        </ul>
+        <p>The player does not have to take relief inside the bunker first.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="assistants">
+      <div class="rule-section-header"><div class="rule-num">10</div><h2>Umbrella and Personal Assistants</h2></div>
+      <div class="rule-body">
+        <p><strong>Umbrella assistants are not allowed.</strong></p>
+        <p>A personal assistant other than a player’s caddie may not:</p>
+        <ul>
+          <li>Give advice;</li>
+          <li>Touch or hold equipment;</li>
+          <li>Stand on the putting surface; or</li>
+          <li>Assist with alignment.</li>
+        </ul>
+        <p>A personal assistant may help search for a ball. Breaches may result in penalties or disqualification.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="e5">
+      <div class="rule-section-header"><div class="rule-num">11</div><h2>Lost Ball / Out of Bounds — Model Local Rule E-5</h2></div>
+      <div class="rule-body">
+        <p><strong>Model Local Rule E-5 is in effect unless otherwise announced before play.</strong> For two penalty strokes, a player may take relief for a ball that is lost outside a penalty area or is out of bounds, using the following reference points and relief area:</p>
+        <h3>Reference Points</h3>
+        <ul>
+          <li><strong>Ball Reference Point:</strong> The point where the original ball is estimated to have come to rest on the course, or last crossed the edge of the course boundary to go out of bounds.</li>
+          <li><strong>Fairway Reference Point:</strong> The point of fairway of the hole being played that is nearest to the Ball Reference Point, but is not nearer the hole than the Ball Reference Point.</li>
+          <li>For this Local Rule, “fairway” means any area of grass in the general area that is cut to fairway height or less. If the ball is estimated lost on the course or last crossed the course boundary short of the fairway, the Fairway Reference Point may be a grass path or a teeing ground for the hole being played cut to fairway height or less.</li>
+        </ul>
+        <h3>Relief Area</h3>
+        <p>The relief area is between two reference lines: a line from the hole through the Ball Reference Point, and a line from the hole through the Fairway Reference Point. The relief area extends two club-lengths to the outside of each reference line.</p>
+        <ul>
+          <li>The relief area must be in the general area and cannot be nearer the hole than the Ball Reference Point.</li>
+          <li>Once the player puts a ball in play under this Local Rule, the original ball is no longer in play and must not be played.</li>
+          <li>This remains true even if the original ball is found on the course before the end of the three-minute search period.</li>
+        </ul>
+        <h3>When E-5 Cannot Be Used</h3>
+        <ul>
+          <li>When the ball is known or virtually certain to have come to rest in a penalty area.</li>
+          <li>When the player has played another ball provisionally under the penalty of stroke and distance.</li>
+        </ul>
+        <p>The player may use this Local Rule for a provisional ball that has not been found or is known or virtually certain to be out of bounds. The penalty for playing from a wrong place is governed by Rule 14.7a.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="preferred-lies">
+      <div class="rule-section-header"><div class="rule-num">12</div><h2>Preferred Lies</h2></div>
+      <div class="rule-body">
+        <p>Throughout the National Finals, lift, clean and place is permitted in the general area:</p>
+        <ul>
+          <li>Within one scorecard length;</li>
+          <li>No nearer the hole;</li>
+          <li>The action must be performed by the player; and</li>
+          <li>The caddie may <strong>not</strong> perform it.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="putting-green">
+      <div class="rule-section-header"><div class="rule-num">13</div><h2>Caddie Restrictions on the Putting Green</h2></div>
+      <div class="rule-body">
+        <p>Caddies may not:</p>
+        <ul>
+          <li>Mark the player’s ball;</li>
+          <li>Place the ball; or</li>
+          <li>Align the ball while replacing it.</li>
+        </ul>
+        <p>Only the player may perform these actions.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="ties">
+      <div class="rule-section-header"><div class="rule-num">14</div><h2>Ties</h2></div>
+      <div class="rule-body">
+        <p>Ties are decided by count-back in this order:</p>
+        <ol class="steps">
+          <li>Gross last 9 — holes 10–18</li>
+          <li>Gross last 6 — holes 13–18</li>
+          <li>Gross last 3 — holes 16–18</li>
+          <li>Hole-by-hole beginning at Hole 18</li>
+          <li>If still tied, compare the #1 handicap hole on the back nine, then #2, and so on until resolved.</li>
+        </ol>
+        <p>For this 36-hole event, the scorecard playoff begins using the final round and works down according to the system above.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="conduct">
+      <div class="rule-section-header"><div class="rule-num">15</div><h2>Dress Code and Personal Conduct</h2></div>
+      <div class="rule-body">
+        <h3>Dress Code</h3>
+        <ul>
+          <li>Collared shirts or mock turtlenecks are required.</li>
+          <li>Jeans, denim, jogging outfits and sweatpants are not allowed.</li>
+        </ul>
+        <h3>Personal Conduct</h3>
+        <p>Players and guests must behave responsibly. Excessive anger, vulgar language, club throwing, alcohol abuse, illegal drug use, poor etiquette or disrespect may result in disqualification without refund.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="weather">
+      <div class="rule-section-header"><div class="rule-num">16</div><h2>Bad Weather</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>The Committee may suspend play for dangerous weather or an unplayable course.</li>
+          <li>Suspension and resumption signals will be announced by the Committee or through official event channels.</li>
+          <li>When play is suspended, players must mark their ball and stop immediately under Rule 5.7a. Failure to stop results in disqualification.</li>
+          <li>On resumption, play restarts from the exact spot.</li>
+          <li>If 18 holes cannot be completed, the Committee may assign scores to unplayed holes, use common completed holes, reschedule, or cancel.</li>
+          <li>If the common completed holes are eight holes or fewer, the entire round is cancelled.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="tee-times">
+      <div class="rule-section-header"><div class="rule-num">17</div><h2>Tee Time Format and Player Punctuality</h2></div>
+      <div class="rule-body">
+        <div class="callout"><span class="callout-title">Arrival Time</span><strong>Players should arrive one hour before their tee time and must be at the assigned teeing area at least 15 minutes before the scheduled tee time.</strong></div>
+        <p>Sequential tee times will start from Hole 1 and Hole 10.</p>
+        <h3>Late Arrival — Rule 5.3a</h3>
+        <ul>
+          <li>Within five minutes late: General Penalty / two strokes.</li>
+          <li>More than five minutes late: Double Par for every hole missed unless the Tournament Committee determines that exceptional circumstances apply.</li>
+        </ul>
+        <h3>Ready to Play</h3>
+        <p>A player is ready to play when the player has at least one club, a ball, proper attire, and is prepared to make a stroke.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="cancellation">
+      <div class="rule-section-header"><div class="rule-num">18</div><h2>Cancellation and No Shows</h2></div>
+      <div class="rule-body">
+        <p>Late and no-show participants forfeit the registration fee and receive no refund.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="handicap-adjustment">
+      <div class="rule-section-header"><div class="rule-num">19</div><h2>Handicap Adjustment</h2></div>
+      <div class="rule-body">
+        <div class="callout"><span class="callout-title">Day 1 Adjustment</span>A Day 1 handicap adjustment is made to promote fair play and is based on the player’s <strong>Day 1 Net Score</strong>.</div>
+        <table class="data-table">
+          <thead><tr><th>Day 1 Net Score</th><th>Day 2 Course HCP Adjustment</th></tr></thead>
+          <tbody>
+            <tr><td>85 and above</td><td>+3</td></tr>
+            <tr><td>80–84</td><td>+2</td></tr>
+            <tr><td>77–79</td><td>+1</td></tr>
+            <tr><td>72–76</td><td>0</td></tr>
+            <tr><td>70–71</td><td>-1</td></tr>
+            <tr><td>67–69</td><td>-2</td></tr>
+            <tr><td>65–66</td><td>-3</td></tr>
+            <tr><td>63–64</td><td>-4</td></tr>
+            <tr><td>61–62</td><td>-5</td></tr>
+            <tr><td>59–60</td><td>-6</td></tr>
+          </tbody>
+        </table>
+        <h3>Examples</h3>
+        <ul>
+          <li>Gross 85, Course HCP 15 → Net 70 → Day 2 Course HCP becomes 14.</li>
+          <li>Gross 95, Course HCP 15 → Net 80 → Day 2 Course HCP becomes 17.</li>
+        </ul>
+        <p>The Handicap Adjustment complies with WAGC International Rules and will also be used at the 2026 WAGC World Final.</p>
+      </div>
+    </section>
+
+    <section class="rule-section" id="classification">
+      <div class="rule-section-header"><div class="rule-num">20</div><h2>Flight Placement and Classification</h2></div>
+      <div class="rule-body">
+        <table class="data-table">
+          <thead><tr><th>Division</th><th>Handicap Index</th></tr></thead>
+          <tbody>
+            <tr><td><span class="division-badge">A</span></td><td>0–5.4</td></tr>
+            <tr><td><span class="division-badge">B</span></td><td>5.5–10.4</td></tr>
+            <tr><td><span class="division-badge">C</span></td><td>10.5–15.4</td></tr>
+            <tr><td><span class="division-badge">D</span></td><td>15.5–20.4</td></tr>
+            <tr><td><span class="division-badge">E</span></td><td>20.5–25.4</td></tr>
+          </tbody>
+        </table>
+        <ul>
+          <li>Each player’s Low Handicap Index will be used.</li>
+          <li>Under WHS Rule 5.7, the Low Handicap Index is the lowest Handicap Index achieved during the 365-day period preceding the most recent score in the player’s record.</li>
+          <li>Indexes above 25.4 are capped at 25.4.</li>
+          <li>The official handicap cut-off date is September 1, 2026.</li>
+          <li>The applicable Low Handicap Index at the cut-off determines the player’s division.</li>
+          <li>Course Handicap is calculated for the course being played.</li>
+          <li>Players will be paired within the same division or category where possible.</li>
+          <li>WAGC Officials and the Tournament Director retain final re-flighting authority.</li>
+          <li>Officials may promote players into a lower-handicap division or re-flight players.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="caddie-cart">
+      <div class="rule-section-header"><div class="rule-num">21</div><h2>Caddie and Golf Cart Policy</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>One assigned caddie per player.</li>
+          <li>Caddies are assigned by the host venue and/or the Committee.</li>
+          <li>Outside caddies from another golf course are <strong>not allowed</strong>.</li>
+          <li>Solo carts are <strong>not allowed</strong>; carts must be shared with a flight mate.</li>
+          <li>Player-owned golf carts may be used subject to approval but must also be shared.</li>
+          <li>Other carts will be assigned and shared as directed.</li>
+          <li>The Tournament Committee has the final say on assignment disputes.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="disputes">
+      <div class="rule-section-header"><div class="rule-num">22</div><h2>Disputes or Doubts as to Procedure</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>Refer disputes to the Official Referee and/or Tournament Director.</li>
+          <li>If they are unavailable, after notifying the marker, the player may play two balls according to the Rules of Golf and obtain a ruling after the round before signing and submitting the scorecard.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rule-section" id="committee-authority">
+      <div class="rule-section-header"><div class="rule-num">23</div><h2>The Committee</h2></div>
+      <div class="rule-body">
+        <ul>
+          <li>For Rules questions not addressed here, refer first to the Tournament Director, second to the Official Referee, and third to the WAGC Committee.</li>
+          <li>Players are responsible for their valuables. WAGC is not responsible for loss or theft.</li>
+          <li>The Committee may change the Terms of Competition and Conditions of Entry.</li>
+          <li>The Tournament Director may disqualify a player for improper conduct, a serious breach of etiquette, or when the Committee determines disqualification is warranted.</li>
+          <li>All doubtful rules issues, appeals, protests and disputes go to the Committee, Tournament Director or Referee. Their decisions are final.</li>
+          <li>No score disputes will be entertained after final results are announced.</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <span class="copy">&copy; 2026 WAGC Philippines. All Rights Reserved.</span>
+  <div class="footer-social">
+    <a href="https://web.facebook.com/WAGCPhilippines/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/wagcphilippines/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@WAGCPhilippines" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+  </div>
+  <div class="footer-links">
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="terms.html">Terms &amp; Conditions</a>
+    <a href="index.html#contact">Contact Us</a>
+  </div>
+</footer>
+
+</body>
+</html>
