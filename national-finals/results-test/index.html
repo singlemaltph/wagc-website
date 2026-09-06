@@ -528,6 +528,19 @@
     .adj-pos { color: var(--red); font-weight: 700; }
     .adj-neg { color: var(--green); font-weight: 700; }
     .adj-zero { color: var(--gray); font-weight: 700; }
+    .pending-row td { color: var(--gray); }
+    .pending-badge {
+      display: inline-block;
+      background: #e5e9f0;
+      color: var(--gray);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
 
     /* ── MOBILE CARDS ── */
     .nf-cards-mobile { display: none; }
@@ -539,6 +552,7 @@
       border-left: 4px solid #d8dee8;
     }
     .nf-card-leader { border-left-color: var(--gold); background: #FFF8E7; }
+    .nf-card-pending { opacity: 0.75; }
     .nf-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .nf-card-top .player-name { font-weight: 800; color: var(--navy); font-size: 1rem; }
     .pos-badge {

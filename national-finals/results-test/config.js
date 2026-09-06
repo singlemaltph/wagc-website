@@ -4,31 +4,61 @@
    This copy lives at national-finals/results-test/ and is for internal
    stress-testing/review only.
 
-   day2FlightsPublished and finalResultsPublished are separate flags on
-   purpose — Day 2 flights and Final Results are released at different
-   points in the tournament, so one flag controlling both would produce
-   confusing behavior (e.g. Day 2 pairings appearing before they exist,
-   or staying hidden after Day 1 just because awarding hasn't happened).
+   SOURCE OF TRUTH: the private "2026 WAGC NF Scoring" Google Sheet is the
+   authoritative dataset before, during, and immediately after the
+   tournament (full roster, Low Index, Course HCP, internal IDs, Day 1/2
+   scores, handicap adjustments, official positions and tie-break results).
+   This public website is NOT that source of truth — it only ever holds
+   what has already been cleared for public release. See
+   PUBLISHING_WORKFLOW.md in this directory for the full policy.
 
-   IMPORTANT (production workflow) — the eventual production page
-   (national-finals/results/) must move through these states, and real
-   Day 2 / final data must never be deployed ahead of the matching flag:
+   Five separate flags on purpose — roster, Day 1 flights, Day 1 results,
+   Day 2 flights, and Final results are each released at a different point
+   in the tournament. Collapsing any of these into one flag produces
+   confusing or unsafe behavior (e.g. Day 2 pairings appearing before they
+   exist, or Day 1 results stuck behind a flag meant for Final).
 
-     BEFORE / DURING DAY 1 : rosterPublished=true, day1Published=true (once ready),
-                              day2FlightsPublished=false, finalResultsPublished=false
-     AFTER DAY 1 COMPLETES : day2FlightsPublished=true once real Day 2 pairings
-                              are generated and published (see app.js buildFlights
-                              for the pairing rule to implement later)
-     DURING DAY 2           : finalResultsPublished stays false
-     AFTER AWARDS CEREMONY  : finalResultsPublished=true, real final data added
-                              to data.js at that moment
+   CRITICAL — these flags control UI VISIBILITY ONLY. They are NOT a
+   security boundary. This repository is public: anything committed into
+   data.js, flights.js, or any other file here can be read directly from
+   GitHub or from DevTools regardless of these flags. Therefore:
+     - REAL Day 2 pairings must not be committed here before they are
+       officially released (after Day 1 is complete and verified).
+     - REAL final-result data must not be committed here before the
+       Awards Ceremony, even if finalResultsPublished is false.
+   Flip a flag to true only in the same change that adds the real,
+   already-cleared-for-release data it gates.
+
+   STATE MACHINE (production page: national-finals/results/):
+
+     STATE A — Pre-event
+       rosterPublished: true, day1FlightsPublished: true,
+       day1ResultsPublished: false, day2FlightsPublished: false,
+       finalResultsPublished: false
+
+     STATE B — Day 1 scoring underway
+       day1ResultsPublished: true (leaderboard fills progressively as
+       scores are verified — see app.js buildDay1's completed/pending split)
+
+     STATE C — Day 1 complete, Day 2 flights released
+       day2FlightsPublished: true (only once the real Day 2 pairing data,
+       generated from final Day 1 standings per the championship-flight-last
+       rule documented in flights.js, has been committed)
+
+     STATE D — Day 2 finished, before Awards Ceremony
+       finalResultsPublished stays false — no exceptions, even though the
+       internal/private result is already known
+
+     STATE E — After Awards Ceremony
+       finalResultsPublished: true, once real final data has been committed
 
    Do NOT copy day2FlightsPublished: true or finalResultsPublished: true
-   from this test config into the production page ahead of schedule.
+   into the production page ahead of the matching real data being added.
    ========================================================================== */
 window.NF_CONFIG = {
   rosterPublished: true,
-  day1Published: true,
+  day1FlightsPublished: true,
+  day1ResultsPublished: false,
   day2FlightsPublished: false,
   finalResultsPublished: false,
 

@@ -19,7 +19,20 @@
   }
 
   /* Rank players within their division by ascending value of `key`.
-     Ties share the same rank (competition ranking: 1,1,3). */
+     Ties share the same rank (competition ranking: 1,1,3).
+
+     TEST-ONLY PLACEHOLDER: the alphabetical-name fallback below is NOT the
+     official National Finals tie-break. The official sequence (from the
+     Tournament Conditions, documented in PUBLISHING_WORKFLOW.md) is:
+       1) gross score, holes 10-18   2) gross, holes 13-18
+       3) gross, holes 16-18         4) hole-by-hole count-back from hole 18
+       5-7) back-nine handicap-hole ranking (holes 10-18), #1 then #2 then
+            onward, until resolved — using the Day 2 (final round) scorecard
+            for this 36-hole event.
+     That requires hole-by-hole scores this test dataset does not carry.
+     In production, prefer receiving an already-tie-break-resolved
+     `position` from the private scoring workbook rather than recomputing
+     official ties here — see data.js's TIE-BREAK NOTE. */
   function rankByDivision(list, key) {
     var byDivision = {};
     list.forEach(function (p) {
@@ -151,12 +164,18 @@
 
   function buildDay1() {
     var wrap = document.getElementById("day1-panel");
-    if (!config.day1Published) {
-      wrap.innerHTML = lockedMessage("DAY 1 RESULTS", "Day 1 results have not been published yet.");
+    if (!config.day1ResultsPublished) {
+      wrap.innerHTML = lockedMessage("DAY 1 RESULTS", "Day 1 results will be published as scores are received and verified.");
       return;
     }
 
-    var ranked = rankByDivision(players, "day1Net");
+    /* Progressive publishing: only players whose Day 1 score has been
+       received AND verified (day1Complete !== false) get ranked. Everyone
+       else shows as "Pending" with no leaderboard position — the public
+       leaderboard is expected to fill in gradually during Day 1. */
+    var completed = players.filter(function (p) { return p.day1Complete !== false; });
+    var pending = players.filter(function (p) { return p.day1Complete === false; });
+    var ranked = rankByDivision(completed, "day1Net");
 
     wrap.innerHTML =
       '<div class="toolbar">' +
@@ -174,7 +193,9 @@
       divisionsToShow.forEach(function (div) {
         var group = ranked.filter(function (p) { return p.division === div; })
           .sort(function (a, b) { return a._rank - b._rank || a.name.localeCompare(b.name); });
-        if (!group.length) return;
+        var pendingGroup = pending.filter(function (p) { return p.division === div; })
+          .sort(function (a, b) { return a.name.localeCompare(b.name); });
+        if (!group.length && !pendingGroup.length) return;
 
         html += '<div class="division-block">';
         html += '<div class="division-heading"><span class="div-badge">' + div + "</span> Division " + div + "</div>";
@@ -194,6 +215,14 @@
             "<td>" + p.day2Hcp + "</td>" +
           "</tr>";
         });
+        pendingGroup.forEach(function (p) {
+          html += '<tr class="pending-row">' +
+            '<td class="pos-cell"><span class="pending-badge">Pending</span></td>' +
+            "<td class=\"player-name\">" + esc(p.name) + "</td>" +
+            '<td colspan="4">—</td>' +
+            "<td>" + p.day2Hcp + "</td>" +
+          "</tr>";
+        });
         html += "</tbody></table>";
 
         html += '<div class="nf-cards nf-cards-mobile">';
@@ -210,6 +239,14 @@
               '<div class="stat stat-highlight"><span class="stat-label">Net</span><span class="stat-value">' + p.day1Net + "</span></div>" +
               '<div class="stat"><span class="stat-label">Adj.</span><span class="stat-value ' + adjClass(p.adjustment) + '">' + formatSigned(p.adjustment) + "</span></div>" +
               '<div class="stat"><span class="stat-label">Day 2 HCP</span><span class="stat-value">' + p.day2Hcp + "</span></div>" +
+            "</div>" +
+          "</div>";
+        });
+        pendingGroup.forEach(function (p) {
+          html += '<div class="nf-card nf-card-pending">' +
+            '<div class="nf-card-top">' +
+              '<span class="pending-badge">Pending</span>' +
+              '<span class="player-name">' + esc(p.name) + "</span>" +
             "</div>" +
           "</div>";
         });
@@ -368,6 +405,16 @@
        documented in flights.js). Nothing about actual Day 2 pairings or
        tee times may render here until config.day2FlightsPublished is true. */
     function renderFlights() {
+      if (state.day === "day1" && !config.day1FlightsPublished) {
+        toolbar.hidden = true;
+        document.getElementById("flights-results").innerHTML =
+          '<div class="locked-panel">' +
+            '<i class="fas fa-lock locked-icon"></i>' +
+            "<h3>DAY 1 FLIGHT SCHEDULE</h3>" +
+            "<p>Day 1 flight pairings and tee times have not been published yet.</p>" +
+          "</div>";
+        return;
+      }
       if (state.day === "day2" && !config.day2FlightsPublished) {
         toolbar.hidden = true;
         document.getElementById("flights-results").innerHTML =

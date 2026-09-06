@@ -29,19 +29,32 @@
    turned on.
 
    The real Day 2 schedule must instead be generated AFTER Day 1 is
-   complete, using Day 1 standings, not a simple course swap of Day 1
-   pairings:
+   complete and verified, using official Day 1 standings, not a simple
+   course swap of Day 1 pairings:
+
      - Pair players within their division according to Day 1 ranking.
-     - The leading players tee off later in the Day 2 sequence.
+     - The leading players tee off later — the championship flight
+       (positions 1-4) MUST be the LAST flight for that division, so the
+       division winner stays undecided until the final group finishes.
      - Per division, working backward from the last flight:
-         last flight        = positions 1-4 (the leaders)
-         preceding flight   = positions 5-8
-         preceding flight   = positions 9-12
+         LAST / CHAMPIONSHIP flight = Day 1 positions 1-4
+         second-to-last             = positions 5-8
+         third-to-last              = positions 9-12
          ...continue backward through the standings
-     - This competitive-ranking rule takes priority over the Day 1
-       ladies-pairing preference.
+       Example, 20 players in a division (flight order, earliest first):
+         17-20, 13-16, 9-12, 5-8, then LAST/CHAMPIONSHIP = 1-4
+     - NON-DIVISIBLE counts: protect the championship end of the sequence.
+       Do NOT break apart positions 1-4 — let an earlier/lower-ranked
+       flight carry fewer than 4 players instead.
+       Example, 14 players in a division (flight order, earliest first):
+         13-14 (2 players), 9-12, 5-8, then LAST/CHAMPIONSHIP = 1-4
+     - This competitive-ranking rule takes PRIORITY over the Day 1
+       ladies-pairing preference — never move a top-4 player out of the
+       championship flight to satisfy a ladies-pairing preference. Do not
+       infer gender from player names.
+
    Do not guess or publish real Day 2 pairings before that generator is
-   built and Day 1 has actually finished.
+   built and Day 1 has actually finished and been verified.
    ========================================================================== */
 (function () {
   "use strict";
