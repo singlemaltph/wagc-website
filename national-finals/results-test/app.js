@@ -3,7 +3,13 @@
 
   var DIVISIONS = ["A", "B", "C", "D", "E"];
   var players = window.NF_PLAYERS || [];
+  var flights = window.NF_FLIGHTS || [];
   var config = window.NF_CONFIG || {};
+
+  function divisionForPlayer(name) {
+    var match = players.filter(function (p) { return p.name === name; })[0];
+    return match ? match.division : "-";
+  }
 
   function formatSigned(n) {
     if (n > 0) return "+" + n;
@@ -237,8 +243,8 @@
 
   /* ---------------- DAY 2 / FINAL RESULTS ---------------- */
 
-  function buildDay2() {
-    var wrap = document.getElementById("day2-panel");
+  function buildFinal() {
+    var wrap = document.getElementById("final-panel");
 
     if (!config.day2Published) {
       wrap.innerHTML =
@@ -254,15 +260,16 @@
     var ranked = rankByDivision(players, "finalNet");
 
     wrap.innerHTML =
+      (config.isTestData ? '<div class="sample-banner"><i class="fas fa-flask-vial"></i>SIMULATED FINAL RESULTS — TEST DATA</div>' : "") +
       '<div class="toolbar">' +
-        '<div class="filter-pills" id="day2-filter" data-target="division"></div>' +
+        '<div class="filter-pills" id="final-filter" data-target="division"></div>' +
       "</div>" +
-      '<div id="day2-results"></div>';
+      '<div id="final-results"></div>';
 
-    buildFilterPills("day2-filter", "all");
+    buildFilterPills("final-filter", "all");
     var state = { division: "all" };
 
-    function renderDay2() {
+    function renderFinal() {
       var divisionsToShow = state.division === "all" ? DIVISIONS : [state.division];
       var html = "";
 
@@ -312,18 +319,80 @@
       });
 
       if (!html) html = '<p class="empty-state">No results for this division.</p>';
-      document.getElementById("day2-results").innerHTML = html;
+      document.getElementById("final-results").innerHTML = html;
     }
 
-    document.getElementById("day2-filter").addEventListener("click", function (e) {
+    document.getElementById("final-filter").addEventListener("click", function (e) {
       var btn = e.target.closest("[data-value]");
       if (!btn) return;
       state.division = btn.getAttribute("data-value");
-      setActivePill("day2-filter", state.division);
-      renderDay2();
+      setActivePill("final-filter", state.division);
+      renderFinal();
     });
 
-    renderDay2();
+    renderFinal();
+  }
+
+  /* ---------------- FLIGHTS ---------------- */
+
+  function buildFlights() {
+    var wrap = document.getElementById("flights-panel");
+
+    wrap.innerHTML =
+      '<div class="sample-banner"><i class="fas fa-flask-vial"></i>SAMPLE FLIGHT DATA — FOR TESTING ONLY</div>' +
+      '<div class="toolbar">' +
+        '<div class="search-box">' +
+          '<i class="fas fa-search"></i>' +
+          '<input type="search" id="flight-search" placeholder="Find your flight — search your name..." aria-label="Search for a player to find their flight" />' +
+        "</div>" +
+      "</div>" +
+      '<div id="flights-results"></div>';
+
+    var searchInput = document.getElementById("flight-search");
+
+    function renderFlights(query) {
+      var q = (query || "").trim().toLowerCase();
+      var list = flights;
+
+      if (q) {
+        list = flights.filter(function (f) {
+          return f.players.some(function (name) { return name.toLowerCase().indexOf(q) !== -1; });
+        });
+      }
+
+      if (!list.length) {
+        document.getElementById("flights-results").innerHTML = '<p class="empty-state">No flight found for that player.</p>';
+        return;
+      }
+
+      var html = '<div class="flight-grid">';
+      list.forEach(function (f) {
+        var hasMatch = q && f.players.some(function (name) { return name.toLowerCase().indexOf(q) !== -1; });
+        html += '<div class="flight-card' + (hasMatch ? " flight-match" : "") + '">' +
+          '<div class="flight-card-head">' +
+            '<span class="flight-num">Flight ' + f.flightNumber + "</span>" +
+            '<span class="flight-meta">' + esc(f.teeTime) + " · Hole " + f.startingHole + "</span>" +
+          "</div>" +
+          '<div class="flight-players">';
+        f.players.forEach(function (name) {
+          var isMatch = q && name.toLowerCase().indexOf(q) !== -1;
+          html += '<div class="flight-player-row' + (isMatch ? " player-match" : "") + '">' +
+            '<span class="fp-name">' + esc(name) + "</span>" +
+            '<span class="div-chip">' + esc(divisionForPlayer(name)) + "</span>" +
+          "</div>";
+        });
+        html += "</div></div>";
+      });
+      html += "</div>";
+
+      document.getElementById("flights-results").innerHTML = html;
+    }
+
+    searchInput.addEventListener("input", function () {
+      renderFlights(searchInput.value);
+    });
+
+    renderFlights("");
   }
 
   /* ---------------- SHARED UI HELPERS ---------------- */
@@ -371,7 +440,8 @@
   document.addEventListener("DOMContentLoaded", function () {
     initTabs();
     buildRoster();
+    buildFlights();
     buildDay1();
-    buildDay2();
+    buildFinal();
   });
 })();

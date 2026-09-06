@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>National Finals Results (Test) — WAGC Philippines 2026</title>
+  <title>2026 WAGC Philippines National Finals — Player Hub (Test)</title>
   <meta name="robots" content="noindex,nofollow,noarchive">
   <meta name="googlebot" content="noindex,nofollow,noarchive">
 
@@ -25,6 +25,7 @@
       --gray:  #6B7280;
       --green: #1E7A46;
       --red:   #B4232C;
+      --viber: #7360F2;
       --font-head: 'Barlow Condensed', sans-serif;
       --font-body: 'Barlow', sans-serif;
     }
@@ -43,10 +44,15 @@
       text-transform: uppercase;
       cursor: pointer;
       border: none;
+      border-radius: 6px;
       transition: background 0.2s, color 0.2s;
     }
     .btn-gold { background: var(--gold); color: var(--navy); }
     .btn-gold:hover { background: var(--gold2); }
+    .btn-block { display: block; width: 100%; text-align: center; }
+    .btn-lg { padding: 14px 22px; font-size: 0.9rem; min-height: 48px; }
+    .btn-outline-navy { background: transparent; color: var(--navy); border: 1.5px solid var(--navy); }
+    .btn-outline-navy:hover { background: var(--navy); color: var(--white); }
 
     /* ── NAV ── */
     nav {
@@ -164,6 +170,15 @@
       font-size: 0.95rem;
       letter-spacing: 0.02em;
     }
+    .hero-subheading {
+      margin-top: 10px;
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
 
     /* ── TABS ── */
     .nf-tabs-wrap {
@@ -183,11 +198,11 @@
     }
     .nf-tab {
       flex: 1 1 0;
-      min-width: 130px;
+      min-width: 100px;
       background: none;
       border: none;
       cursor: pointer;
-      padding: 16px 12px;
+      padding: 16px 10px;
       font-family: var(--font-head);
       font-size: 0.95rem;
       font-weight: 800;
@@ -199,7 +214,7 @@
       white-space: nowrap;
     }
     .nf-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
-    .nf-tab i { margin-right: 6px; color: var(--gold); }
+    .nf-tab i { margin-right: 5px; color: var(--gold); }
 
     /* ── CONTENT ── */
     .nf-content {
@@ -224,6 +239,120 @@
       color: var(--gray);
       margin-bottom: 20px;
     }
+
+    /* ── VIBER CALLOUT ── */
+    .viber-card {
+      background: var(--navy);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-left: 4px solid var(--viber);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .viber-card-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .viber-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: var(--viber);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .viber-card-title {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+    .viber-card p { color: #cdd6e4; font-size: 0.9rem; line-height: 1.6; }
+    .btn-viber {
+      background: var(--viber);
+      color: var(--white);
+    }
+    .btn-viber:hover { background: #5f4fd6; }
+    .btn-viber i { margin-right: 8px; }
+
+    /* ── INFO SECTIONS ── */
+    .info-section { margin-bottom: 32px; }
+    .info-section-title {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 16px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .info-item {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .info-item .label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--gray); margin-bottom: 6px; }
+    .info-item .value { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--navy); }
+
+    .card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid #e5e9f0;
+    }
+    .card h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .card p { font-size: 0.9rem; color: #4b5666; line-height: 1.7; margin-bottom: 14px; }
+    .key-info-list { list-style: none; margin: 14px 0 0; display: flex; flex-direction: column; gap: 8px; }
+    .key-info-list li {
+      font-size: 0.87rem;
+      color: #374151;
+      line-height: 1.6;
+      padding-left: 18px;
+      position: relative;
+    }
+    .key-info-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .official-comm-card {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 22px;
+      text-align: center;
+    }
+    .official-comm-card .info-section-title { color: var(--gold); border: none; padding-bottom: 0; margin-bottom: 10px; }
+    .official-comm-card p { color: #cdd6e4; font-size: 0.9rem; line-height: 1.7; max-width: 520px; margin: 0 auto 16px; }
 
     /* ── TOOLBAR: filter pills + search ── */
     .toolbar {
@@ -279,6 +408,22 @@
       padding: 10px 0;
     }
 
+    /* ── SAMPLE DATA BANNER (flights) ── */
+    .sample-banner {
+      background: #FFF8E7;
+      border: 1px dashed #d9b84a;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #6b5300;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .sample-banner i { color: var(--gold2); margin-right: 6px; }
+
     /* ── DIVISION BLOCKS ── */
     .division-block { margin-bottom: 36px; }
     .division-heading {
@@ -308,6 +453,20 @@
       font-weight: 900;
       border-radius: 6px;
     }
+    .div-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 900;
+      border-radius: 4px;
+    }
 
     /* ── DESKTOP TABLE ── */
     .nf-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -327,7 +486,7 @@
     .nf-table .pos-cell { font-family: var(--font-head); font-weight: 900; font-size: 1rem; color: var(--navy); }
     .nf-table .net-cell { font-weight: 800; color: var(--navy); }
     .leader-row { background: #FFF8E7 !important; }
-    .leader-icon { color: var(--gold); font-size: 0.85rem; }
+    .leader-icon { color: var(--gold); font-size: 0.8rem; }
     .adj-pos { color: var(--red); font-weight: 700; }
     .adj-neg { color: var(--green); font-weight: 700; }
     .adj-zero { color: var(--gray); font-weight: 700; }
@@ -362,6 +521,55 @@
     .stat-highlight .stat-value { color: var(--navy); text-decoration: underline 2px var(--gold); text-underline-offset: 3px; }
 
     .empty-state { color: var(--gray); font-size: 0.9rem; padding: 24px 0; text-align: center; }
+
+    /* ── FLIGHT CARDS ── */
+    .flight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .flight-card {
+      background: var(--light);
+      border-radius: 10px;
+      border-left: 4px solid var(--navy);
+      padding: 14px 16px;
+    }
+    .flight-card.flight-match { border-left-color: var(--gold); background: #FFF8E7; }
+    .flight-card-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #dde3ec;
+    }
+    .flight-card-head .flight-num {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--navy);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .flight-card-head .flight-meta {
+      font-size: 0.82rem;
+      color: var(--gray);
+      font-weight: 600;
+    }
+    .flight-players { display: flex; flex-direction: column; gap: 7px; }
+    .flight-player-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: #374151;
+      padding: 4px 6px;
+      border-radius: 6px;
+    }
+    .flight-player-row.player-match { background: #FFF1C2; font-weight: 700; color: var(--navy); }
+    .flight-player-row .fp-name { font-weight: 600; }
+    .flight-player-row.player-match .fp-name { font-weight: 800; }
 
     /* ── LOCKED PANEL ── */
     .locked-panel {
@@ -425,10 +633,16 @@
 
       .nf-table-desktop { display: none; }
       .nf-cards-mobile { display: block; }
+
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .flight-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
       .nf-card-stats { grid-template-columns: repeat(2, 1fr); }
-      .nf-tab { font-size: 0.82rem; padding: 14px 8px; min-width: 110px; }
+      .nf-tab { font-size: 0.78rem; padding: 14px 6px; min-width: 82px; }
+      .nf-tab i { margin-right: 3px; }
+      .info-grid { grid-template-columns: 1fr 1fr; }
+      .btn-viber.btn-lg { width: 100%; }
     }
   </style>
 </head>
@@ -467,37 +681,112 @@
   <h1>2026 WAGC Philippines National Finals</h1>
   <div class="hero-venue">Caliraya Golf &amp; Country Club</div>
   <div class="hero-dates">September 11–12, 2026</div>
-  <div class="disclaimer-line">This page contains simulated player and scoring data for testing purposes only. These are not official tournament results.</div>
+  <div class="hero-subheading">Player Information &amp; Results</div>
+  <div class="disclaimer-line">This page contains simulated player, flight, and scoring data for testing purposes only. These are not official tournament records.</div>
 </div>
 
 <!-- ── TABS ── -->
 <div class="nf-tabs-wrap">
   <div class="nf-tabs" id="nf-tabs">
-    <button class="nf-tab active" data-tab="roster"><i class="fas fa-users"></i>Player Roster</button>
-    <button class="nf-tab" data-tab="day1"><i class="fas fa-golf-ball-tee"></i>Day 1 Results</button>
-    <button class="nf-tab" data-tab="day2"><i class="fas fa-trophy"></i>Day 2 / Final</button>
+    <button class="nf-tab active" data-tab="info"><i class="fas fa-circle-info"></i>Info</button>
+    <button class="nf-tab" data-tab="roster"><i class="fas fa-users"></i>Roster</button>
+    <button class="nf-tab" data-tab="flights"><i class="fas fa-list-ol"></i>Flights</button>
+    <button class="nf-tab" data-tab="day1"><i class="fas fa-golf-ball-tee"></i>Day 1</button>
+    <button class="nf-tab" data-tab="final"><i class="fas fa-trophy"></i>Final</button>
   </div>
 </div>
 
 <!-- ── CONTENT ── -->
 <div class="nf-content">
 
-  <div class="nf-panel active" id="roster-panel-outer">
+  <!-- INFO -->
+  <div class="nf-panel active" id="info-panel-outer">
+
+    <div class="viber-card">
+      <div class="viber-card-head">
+        <div class="viber-icon"><i class="fab fa-viber"></i></div>
+        <div class="viber-card-title">For Live Tournament Updates</div>
+      </div>
+      <p>Join the Official WAGC Philippines National Finals Viber Group for announcements, schedule updates, player notices, and important tournament information.</p>
+      <a href="https://invite.viber.com/?g=auPwh6ZKGVd5Oy-SuwdaEpBvelWTywGB" target="_blank" rel="noopener noreferrer" class="btn btn-viber btn-lg btn-block">
+        <i class="fab fa-viber"></i>Join Official Viber Group
+      </a>
+    </div>
+
+    <div class="info-section">
+      <div class="info-section-title">Event Information</div>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="label">Venue</div>
+          <div class="value">Caliraya Golf &amp; Country Club</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Dates</div>
+          <div class="value">Sep 11–12, 2026</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Format</div>
+          <div class="value">Net Stroke Play</div>
+        </div>
+        <div class="info-item">
+          <div class="label">Divisions</div>
+          <div class="value">A / B / C / D / E</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section">
+      <div class="info-section-title">Tournament Conditions</div>
+      <div class="card">
+        <p>Players are responsible for reviewing the official tournament conditions prior to play.</p>
+        <ul class="key-info-list">
+          <li>Net Stroke Play</li>
+          <li>Five handicap divisions: A–E</li>
+          <li>Day 1 handicap adjustments may apply for Day 2</li>
+          <li>Divisions remain fixed throughout the tournament</li>
+          <li>Divisions D &amp; E are subject to the tournament's Double Par rule</li>
+        </ul>
+        <br>
+        <a href="../../2026-NF-Tournament-Conditions.html" class="btn btn-outline-navy btn-lg btn-block">View Tournament Conditions</a>
+      </div>
+    </div>
+
+    <div class="official-comm-card">
+      <div class="info-section-title">Official Tournament Communication</div>
+      <p>For live announcements, schedule changes, player notices, and tournament-day updates, please join the Official WAGC Philippines National Finals Viber Group.</p>
+      <a href="https://invite.viber.com/?g=auPwh6ZKGVd5Oy-SuwdaEpBvelWTywGB" target="_blank" rel="noopener noreferrer" class="btn btn-viber btn-lg">
+        <i class="fab fa-viber"></i>Join Viber Group
+      </a>
+    </div>
+
+  </div>
+
+  <!-- ROSTER -->
+  <div class="nf-panel" id="roster-panel-outer">
     <div class="panel-heading">Player Roster</div>
     <div class="panel-subtext">All confirmed National Finals participants, grouped by division.</div>
     <div id="roster-panel"></div>
   </div>
 
+  <!-- FLIGHTS -->
+  <div class="nf-panel" id="flights-panel-outer">
+    <div class="panel-heading">Flight Schedule</div>
+    <div class="panel-subtext">Find your flight, tee time, and starting hole.</div>
+    <div id="flights-panel"></div>
+  </div>
+
+  <!-- DAY 1 -->
   <div class="nf-panel" id="day1-panel-outer">
     <div class="panel-heading">Day 1 Results</div>
     <div class="panel-subtext">Ranked within each division by lowest Day 1 Net score.</div>
     <div id="day1-panel"></div>
   </div>
 
-  <div class="nf-panel" id="day2-panel-outer">
+  <!-- FINAL -->
+  <div class="nf-panel" id="final-panel-outer">
     <div class="panel-heading">Day 2 / Final Results</div>
     <div class="panel-subtext">Ranked within each division by lowest 2-Day Net Total.</div>
-    <div id="day2-panel"></div>
+    <div id="final-panel"></div>
   </div>
 
 </div>
@@ -519,6 +808,7 @@
 
 <script src="config.js"></script>
 <script src="data.js"></script>
+<script src="flights.js"></script>
 <script src="app.js"></script>
 <script>
   if (window.NF_CONFIG && !window.NF_CONFIG.isTestData) {
