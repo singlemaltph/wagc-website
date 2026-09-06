@@ -20,6 +20,28 @@
    Replace DAY1_FLIGHTS with the real pairing sheet when it is ready; the
    Day 2 generation and the Flights tab rendering in app.js do not need to
    change.
+
+   IMPORTANT — NOT IMPLEMENTED YET: real Day 2 pairing rule.
+   The course-swap generation below (DAY2_FLIGHTS) is a TEST-ONLY stand-in
+   used to exercise the UI. It is intentionally NOT shown publicly — see
+   config.js's day2FlightsPublished flag and app.js's buildFlights(), which
+   renders a "not yet announced" locked card for Day 2 until that flag is
+   turned on.
+
+   The real Day 2 schedule must instead be generated AFTER Day 1 is
+   complete, using Day 1 standings, not a simple course swap of Day 1
+   pairings:
+     - Pair players within their division according to Day 1 ranking.
+     - The leading players tee off later in the Day 2 sequence.
+     - Per division, working backward from the last flight:
+         last flight        = positions 1-4 (the leaders)
+         preceding flight   = positions 5-8
+         preceding flight   = positions 9-12
+         ...continue backward through the standings
+     - This competitive-ranking rule takes priority over the Day 1
+       ladies-pairing preference.
+   Do not guess or publish real Day 2 pairings before that generator is
+   built and Day 1 has actually finished.
    ========================================================================== */
 (function () {
   "use strict";

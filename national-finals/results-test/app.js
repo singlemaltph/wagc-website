@@ -242,13 +242,13 @@
   function buildFinal() {
     var wrap = document.getElementById("final-panel");
 
-    if (!config.day2Published) {
+    if (!config.finalResultsPublished) {
       wrap.innerHTML =
         '<div class="locked-panel">' +
           '<i class="fas fa-trophy locked-icon"></i>' +
           "<h3>FINAL RESULTS</h3>" +
-          "<p>Results will be published following the<br>2026 WAGC Philippines National Finals<br>Awards Ceremony.</p>" +
-          '<p class="locked-highlight">The winners will be revealed during awarding.</p>' +
+          "<p>Final results will be announced after the Awards Ceremony.</p>" +
+          '<p class="locked-highlight">Official results will be published following the awarding.</p>' +
         "</div>";
       return;
     }
@@ -341,7 +341,7 @@
         '<button type="button" class="pill" data-day="day2">Day 2</button>' +
       "</div>" +
       '<div class="course-rotation-note" id="course-rotation-note"></div>' +
-      '<div class="toolbar">' +
+      '<div class="toolbar" id="flights-toolbar">' +
         '<div class="search-box">' +
           '<i class="fas fa-search"></i>' +
           '<input type="search" id="flight-search" placeholder="Find your flight — search your name..." aria-label="Search for a player to find their flight" />' +
@@ -350,6 +350,7 @@
       '<div id="flights-results"></div>';
 
     var searchInput = document.getElementById("flight-search");
+    var toolbar = document.getElementById("flights-toolbar");
     var state = { day: "day1", query: "" };
 
     function renderRotationNote() {
@@ -362,7 +363,24 @@
       document.getElementById("course-rotation-note").innerHTML = html;
     }
 
+    /* Day 2 flight pairings do not exist yet — they can only be built after
+       Day 1 is complete, using Day 1 standings (see the pairing rule
+       documented in flights.js). Nothing about actual Day 2 pairings or
+       tee times may render here until config.day2FlightsPublished is true. */
     function renderFlights() {
+      if (state.day === "day2" && !config.day2FlightsPublished) {
+        toolbar.hidden = true;
+        document.getElementById("flights-results").innerHTML =
+          '<div class="locked-panel">' +
+            '<i class="fas fa-lock locked-icon"></i>' +
+            "<h3>DAY 2 FLIGHT SCHEDULE</h3>" +
+            "<p>Day 2 flight pairings and tee times will be announced after the completion of Day 1.</p>" +
+            '<p class="locked-highlight">Please check back after Day 1 results have been finalized.</p>' +
+          "</div>";
+        return;
+      }
+      toolbar.hidden = false;
+
       var q = state.query.trim().toLowerCase();
       var all = flightsByDay[state.day] || [];
       var list = all;
