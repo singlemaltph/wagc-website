@@ -3,13 +3,9 @@
 
   var DIVISIONS = ["A", "B", "C", "D", "E"];
   var players = window.NF_PLAYERS || [];
-  var flights = window.NF_FLIGHTS || [];
+  var flightsByDay = window.NF_FLIGHTS || { day1: [], day2: [] };
+  var courseRotation = window.NF_COURSE_ROTATION || { day1: [], day2: [] };
   var config = window.NF_CONFIG || {};
-
-  function divisionForPlayer(name) {
-    var match = players.filter(function (p) { return p.name === name; })[0];
-    return match ? match.division : "-";
-  }
 
   function formatSigned(n) {
     if (n > 0) return "+" + n;
@@ -339,7 +335,12 @@
     var wrap = document.getElementById("flights-panel");
 
     wrap.innerHTML =
-      '<div class="sample-banner"><i class="fas fa-flask-vial"></i>SAMPLE FLIGHT DATA — FOR TESTING ONLY</div>' +
+      '<div class="sample-banner"><i class="fas fa-flask-vial"></i>SAMPLE FLIGHT DATA — FOR TESTING ONLY<br><span class="sample-banner-sub">Tee times and pairings shown here are simulated and are not official tournament assignments.</span></div>' +
+      '<div class="day-select" id="flights-day-select">' +
+        '<button type="button" class="pill active" data-day="day1">Day 1</button>' +
+        '<button type="button" class="pill" data-day="day2">Day 2</button>' +
+      "</div>" +
+      '<div class="course-rotation-note" id="course-rotation-note"></div>' +
       '<div class="toolbar">' +
         '<div class="search-box">' +
           '<i class="fas fa-search"></i>' +
@@ -349,14 +350,26 @@
       '<div id="flights-results"></div>';
 
     var searchInput = document.getElementById("flight-search");
+    var state = { day: "day1", query: "" };
 
-    function renderFlights(query) {
-      var q = (query || "").trim().toLowerCase();
-      var list = flights;
+    function renderRotationNote() {
+      var rows = courseRotation[state.day] || [];
+      var label = state.day === "day1" ? "Day 1" : "Day 2";
+      var html = '<div class="course-rotation-title">' + label + " Course Rotation</div>";
+      rows.forEach(function (r) {
+        html += '<div class="course-rotation-row"><span>' + esc(r.divisions) + "</span><span>" + esc(r.course) + "</span></div>";
+      });
+      document.getElementById("course-rotation-note").innerHTML = html;
+    }
+
+    function renderFlights() {
+      var q = state.query.trim().toLowerCase();
+      var all = flightsByDay[state.day] || [];
+      var list = all;
 
       if (q) {
-        list = flights.filter(function (f) {
-          return f.players.some(function (name) { return name.toLowerCase().indexOf(q) !== -1; });
+        list = all.filter(function (f) {
+          return f.players.some(function (pl) { return pl.name.toLowerCase().indexOf(q) !== -1; });
         });
       }
 
@@ -367,18 +380,20 @@
 
       var html = '<div class="flight-grid">';
       list.forEach(function (f) {
-        var hasMatch = q && f.players.some(function (name) { return name.toLowerCase().indexOf(q) !== -1; });
+        var flightNumber = all.indexOf(f) + 1;
+        var hasMatch = q && f.players.some(function (pl) { return pl.name.toLowerCase().indexOf(q) !== -1; });
         html += '<div class="flight-card' + (hasMatch ? " flight-match" : "") + '">' +
           '<div class="flight-card-head">' +
-            '<span class="flight-num">Flight ' + f.flightNumber + "</span>" +
+            '<span class="flight-num">Flight ' + flightNumber + "</span>" +
             '<span class="flight-meta">' + esc(f.teeTime) + " · Hole " + f.startingHole + "</span>" +
           "</div>" +
+          '<div class="flight-course">' + esc(f.course) + "</div>" +
           '<div class="flight-players">';
-        f.players.forEach(function (name) {
-          var isMatch = q && name.toLowerCase().indexOf(q) !== -1;
+        f.players.forEach(function (pl) {
+          var isMatch = q && pl.name.toLowerCase().indexOf(q) !== -1;
           html += '<div class="flight-player-row' + (isMatch ? " player-match" : "") + '">' +
-            '<span class="fp-name">' + esc(name) + "</span>" +
-            '<span class="div-chip">' + esc(divisionForPlayer(name)) + "</span>" +
+            '<span class="fp-name">' + esc(pl.name) + "</span>" +
+            '<span class="div-chip">' + esc(pl.division) + "</span>" +
           "</div>";
         });
         html += "</div></div>";
@@ -388,11 +403,26 @@
       document.getElementById("flights-results").innerHTML = html;
     }
 
-    searchInput.addEventListener("input", function () {
-      renderFlights(searchInput.value);
+    document.getElementById("flights-day-select").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-day]");
+      if (!btn) return;
+      state.day = btn.getAttribute("data-day");
+      state.query = "";
+      searchInput.value = "";
+      document.querySelectorAll("#flights-day-select .pill").forEach(function (p) {
+        p.classList.toggle("active", p === btn);
+      });
+      renderRotationNote();
+      renderFlights();
     });
 
-    renderFlights("");
+    searchInput.addEventListener("input", function () {
+      state.query = searchInput.value;
+      renderFlights();
+    });
+
+    renderRotationNote();
+    renderFlights();
   }
 
   /* ---------------- SHARED UI HELPERS ---------------- */

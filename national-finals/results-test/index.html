@@ -423,6 +423,43 @@
       text-align: center;
     }
     .sample-banner i { color: var(--gold2); margin-right: 6px; }
+    .sample-banner-sub {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+      color: #7a6212;
+    }
+
+    /* ── FLIGHTS: DAY SELECT + COURSE ROTATION ── */
+    .day-select { display: flex; gap: 8px; margin-bottom: 16px; }
+    .day-select .pill { flex: 1 1 0; text-align: center; min-height: 46px; font-size: 0.9rem; }
+    .course-rotation-note {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+    }
+    .course-rotation-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .course-rotation-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #4b5666;
+      padding: 3px 0;
+    }
+    .course-rotation-row span:first-child { font-weight: 700; color: var(--navy); }
 
     /* ── DIVISION BLOCKS ── */
     .division-block { margin-bottom: 36px; }
@@ -539,9 +576,17 @@
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 2px;
       padding-bottom: 8px;
       border-bottom: 1px solid #dde3ec;
+    }
+    .flight-course {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: 10px;
     }
     .flight-card-head .flight-num {
       font-family: var(--font-head);
