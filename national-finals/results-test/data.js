@@ -1,76 +1,180 @@
 /* ==========================================================================
-   NATIONAL FINALS — TEST / MOCK PLAYER DATA
+   NATIONAL FINALS — CURRENT PLAYER ROSTER
    --------------------------------------------------------------------------
-   This file is intentionally separate from the page markup/logic so it can
-   later be swapped out for a live feed generated from the NF Scoring
-   Google Sheet without touching index.html or app.js.
+   This is the REAL, current National Finals player roster, sourced from
+   the "Players" tab of the private "2026 WAGC NF Scoring" Google Sheet
+   (NOT the "Test Players" tab). It is a sanitized, PUBLIC-SAFE snapshot —
+   only fields appropriate for public display are included below.
 
-   THIS IS TEST DATA — used to stress-test the page before the real
-   tournament. Replace the contents of NF_PLAYERS with the live roster when
-   ready, and see config.js for the publication flags that control what is
-   shown to the public.
+   Fields deliberately EXCLUDED (present in the private sheet, never to be
+   committed here): Player ID, WHS ID, WHS Index (raw), TEE, Palmer/Marsh
+   Course HCP, Notes, Source/Reference, ROSTER STATUS, or any other
+   internal/administrative column. This repository is public — GitHub and
+   this file are readable by anyone regardless of any publication flag, so
+   nothing internal belongs here even if the UI never renders it.
+
+   This roster snapshot is separate from Day 1/Final SCORING data on
+   purpose: scoring/results remain TEST DATA under the existing publishing
+   workflow (see config.js + PUBLISHING_WORKFLOW.md) and live in
+   test-scores.js as window.NF_TEST_SCORES, using a fictitious set of
+   players. Do NOT merge real roster entries with fake scores.
 
    Field reference:
-     name         - player full name
-     division     - "A" | "B" | "C" | "D" | "E"
-     index        - WHS Handicap Index
-     day1Complete - true once this player's Day 1 score has been received
-                    AND verified. Players are only ranked on the public
-                    Day 1 leaderboard when this is true (see app.js
-                    buildDay1) — this is what lets the leaderboard fill in
-                    progressively during Day 1 instead of an all-or-nothing
-                    publish. All test rows below are true; flip one to
-                    false locally to test the "Pending" state, but do not
-                    commit that change.
-     day1Hcp      - Day 1 Course Handicap
-     day1Gross    - Day 1 gross score
-     day1Net      - Day 1 net score (day1Gross - day1Hcp)
-     adjustment   - handicap adjustment applied after Day 1
-     day2Hcp      - Day 2 Course Handicap
-     day2Gross    - Day 2 gross score
-     day2Net      - Day 2 net score (day2Gross - day2Hcp)
-     finalNet     - 2-day net total (day1Net + day2Net)
+     name           - player full name, as entered in the Players tab
+     division       - "A" | "B" | "C" | "D" | "E" | "PENDING"
+                       ("PENDING" = division not yet assigned in the sheet;
+                       never guessed/derived here — taken as-is from the
+                       sheet's DIV column being blank)
+     tournamentIndex - the sheet's "Low Index": the index used for
+                       National Finals division placement. Labeled
+                       "Tournament Index" in the UI. null when the sheet's
+                       Low Index is itself blank/PENDING/Unknown (all such
+                       cases are currently PENDING-division players) — this
+                       is never fabricated.
+     day1CourseHcp   - the sheet's "Day 1 Course HCP". null when not yet
+                       finalized in the sheet (currently blank for every
+                       player) — the UI renders this as "—", never a
+                       made-up number.
 
-   Do NOT add WHS ID, player ID, email, phone, or internal notes here —
-   this file is loaded directly by the public results page.
-
-   TIE-BREAK NOTE: `position` shown on the public leaderboard is computed
-   here client-side by ascending Day1Net/finalNet with an alphabetical
-   fallback — that is a TEST-ONLY placeholder, NOT the official National
-   Finals tie-break rule. See PUBLISHING_WORKFLOW.md for the official
-   count-back sequence. In production, the private scoring workbook should
-   apply that official tie-break and hand this file an already-resolved
-   `position`/ranking rather than have the website recompute it — this
-   avoids inconsistent results and avoids exposing hole-by-hole scorecards
-   publicly.
+   To refresh: re-pull the Players tab, re-run the same sanitization
+   (drop every column above, sort A→E→PENDING then alphabetical by name),
+   and replace the array below. Do not hand-edit scores or divisions here
+   — the sheet is the source of truth.
    ========================================================================== */
 window.NF_PLAYERS = [
-  { name: "RONALD ANDAL",          division: "B", index: 10.0, day1Complete: true, day1Hcp: 9,  day1Gross: 83,  day1Net: 74, adjustment: 0,  day2Hcp: 8,  day2Gross: 86,  day2Net: 78, finalNet: 152 },
-  { name: "TAE UK KIM",            division: "B", index: 10.0, day1Complete: true, day1Hcp: 9,  day1Gross: 87,  day1Net: 78, adjustment: 1,  day2Hcp: 9,  day2Gross: 77,  day2Net: 68, finalNet: 146 },
-  { name: "GREG REYES",            division: "C", index: 11.6, day1Complete: true, day1Hcp: 11, day1Gross: 76,  day1Net: 65, adjustment: -3, day2Hcp: 7,  day2Gross: 80,  day2Net: 73, finalNet: 138 },
-  { name: "ERWIN PABKALINAWAN",    division: "C", index: 13.0, day1Complete: true, day1Hcp: 13, day1Gross: 79,  day1Net: 66, adjustment: -3, day2Hcp: 9,  day2Gross: 78,  day2Net: 69, finalNet: 135 },
-  { name: "ROMMEL MARIANO",        division: "C", index: 13.3, day1Complete: true, day1Hcp: 13, day1Gross: 83,  day1Net: 70, adjustment: -1, day2Hcp: 11, day2Gross: 80,  day2Net: 69, finalNet: 139 },
-  { name: "ALVIN HIPOLITO",        division: "C", index: 14.6, day1Complete: true, day1Hcp: 15, day1Gross: 86,  day1Net: 71, adjustment: -1, day2Hcp: 12, day2Gross: 87,  day2Net: 75, finalNet: 146 },
-  { name: "RAYMOND PALOMARES",     division: "C", index: 13.2, day1Complete: true, day1Hcp: 13, day1Gross: 91,  day1Net: 78, adjustment: 1,  day2Hcp: 13, day2Gross: 91,  day2Net: 78, finalNet: 156 },
-  { name: "EDGARDO BROCAL",        division: "C", index: 15.3, day1Complete: true, day1Hcp: 15, day1Gross: 94,  day1Net: 79, adjustment: 1,  day2Hcp: 15, day2Gross: 96,  day2Net: 81, finalNet: 160 },
-  { name: "ED ESGUERRA",           division: "D", index: 16.1, day1Complete: true, day1Hcp: 16, day1Gross: 74,  day1Net: 58, adjustment: -6, day2Hcp: 9,  day2Gross: 83,  day2Net: 74, finalNet: 132 },
-  { name: "JEROME CHUA",           division: "D", index: 16.5, day1Complete: true, day1Hcp: 17, day1Gross: 88,  day1Net: 71, adjustment: -1, day2Hcp: 15, day2Gross: 87,  day2Net: 72, finalNet: 143 },
-  { name: "MICHAELO PALANCA",      division: "D", index: 20.1, day1Complete: true, day1Hcp: 21, day1Gross: 95,  day1Net: 74, adjustment: 0,  day2Hcp: 20, day2Gross: 98,  day2Net: 78, finalNet: 152 },
-  { name: "ANDRO SERVIENTO",       division: "D", index: 19.6, day1Complete: true, day1Hcp: 20, day1Gross: 95,  day1Net: 75, adjustment: 0,  day2Hcp: 19, day2Gross: 93,  day2Net: 74, finalNet: 149 },
-  { name: "CESAR AREZA",           division: "D", index: 18.2, day1Complete: true, day1Hcp: 19, day1Gross: 94,  day1Net: 75, adjustment: 0,  day2Hcp: 17, day2Gross: 99,  day2Net: 82, finalNet: 157 },
-  { name: "BENSON SO",             division: "D", index: 19.8, day1Complete: true, day1Hcp: 20, day1Gross: 98,  day1Net: 78, adjustment: 1,  day2Hcp: 20, day2Gross: 101, day2Net: 81, finalNet: 159 },
-  { name: "LEO JOAB DE CASTRO",    division: "D", index: 16.3, day1Complete: true, day1Hcp: 16, day1Gross: 95,  day1Net: 79, adjustment: 1,  day2Hcp: 16, day2Gross: 87,  day2Net: 71, finalNet: 150 },
-  { name: "VICTOR FRIAS",          division: "D", index: 19.2, day1Complete: true, day1Hcp: 20, day1Gross: 116, day1Net: 96, adjustment: 3,  day2Hcp: 22, day2Gross: 102, day2Net: 80, finalNet: 176 },
-  { name: "ROSSETTE REYES",        division: "E", index: 27.4, day1Complete: true, day1Hcp: 29, day1Gross: 93,  day1Net: 64, adjustment: -4, day2Hcp: 24, day2Gross: 96,  day2Net: 72, finalNet: 136 },
-  { name: "ROY JAVIER",            division: "E", index: 22.0, day1Complete: true, day1Hcp: 23, day1Gross: 91,  day1Net: 68, adjustment: -2, day2Hcp: 20, day2Gross: 87,  day2Net: 67, finalNet: 135 },
-  { name: "NICK REYES",            division: "E", index: 24.0, day1Complete: true, day1Hcp: 25, day1Gross: 94,  day1Net: 69, adjustment: -2, day2Hcp: 22, day2Gross: 94,  day2Net: 72, finalNet: 141 },
-  { name: "OLIVER BALITA",         division: "E", index: 22.3, day1Complete: true, day1Hcp: 23, day1Gross: 94,  day1Net: 71, adjustment: -1, day2Hcp: 21, day2Gross: 101, day2Net: 80, finalNet: 151 },
-  { name: "JOHN RODOLF RABINO",    division: "E", index: 22.1, day1Complete: true, day1Hcp: 23, day1Gross: 99,  day1Net: 76, adjustment: 0,  day2Hcp: 22, day2Gross: 99,  day2Net: 77, finalNet: 153 },
-  { name: "JENNISON MACARAIG",     division: "E", index: 30.6, day1Complete: true, day1Hcp: 32, day1Gross: 113, day1Net: 81, adjustment: 2,  day2Hcp: 33, day2Gross: 111, day2Net: 78, finalNet: 159 },
-  { name: "MARK JASON VILLAMOR",   division: "E", index: 27.2, day1Complete: true, day1Hcp: 29, day1Gross: 111, day1Net: 82, adjustment: 2,  day2Hcp: 30, day2Gross: 108, day2Net: 78, finalNet: 160 },
-  { name: "ARIS NATIVIDAD",        division: "E", index: 21.7, day1Complete: true, day1Hcp: 22, day1Gross: 106, day1Net: 84, adjustment: 2,  day2Hcp: 23, day2Gross: 98,  day2Net: 75, finalNet: 159 },
-  { name: "MARIA RICA BALTAZAR",   division: "B", index: 9.4,  day1Complete: true, day1Hcp: 9,  day1Gross: 81,  day1Net: 72, adjustment: 0,  day2Hcp: 8,  day2Gross: 82,  day2Net: 74, finalNet: 146 },
-  { name: "VICE MILBERT OLIVEROS", division: "C", index: 10.7, day1Complete: true, day1Hcp: 10, day1Gross: 85,  day1Net: 75, adjustment: 0,  day2Hcp: 9,  day2Gross: 88,  day2Net: 79, finalNet: 154 },
-  { name: "VLADIMIR VIC FRIAS",    division: "D", index: 19.2, day1Complete: true, day1Hcp: 20, day1Gross: 89,  day1Net: 69, adjustment: -2, day2Hcp: 17, day2Gross: 88,  day2Net: 71, finalNet: 140 },
-  { name: "DENNIS BALTAZAR",       division: "D", index: 18.4, day1Complete: true, day1Hcp: 19, day1Gross: 111, day1Net: 92, adjustment: 3,  day2Hcp: 21, day2Gross: 97,  day2Net: 76, finalNet: 168 }
+  { name: "GERARDO DE CHAVEZ", division: "A", tournamentIndex: 5.1, day1CourseHcp: null },
+  { name: "Ian Davin Rosales", division: "A", tournamentIndex: 1.7, day1CourseHcp: null },
+  { name: "John Paul Gutierrez", division: "A", tournamentIndex: 4.9, day1CourseHcp: null },
+  { name: "Randy Sulpico Someros", division: "A", tournamentIndex: 4.3, day1CourseHcp: null },
+  { name: "Raymund James Lachica", division: "A", tournamentIndex: 3.9, day1CourseHcp: null },
+  { name: "Richard (Ricky) Delos Santos", division: "A", tournamentIndex: 4.9, day1CourseHcp: null },
+  { name: "Clover Arangote", division: "B", tournamentIndex: 9.9, day1CourseHcp: null },
+  { name: "Elvin Panliboton", division: "B", tournamentIndex: 7.5, day1CourseHcp: null },
+  { name: "Eugene Unabia", division: "B", tournamentIndex: 7.4, day1CourseHcp: null },
+  { name: "Htein Lin Aung", division: "B", tournamentIndex: 9.3, day1CourseHcp: null },
+  { name: "Kevin Andre Montealto", division: "B", tournamentIndex: 8.8, day1CourseHcp: null },
+  { name: "Leo Gerald de Castro", division: "B", tournamentIndex: 7.3, day1CourseHcp: null },
+  { name: "Lyndon Theodore D Pamintuan", division: "B", tournamentIndex: 5.5, day1CourseHcp: null },
+  { name: "Ma Victoria Herrera", division: "B", tournamentIndex: 7.9, day1CourseHcp: null },
+  { name: "Mark stephen villegas", division: "B", tournamentIndex: 9.1, day1CourseHcp: null },
+  { name: "Mohd Yussof B Ishak", division: "B", tournamentIndex: 8.1, day1CourseHcp: null },
+  { name: "Neil Ruelan", division: "B", tournamentIndex: 6.8, day1CourseHcp: null },
+  { name: "Paolo Obaniana", division: "B", tournamentIndex: 10.4, day1CourseHcp: null },
+  { name: "Philip Ouano", division: "B", tournamentIndex: 5.8, day1CourseHcp: null },
+  { name: "Raymond Monterde Lazaro", division: "B", tournamentIndex: 9.0, day1CourseHcp: null },
+  { name: "Richard Lao", division: "B", tournamentIndex: 8.7, day1CourseHcp: null },
+  { name: "Roberto A.  Umali", division: "B", tournamentIndex: 10.3, day1CourseHcp: null },
+  { name: "Wendell Lucido", division: "B", tournamentIndex: 7.6, day1CourseHcp: null },
+  { name: "Albert Lasac", division: "C", tournamentIndex: 14.3, day1CourseHcp: null },
+  { name: "Albert Teoxon", division: "C", tournamentIndex: 14.4, day1CourseHcp: null },
+  { name: "Alvie G. Barrios", division: "C", tournamentIndex: 12.8, day1CourseHcp: null },
+  { name: "Audi Noel Capellan", division: "C", tournamentIndex: 11.3, day1CourseHcp: null },
+  { name: "Aung Kyaw Oo", division: "C", tournamentIndex: 10.6, day1CourseHcp: null },
+  { name: "Aurelio Marasigan S.", division: "C", tournamentIndex: 10.7, day1CourseHcp: null },
+  { name: "Benjamin Diaz Jr", division: "C", tournamentIndex: 14.4, day1CourseHcp: null },
+  { name: "Edmundo Barrios", division: "C", tournamentIndex: 12.8, day1CourseHcp: null },
+  { name: "Eric Nicholis Goetz", division: "C", tournamentIndex: 14.9, day1CourseHcp: null },
+  { name: "Espie espinosa", division: "C", tournamentIndex: 14.3, day1CourseHcp: null },
+  { name: "EXEQUIEL P. LONGARES", division: "C", tournamentIndex: 12.7, day1CourseHcp: null },
+  { name: "Gen Bonnevie", division: "C", tournamentIndex: 12.1, day1CourseHcp: null },
+  { name: "Gunal Kanna Moorthy Kannan", division: "C", tournamentIndex: 14.7, day1CourseHcp: null },
+  { name: "Jeter Clerigo", division: "C", tournamentIndex: 12.6, day1CourseHcp: null },
+  { name: "Jing Barretto", division: "C", tournamentIndex: 13.5, day1CourseHcp: null },
+  { name: "Joel Respeto", division: "C", tournamentIndex: 10.7, day1CourseHcp: null },
+  { name: "JOHN VICAR VALDEZ", division: "C", tournamentIndex: 11.0, day1CourseHcp: null },
+  { name: "Jose Panganiban, Jr", division: "C", tournamentIndex: 14.5, day1CourseHcp: null },
+  { name: "Juan Francisco V. Estevez Jr", division: "C", tournamentIndex: 12.4, day1CourseHcp: null },
+  { name: "Kristian Herrera", division: "C", tournamentIndex: 12.1, day1CourseHcp: null },
+  { name: "Malvin James Ching", division: "C", tournamentIndex: 12.9, day1CourseHcp: null },
+  { name: "Natasha Martina Bantug", division: "C", tournamentIndex: 11.4, day1CourseHcp: null },
+  { name: "Raymond dabao", division: "C", tournamentIndex: 11.1, day1CourseHcp: null },
+  { name: "Rodel T. Paderayon", division: "C", tournamentIndex: 15.1, day1CourseHcp: null },
+  { name: "Rogelio Ramirez", division: "C", tournamentIndex: 11.9, day1CourseHcp: null },
+  { name: "Rosven Lasac", division: "C", tournamentIndex: 14.5, day1CourseHcp: null },
+  { name: "Shaminder Singh Rahil", division: "C", tournamentIndex: 14.7, day1CourseHcp: null },
+  { name: "Tomas L Olfato", division: "C", tournamentIndex: 13.8, day1CourseHcp: null },
+  { name: "Vic Roel Ferrer", division: "C", tournamentIndex: 13.2, day1CourseHcp: null },
+  { name: "Victor Vital", division: "C", tournamentIndex: 11.8, day1CourseHcp: null },
+  { name: "Victoria Faurens", division: "C", tournamentIndex: 14.9, day1CourseHcp: null },
+  { name: "Abbhi Akshaya", division: "D", tournamentIndex: 17.8, day1CourseHcp: null },
+  { name: "Amor Laguilles", division: "D", tournamentIndex: 15.8, day1CourseHcp: null },
+  { name: "Andrew Tan", division: "D", tournamentIndex: 15.5, day1CourseHcp: null },
+  { name: "Ariel Araja", division: "D", tournamentIndex: 16.0, day1CourseHcp: null },
+  { name: "Arnel Marasigan S.", division: "D", tournamentIndex: 16.5, day1CourseHcp: null },
+  { name: "Augusto Anthony Buendia Jr.", division: "D", tournamentIndex: 15.8, day1CourseHcp: null },
+  { name: "Domingo Mestiola", division: "D", tournamentIndex: 17.4, day1CourseHcp: null },
+  { name: "generoso “gene” ponio", division: "D", tournamentIndex: 16.7, day1CourseHcp: null },
+  { name: "Glenda aguto", division: "D", tournamentIndex: 16.1, day1CourseHcp: null },
+  { name: "Hannah Bella Lazaro", division: "D", tournamentIndex: 19.4, day1CourseHcp: null },
+  { name: "Hoang Minh Duc", division: "D", tournamentIndex: 17.0, day1CourseHcp: null },
+  { name: "Janiree Dacles", division: "D", tournamentIndex: 19.1, day1CourseHcp: null },
+  { name: "Jasmine Velu", division: "D", tournamentIndex: 19.0, day1CourseHcp: null },
+  { name: "Jay Dizon", division: "D", tournamentIndex: 20.3, day1CourseHcp: null },
+  { name: "Joan Arangote", division: "D", tournamentIndex: 18.6, day1CourseHcp: null },
+  { name: "JOSEPH BARNIE (BANG) GUMALO", division: "D", tournamentIndex: 18.0, day1CourseHcp: null },
+  { name: "Kimberly Duenas", division: "D", tournamentIndex: 17.5, day1CourseHcp: null },
+  { name: "Marilyn L. Del Rosario", division: "D", tournamentIndex: 18.3, day1CourseHcp: null },
+  { name: "Mary Carlene Navarro", division: "D", tournamentIndex: 19.2, day1CourseHcp: null },
+  { name: "Meynard Gelindon", division: "D", tournamentIndex: 17.0, day1CourseHcp: null },
+  { name: "NELSON CHAN", division: "D", tournamentIndex: 16.0, day1CourseHcp: null },
+  { name: "Nicole Jennice Aguilar", division: "D", tournamentIndex: 17.4, day1CourseHcp: null },
+  { name: "Patricia Valencia", division: "D", tournamentIndex: 15.5, day1CourseHcp: null },
+  { name: "Peter Nacion", division: "D", tournamentIndex: 17.2, day1CourseHcp: null },
+  { name: "Raffy Tamayo", division: "D", tournamentIndex: 17.0, day1CourseHcp: null },
+  { name: "Rainier Sison", division: "D", tournamentIndex: 16.8, day1CourseHcp: null },
+  { name: "RICHARD DALILIS", division: "D", tournamentIndex: 16.2, day1CourseHcp: null },
+  { name: "Roy Amurao", division: "D", tournamentIndex: 17.8, day1CourseHcp: null },
+  { name: "Ruben Javier A.", division: "D", tournamentIndex: 20.2, day1CourseHcp: null },
+  { name: "VIRGILIO CADANG", division: "D", tournamentIndex: 18.1, day1CourseHcp: null },
+  { name: "Virgilio R. Villaescusa", division: "D", tournamentIndex: 17.4, day1CourseHcp: null },
+  { name: "Xavier Faurens", division: "D", tournamentIndex: 15.5, day1CourseHcp: null },
+  { name: "Yi Lwin", division: "D", tournamentIndex: 18.0, day1CourseHcp: null },
+  { name: "Agnes Priest", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Allen Macaraig", division: "E", tournamentIndex: 22.0, day1CourseHcp: null },
+  { name: "Amy Lauron", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Bogki Min", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "CEDRIC MARK URERA", division: "E", tournamentIndex: 23.5, day1CourseHcp: null },
+  { name: "Charito Lauron", division: "E", tournamentIndex: 25.5, day1CourseHcp: null },
+  { name: "Dennis Chavez Atienza", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Jan Kero Batallones", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Janelle Lim-Kanna", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Jayrold E. Bautista", division: "E", tournamentIndex: 22.3, day1CourseHcp: null },
+  { name: "Jenny Vi M.Paderayon", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Jericho Fullante", division: "E", tournamentIndex: 23.5, day1CourseHcp: null },
+  { name: "Johan wahlen pangilinan", division: "E", tournamentIndex: 23.6, day1CourseHcp: null },
+  { name: "Joseph Reylan Reyes", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Jt Trinidad", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Lorenzo A Javier", division: "E", tournamentIndex: 22.2, day1CourseHcp: null },
+  { name: "Lwin Min Paing", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Manolo Besa", division: "E", tournamentIndex: 23.1, day1CourseHcp: null },
+  { name: "Maria Barbara Kathleen L. Evangelista (Lynne)", division: "E", tournamentIndex: 24.5, day1CourseHcp: null },
+  { name: "Maritess Uy", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Melvin Alit Gialolo", division: "E", tournamentIndex: 24.4, day1CourseHcp: null },
+  { name: "Oliver Dela Cruz", division: "E", tournamentIndex: 22.3, day1CourseHcp: null },
+  { name: "Oliver James Matias", division: "E", tournamentIndex: 20.8, day1CourseHcp: null },
+  { name: "Owen Ajero Rosal", division: "E", tournamentIndex: 23.6, day1CourseHcp: null },
+  { name: "Pearl Grace Rodrigo Agdeppa", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Philip Martin Esteban", division: "E", tournamentIndex: 21.0, day1CourseHcp: null },
+  { name: "Ricardo Carpio III", division: "E", tournamentIndex: 22.7, day1CourseHcp: null },
+  { name: "Roberto Cruz Lazaro", division: "E", tournamentIndex: 21.9, day1CourseHcp: null },
+  { name: "Ronald Rezani", division: "E", tournamentIndex: 21.5, day1CourseHcp: null },
+  { name: "Rowena Victorino", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Rustico Ramirez", division: "E", tournamentIndex: 24.0, day1CourseHcp: null },
+  { name: "Sherwin Gregorio Uy", division: "E", tournamentIndex: 25.4, day1CourseHcp: null },
+  { name: "Shiela Teoxon", division: "E", tournamentIndex: 23.3, day1CourseHcp: null },
+  { name: "Alan Algodon", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "AMADO CONCEPCION JR.", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Angela Mae Divino", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Arnold John Mesias", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Divina Lapasaran", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Erisa Joyce D. Min", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Ian Lopez", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Jaybee Pasayan", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Jefferson G Robles", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Julius Michael Lachica", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "MARJORIE JALOSJOS", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Marlo dela peña", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Patricia Claire Botardo", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "TOSHIKI KOYAMA", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
+  { name: "Vanessa grace Saring", division: "PENDING", tournamentIndex: null, day1CourseHcp: null },
 ];

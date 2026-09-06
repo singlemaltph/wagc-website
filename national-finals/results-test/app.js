@@ -2,7 +2,9 @@
   "use strict";
 
   var DIVISIONS = ["A", "B", "C", "D", "E"];
-  var players = window.NF_PLAYERS || [];
+  var ROSTER_DIVISIONS = DIVISIONS.concat(["PENDING"]);
+  var roster = window.NF_PLAYERS || [];       // real current roster (name/division/tournamentIndex/day1CourseHcp)
+  var testScores = window.NF_TEST_SCORES || []; // fictitious players, Day 1/Final leaderboards only
   var flightsByDay = window.NF_FLIGHTS || { day1: [], day2: [] };
   var courseRotation = window.NF_COURSE_ROTATION || { day1: [], day2: [] };
   var config = window.NF_CONFIG || {};
@@ -77,12 +79,21 @@
       return;
     }
 
-    var sorted = players.slice().sort(function (a, b) {
+    var totalCount = roster.length;
+    var pendingCount = roster.filter(function (p) { return p.division === "PENDING"; }).length;
+
+    /* Division order A→E→PENDING falls out of plain string comparison
+       here since "PENDING" sorts after "E" alphabetically. */
+    var sorted = roster.slice().sort(function (a, b) {
       if (a.division !== b.division) return a.division.localeCompare(b.division);
       return a.name.localeCompare(b.name);
     });
 
     wrap.innerHTML =
+      '<div class="roster-clarify">' +
+        '<div class="roster-clarify-title">Current National Finals Player Roster</div>' +
+        "<p>Roster information reflects the current National Finals player list (" + totalCount + " players, " + (totalCount - pendingCount) + " assigned to a division, " + pendingCount + " pending division assignment). Tournament scoring shown elsewhere on this test page may still use test data.</p>" +
+      "</div>" +
       '<div class="toolbar">' +
         '<div class="filter-pills" id="roster-filter" data-target="division"></div>' +
         '<div class="search-box">' +
@@ -92,10 +103,17 @@
       "</div>" +
       '<div id="roster-results"></div>';
 
-    buildFilterPills("roster-filter", "all");
+    buildFilterPills("roster-filter", "all", ROSTER_DIVISIONS);
 
     var searchInput = document.getElementById("roster-search");
     var state = { division: "all", query: "" };
+
+    function fmtIndex(n) {
+      return n === null || n === undefined ? "—" : n.toFixed(1);
+    }
+    function fmtHcp(n) {
+      return n === null || n === undefined ? "—" : String(n);
+    }
 
     function renderRoster() {
       var filtered = sorted.filter(function (p) {
@@ -110,21 +128,25 @@
         grouped[p.division].push(p);
       });
 
-      var divisionsToShow = state.division === "all" ? DIVISIONS : [state.division];
+      var divisionsToShow = state.division === "all" ? ROSTER_DIVISIONS : [state.division];
       var html = "";
 
       divisionsToShow.forEach(function (div) {
         var group = grouped[div] || [];
         if (!group.length) return;
 
+        var isPending = div === "PENDING";
+        var badge = isPending ? '<span class="pending-badge">Pending</span>' : '<span class="div-badge">' + div + "</span>";
+        var heading = isPending ? "Division Pending" : "Division " + div;
+
         html += '<div class="division-block">';
-        html += '<div class="division-heading"><span class="div-badge">' + div + "</span> Division " + div + '<span class="division-count">' + group.length + " player" + (group.length === 1 ? "" : "s") + "</span></div>";
+        html += '<div class="division-heading">' + badge + " " + heading + '<span class="division-count">' + group.length + " player" + (group.length === 1 ? "" : "s") + "</span></div>";
 
         html += '<table class="nf-table nf-table-desktop"><thead><tr>' +
-          "<th>Player</th><th>Handicap Index</th><th>Day 1 Course HCP</th>" +
+          "<th>Player</th><th>Tournament Index</th><th>Day 1 Course HCP</th>" +
           "</tr></thead><tbody>";
         group.forEach(function (p) {
-          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + p.index.toFixed(1) + "</td><td>" + p.day1Hcp + "</td></tr>";
+          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.day1CourseHcp) + "</td></tr>";
         });
         html += "</tbody></table>";
 
@@ -133,8 +155,8 @@
           html += '<div class="nf-card">' +
             '<div class="nf-card-top"><span class="player-name">' + esc(p.name) + "</span></div>" +
             '<div class="nf-card-stats">' +
-              '<div class="stat"><span class="stat-label">Index</span><span class="stat-value">' + p.index.toFixed(1) + "</span></div>" +
-              '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + p.day1Hcp + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Tournament Index</span><span class="stat-value">' + fmtIndex(p.tournamentIndex) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + fmtHcp(p.day1CourseHcp) + "</span></div>" +
             "</div>" +
           "</div>";
         });
@@ -173,8 +195,8 @@
        received AND verified (day1Complete !== false) get ranked. Everyone
        else shows as "Pending" with no leaderboard position — the public
        leaderboard is expected to fill in gradually during Day 1. */
-    var completed = players.filter(function (p) { return p.day1Complete !== false; });
-    var pending = players.filter(function (p) { return p.day1Complete === false; });
+    var completed = testScores.filter(function (p) { return p.day1Complete !== false; });
+    var pending = testScores.filter(function (p) { return p.day1Complete === false; });
     var ranked = rankByDivision(completed, "day1Net");
 
     wrap.innerHTML =
@@ -290,7 +312,7 @@
       return;
     }
 
-    var ranked = rankByDivision(players, "finalNet");
+    var ranked = rankByDivision(testScores, "finalNet");
 
     wrap.innerHTML =
       (config.isTestData ? '<div class="sample-banner"><i class="fas fa-flask-vial"></i>SIMULATED FINAL RESULTS — TEST DATA</div>' : "") +
@@ -500,9 +522,9 @@
     "</div>";
   }
 
-  function buildFilterPills(containerId, active) {
+  function buildFilterPills(containerId, active, divisions) {
     var container = document.getElementById(containerId);
-    var options = ["all"].concat(DIVISIONS);
+    var options = ["all"].concat(divisions || DIVISIONS);
     container.innerHTML = options.map(function (opt) {
       var label = opt === "all" ? "All" : opt;
       return '<button type="button" class="pill' + (opt === active ? " active" : "") + '" data-value="' + opt + '">' + label + "</button>";
