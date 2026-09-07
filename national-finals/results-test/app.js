@@ -538,6 +538,28 @@
     });
   }
 
+  /* ---------------- RESULTS SUB-NAV (Day 1 / Day 2 & Final) ---------------- */
+
+  function initResultsSelect() {
+    var container = document.getElementById("results-select");
+    if (!container) return;
+    var buttons = container.querySelectorAll("[data-result]");
+    var panels = {
+      day1: document.getElementById("results-day1-outer"),
+      final: document.getElementById("results-final-outer")
+    };
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var target = btn.getAttribute("data-result");
+        buttons.forEach(function (b) { b.classList.toggle("active", b === btn); });
+        Object.keys(panels).forEach(function (key) {
+          panels[key].classList.toggle("active", key === target);
+        });
+      });
+    });
+  }
+
   /* ---------------- TABS ---------------- */
 
   function initTabs() {
@@ -556,6 +578,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initTabs();
+    initResultsSelect();
     buildRoster();
     buildFlights();
     buildDay1();

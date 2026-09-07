@@ -435,8 +435,74 @@
     }
 
     /* ── FLIGHTS: DAY SELECT + COURSE ROTATION ── */
+    /* Also reused for the Results tab's Day 1 / Day 2 & Final selector —
+       intentionally smaller/secondary compared to the primary .nf-tabs bar. */
     .day-select { display: flex; gap: 8px; margin-bottom: 16px; }
     .day-select .pill { flex: 1 1 0; text-align: center; min-height: 46px; font-size: 0.9rem; }
+
+    /* ── RESULTS SUB-PANELS ── */
+    .results-sub-panel { display: none; }
+    .results-sub-panel.active { display: block; }
+    .results-sub-heading {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--navy);
+      margin-bottom: 2px;
+    }
+
+    /* ── EVENT SCHEDULE ── */
+    .schedule-day { margin-bottom: 30px; }
+    .schedule-day:last-child { margin-bottom: 0; }
+    .schedule-day-head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--gold);
+    }
+    .schedule-day-label {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.05rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--navy);
+    }
+    .schedule-day-date { font-size: 0.82rem; color: var(--gray); font-weight: 600; }
+    .schedule-list { display: flex; flex-direction: column; }
+    .schedule-item {
+      display: flex;
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eef1f5;
+    }
+    .schedule-item:last-child { border-bottom: none; }
+    .schedule-time {
+      flex: 0 0 74px;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: var(--navy);
+      padding-top: 1px;
+    }
+    .schedule-event-title { font-size: 0.9rem; color: #374151; font-weight: 600; line-height: 1.5; }
+    .schedule-event-sub { font-size: 0.78rem; color: var(--gray); margin-top: 2px; line-height: 1.5; }
+    .schedule-day-venue { margin-top: 10px; font-size: 0.78rem; color: var(--gray); }
+    .schedule-day-venue strong { color: var(--navy); font-weight: 700; }
+    .schedule-note {
+      margin-top: 22px;
+      font-size: 0.82rem;
+      color: #4b5666;
+      line-height: 1.7;
+      background: var(--light);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .schedule-note p + p { margin-top: 8px; }
     .course-rotation-note {
       background: var(--light);
       border-radius: 8px;
@@ -769,8 +835,7 @@
     <button class="nf-tab active" data-tab="info"><i class="fas fa-circle-info"></i>Info</button>
     <button class="nf-tab" data-tab="roster"><i class="fas fa-users"></i>Roster</button>
     <button class="nf-tab" data-tab="flights"><i class="fas fa-list-ol"></i>Flights</button>
-    <button class="nf-tab" data-tab="day1"><i class="fas fa-golf-ball-tee"></i>Day 1</button>
-    <button class="nf-tab" data-tab="final"><i class="fas fa-trophy"></i>Final</button>
+    <button class="nf-tab" data-tab="results"><i class="fas fa-trophy"></i>Results</button>
   </div>
 </div>
 
@@ -814,6 +879,163 @@
     </div>
 
     <div class="info-section">
+      <div class="info-section-title">Event Schedule</div>
+
+      <div class="schedule-day">
+        <div class="schedule-day-head">
+          <span class="schedule-day-label">Day 0</span>
+          <span class="schedule-day-date">Thursday, September 10</span>
+        </div>
+        <div class="schedule-day-label" style="font-size:0.85rem;margin-bottom:10px;">Welcome Ceremony</div>
+        <div class="schedule-list">
+          <div class="schedule-item">
+            <div class="schedule-time">1:00 PM</div>
+            <div><div class="schedule-event-title">Player Arrival &amp; Registration Open</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">4:00 PM</div>
+            <div><div class="schedule-event-title">Salubong to the Champions - Welcome Ceremony</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">5:00 PM</div>
+            <div>
+              <div class="schedule-event-title">Dinner featuring Lutong Cavinti</div>
+              <div class="schedule-event-sub">Hosted by Governor Marisol Aragonés</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">6:00 PM</div>
+            <div><div class="schedule-event-title">Special Entertainment featuring The Voice Finalist</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">7:00 PM</div>
+            <div>
+              <div class="schedule-event-title">National Finals Briefing</div>
+              <div class="schedule-event-sub">Tournament Rules &amp; Conditions, Flight Pairings, Q&amp;A</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">8:00 PM</div>
+            <div><div class="schedule-event-title">Fellowship &amp; End of Formal Program</div></div>
+          </div>
+        </div>
+        <div class="schedule-day-venue">Venue: <strong>Caliraya Springs Clubhouse</strong></div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="schedule-day-head">
+          <span class="schedule-day-label">Day 1</span>
+          <span class="schedule-day-date">Friday, September 11</span>
+        </div>
+        <div class="schedule-day-label" style="font-size:0.85rem;margin-bottom:10px;">First Day of National Finals</div>
+        <div class="schedule-list">
+          <div class="schedule-item">
+            <div class="schedule-time">6:00 AM</div>
+            <div><div class="schedule-event-title">Breakfast</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">6:30 AM</div>
+            <div><div class="schedule-event-title">Tournament Preparation / Proceed to Assigned Course</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">7:00 AM</div>
+            <div><div class="schedule-event-title">Start of Tournament - Day 1 Sequential Tee Off</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">3:00 PM</div>
+            <div><div class="schedule-event-title">Last Golf Flight Finished</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">4:00 PM</div>
+            <div>
+              <div class="schedule-event-title">Sunset Arrival &amp; Welcome Cocktails</div>
+              <div class="schedule-event-sub">Venue: Mountain Lake Resort Marina</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">5:00 PM</div>
+            <div>
+              <div class="schedule-event-title">Night of Champions Dinner</div>
+              <div class="schedule-event-sub">Hosted by Mayor Arrantlee Romulo R. Arroyo · Venue: Mountain Lake Resort Marina</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">6:00 PM</div>
+            <div>
+              <div class="schedule-event-title">LGU Entertainment Program</div>
+              <div class="schedule-event-sub">Fire Dancer • DJ / Music • Foam Party</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">8:00 PM</div>
+            <div><div class="schedule-event-title">Bonfire Fellowship</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">8:30 PM</div>
+            <div><div class="schedule-event-title">Open Social Night &amp; End of Formal Program</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-day">
+        <div class="schedule-day-head">
+          <span class="schedule-day-label">Day 2</span>
+          <span class="schedule-day-date">Saturday, September 12</span>
+        </div>
+        <div class="schedule-day-label" style="font-size:0.85rem;margin-bottom:10px;">Final Day of National Finals</div>
+        <div class="schedule-list">
+          <div class="schedule-item">
+            <div class="schedule-time">6:00 AM</div>
+            <div><div class="schedule-event-title">Breakfast</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">6:30 AM</div>
+            <div><div class="schedule-event-title">Tournament Preparation / Proceed to Assigned Course</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">7:00 AM</div>
+            <div><div class="schedule-event-title">Start of Tournament - Day 2 Sequential Tee Off</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">3:00 PM</div>
+            <div><div class="schedule-event-title">Last Golf Flight Finished</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">5:30 PM</div>
+            <div>
+              <div class="schedule-event-title">Cocktail Reception</div>
+              <div class="schedule-event-sub">Venue: Caliraya Springs Clubhouse</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">6:30 PM</div>
+            <div>
+              <div class="schedule-event-title">Celebrating the Champions Dinner</div>
+              <div class="schedule-event-sub">Hosted by Cong. Benjamin C. Agarao, Jr. · Venue: Caliraya Springs Clubhouse</div>
+            </div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">8:30 PM</div>
+            <div><div class="schedule-event-title">Awarding and Announcements</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">9:00 PM</div>
+            <div><div class="schedule-event-title">Closing Remarks</div></div>
+          </div>
+          <div class="schedule-item">
+            <div class="schedule-time">9:15 PM</div>
+            <div><div class="schedule-event-title">Fellowship &amp; Celebration</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="schedule-note">
+        <p>Golf tee times, course assignments, and schedule changes will be communicated through the official WAGC Philippines National Finals Viber group.</p>
+        <p>Tournament schedule and times may change leading up to the event.</p>
+      </div>
+    </div>
+
+    <div class="info-section">
       <div class="info-section-title">Tournament Conditions</div>
       <div class="card">
         <p>Players are responsible for reviewing the official tournament conditions prior to play.</p>
@@ -853,18 +1075,27 @@
     <div id="flights-panel"></div>
   </div>
 
-  <!-- DAY 1 -->
-  <div class="nf-panel" id="day1-panel-outer">
-    <div class="panel-heading">Day 1 Results</div>
-    <div class="panel-subtext">Ranked within each division by lowest Day 1 Net score.</div>
-    <div id="day1-panel"></div>
-  </div>
+  <!-- RESULTS -->
+  <div class="nf-panel" id="results-panel-outer">
+    <div class="panel-heading">Results</div>
+    <div class="panel-subtext">Day 1 and Day 2 / Final tournament results.</div>
 
-  <!-- FINAL -->
-  <div class="nf-panel" id="final-panel-outer">
-    <div class="panel-heading">Day 2 / Final Results</div>
-    <div class="panel-subtext">Ranked within each division by lowest 2-Day Net Total.</div>
-    <div id="final-panel"></div>
+    <div class="day-select" id="results-select">
+      <button type="button" class="pill active" data-result="day1">Day 1</button>
+      <button type="button" class="pill" data-result="final">Day 2 / Final</button>
+    </div>
+
+    <div class="results-sub-panel active" id="results-day1-outer">
+      <div class="results-sub-heading">Day 1 Results</div>
+      <div class="panel-subtext">Ranked within each division by lowest Day 1 Net score.</div>
+      <div id="day1-panel"></div>
+    </div>
+
+    <div class="results-sub-panel" id="results-final-outer">
+      <div class="results-sub-heading">Day 2 / Final Results</div>
+      <div class="panel-subtext">Ranked within each division by lowest 2-Day Net Total.</div>
+      <div id="final-panel"></div>
+    </div>
   </div>
 
 </div>
