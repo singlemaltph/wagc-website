@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ==========================================================================
+       CASE-INSENSITIVE NORMALIZATION — National Finals only.
+       --------------------------------------------------------------------------
+       This runs FIRST, before any external <link> stylesheet — a pending
+       render-blocking stylesheet can delay execution of a later inline
+       script, and this redirect needs to fire immediately regardless of
+       whether/how fast those resources load.
+
+       This static site has no server-side rewrite rules, so a mistyped-case
+       request (e.g. /National-Finals/, /NATIONAL-FINALS) 404s here. This
+       script only ever handles the exact National Finals root path — it
+       intentionally does NOT touch any other 404'd URL (including
+       /national-finals/results-test/, which must keep 404ing normally if
+       genuinely not found, and must never be redirected to the dashboard).
+
+       If the pathname, case-insensitively and with any trailing slash
+       stripped, equals "/national-finals", send the visitor to the
+       canonical "/national-finals/" and preserve query string + hash.
+       Everything else falls through to the plain 404 message below. -->
+  <script>
+    (function () {
+      "use strict";
+      var path = window.location.pathname;
+      var normalized = path.replace(/\/+$/, "").toLowerCase();
+
+      if (normalized === "/national-finals") {
+        var canonical = "/national-finals/" + window.location.search + window.location.hash;
+        if (path !== "/national-finals/" || window.location.search || window.location.hash) {
+          window.location.replace(canonical);
+        }
+      }
+    })();
+  </script>
+
+  <title>Page Not Found — WAGC Philippines</title>
+  <meta name="robots" content="noindex,follow">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B2A4A;
+      --gold: #C9A227;
+      --gray: #6B7280;
+      --font-head: 'Barlow Condensed', sans-serif;
+      --font-body: 'Barlow', sans-serif;
+    }
+    body {
+      font-family: var(--font-body);
+      color: var(--navy);
+      background: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .wrap { max-width: 420px; }
+    .code { font-family: var(--font-head); font-size: 4rem; font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 12px; }
+    h1 { font-family: var(--font-head); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 12px; }
+    p { color: var(--gray); font-size: 0.95rem; line-height: 1.6; margin-bottom: 24px; }
+    a.btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="code">404</div>
+    <h1>Page Not Found</h1>
+    <p>The page you're looking for doesn't exist or may have moved.</p>
+    <a class="btn" href="/">Back to Home</a>
+  </div>
+</body>
+</html>

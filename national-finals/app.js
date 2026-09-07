@@ -91,6 +91,42 @@
     // Real final leaderboard rendering goes here once finalResultsPublished = true.
   }
 
+  /* ---------------- INFO SECONDARY SELECTOR ----------------
+     Schedule of Events is selected by default whenever the page loads or
+     the primary INFO tab is (re)selected — see initTabs(). */
+
+  function initInfoSubnav() {
+    var container = document.getElementById("info-subnav");
+    if (!container) return;
+    var buttons = container.querySelectorAll("[data-info]");
+    var panels = {
+      schedule: document.getElementById("info-schedule-outer"),
+      conditions: document.getElementById("info-conditions-outer")
+    };
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var target = btn.getAttribute("data-info");
+        buttons.forEach(function (b) { b.classList.toggle("active", b === btn); });
+        Object.keys(panels).forEach(function (key) {
+          panels[key].classList.toggle("active", key === target);
+        });
+      });
+    });
+  }
+
+  function resetInfoSubnavToSchedule() {
+    var container = document.getElementById("info-subnav");
+    if (!container) return;
+    container.querySelectorAll("[data-info]").forEach(function (b) {
+      b.classList.toggle("active", b.getAttribute("data-info") === "schedule");
+    });
+    var scheduleOuter = document.getElementById("info-schedule-outer");
+    var conditionsOuter = document.getElementById("info-conditions-outer");
+    if (scheduleOuter) scheduleOuter.classList.add("active");
+    if (conditionsOuter) conditionsOuter.classList.remove("active");
+  }
+
   /* ---------------- RESULTS SECONDARY SELECTOR ---------------- */
 
   function initResultsSelect() {
@@ -126,6 +162,7 @@
         var target = tab.getAttribute("data-tab");
         tabs.forEach(function (t) { t.classList.toggle("active", t === tab); });
         panels.forEach(function (p) { p.classList.toggle("active", p.id === target + "-panel-outer"); });
+        if (target === "info") resetInfoSubnavToSchedule();
         window.scrollTo({ top: document.getElementById("nf-tabs").offsetTop - 68, behavior: "smooth" });
       });
     });
@@ -133,6 +170,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     initTabs();
+    initInfoSubnav();
     initResultsSelect();
     buildRoster();
     buildFlights();
