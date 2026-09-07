@@ -31,36 +31,41 @@
      rosterPublished: false, day1FlightsPublished: false,
      day2FlightsPublished: false, day1ResultsPublished: false,
      finalResultsPublished: false
-   Public navigation today is INFO ONLY: Event Schedule + a link to the
-   official Tournament Conditions. No Roster / Flights / Results tab
-   exists in this page's markup — see app.js for how future tabs derive
-   from these flags.
+
+   NAVIGATION MODEL: the primary tabs — INFO / ROSTER / FLIGHTS / RESULTS —
+   are ALWAYS visible on this page, regardless of these flags. Flags gate
+   the CONTENT inside a tab, never the tab's existence. With everything
+   above false, Roster/Flights/Results each show a simple "not yet
+   published, check back" placeholder (see app.js) and load no data files
+   at all — there is nothing unpublished sitting in the DOM or in public
+   JS to find.
 
    ROLLOUT SEQUENCE (update this page's markup + this file together,
-   one step at a time, only once WAGC approves each step):
+   one step at a time, only once WAGC approves each step). The tabs stay
+   the same throughout — only each panel's content changes:
 
      STEP 1 — rosterPublished: true
-       Add a Roster tab + panel (mirroring national-finals/results-test/)
-       and a sanitized public roster data file (name/division/tournament
-       index/day1 course HCP only — never IDs, contact info, or notes).
-       Public nav becomes: INFO | ROSTER
+       Replace the Roster placeholder with real roster rendering
+       (mirroring national-finals/results-test/) and add a sanitized
+       public roster data file (name/division/tournament index/day1
+       course HCP only — never IDs, contact info, or notes).
 
      STEP 2 — day1FlightsPublished: true
-       Add a Flights tab + panel with the real, approved Day 1 pairings.
-       Public nav becomes: INFO | ROSTER | FLIGHTS
+       Replace the Flights placeholder with the real, approved Day 1
+       pairings + Day 1/Day 2 selector UI.
 
      STEP 3 — day1ResultsPublished: true
-       Add a Results tab + panel; Day 1 leaderboard publishes
-       progressively as scores are received and verified (incomplete
-       players show "Pending", never ranked).
-       Public nav becomes: INFO | ROSTER | FLIGHTS | RESULTS
+       Replace the Results > Day 1 placeholder with the real leaderboard;
+       it publishes progressively as scores are received and verified
+       (incomplete players show "Pending", never ranked).
 
      AFTER DAY 1 IS FINALIZED — day2FlightsPublished: true
        Add the real Day 2 pairings (championship flight = each division's
-       Day 1 positions 1-4, teeing off last) to Flights.
+       Day 1 positions 1-4, teeing off last) to Flights > Day 2.
 
      AFTER THE AWARDS CEREMONY — finalResultsPublished: true
-       Add the real final results to Results > Day 2 / Final.
+       Replace the Results > Day 2 / Final placeholder with the real
+       final leaderboard.
 
    Do NOT set any flag to true ahead of adding that section's real content
    in the same change.
