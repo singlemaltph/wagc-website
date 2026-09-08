@@ -48,18 +48,26 @@
        Roster rendering (mirroring national-finals/results-test/) and the
        sanitized public roster data file (data.js) have been added.
        Public-safe roster fields: name, division, tournamentIndex,
-       palmerCourseHcp, marshCourseHcp, day1CourseHcp — taken as-is from
-       the Players tab (columns B, C, E, G, H, K respectively), never
-       recalculated. Still never IDs, WHS Index (raw), TEE, contact info,
-       payment/status, or notes. Desktop table columns: PLAYER /
-       TOURNAMENT INDEX / PALMER HCP / MARSH HCP / DAY 1 HCP. To refresh
-       the roster later, re-pull the Players tab and replace data.js's
-       array in the SAME change that updates
+       palmerCourseHcp, marshCourseHcp — taken as-is from the Players tab
+       (columns B, C, E, G, H respectively), never recalculated. Still
+       never IDs, WHS Index (raw), TEE, contact info, payment/status, or
+       notes. Desktop table columns: PLAYER / TOURNAMENT INDEX / PALMER
+       HCP / MARSH HCP. The roster deliberately does NOT publish Day 1
+       Course HCP — a player's actual Course HCP for a given round is
+       published with that day's flight pairing instead (see STEP 2/3
+       below). To refresh the roster later, re-pull the Players tab and
+       replace data.js's array in the SAME change that updates
        national-finals/results-test/data.js from the same snapshot.
 
      STEP 2 — day1FlightsPublished: true
-       Replace the Flights placeholder with the real, approved Day 1
-       pairings + Day 1/Day 2 selector UI.
+       Add a real Day 1 flight-pairing data file (mirroring the shape of
+       national-finals/results-test/flights.js) and flip the flag in the
+       SAME change; buildFlights() in app.js is already prepared to
+       render it. Flight-player schema: { name, division, courseHcp }.
+       courseHcp source: Players tab → "Day 1 Course HCP" (column K),
+       taken as-is, never recalculated. Column label is always
+       "COURSE HCP". null renders as "—"; a real 0 or negative Course HCP
+       renders as-is.
 
      STEP 3 — day1ResultsPublished: true
        Replace the Results > Day 1 placeholder with the real leaderboard;
@@ -68,7 +76,14 @@
 
      AFTER DAY 1 IS FINALIZED — day2FlightsPublished: true
        Add the real Day 2 pairings (championship flight = each division's
-       Day 1 positions 1-4, teeing off last) to Flights > Day 2.
+       Day 1 positions 1-4, teeing off last) to Flights > Day 2. Same
+       { name, division, courseHcp } schema as Day 1, but courseHcp here
+       must come from the "Handicap Adjustment" tab's official
+       "R2 Course Handicap" — the player's adjusted Course HCP for Round
+       2. Never use the original Palmer/Marsh HCP, "Day 2 Base Course
+       HCP" alone, or a locally recomputed adjustment. Do not publish
+       until Day 1 is finalized, official standings are set, and R2
+       Course Handicap is confirmed.
 
      AFTER THE AWARDS CEREMONY — finalResultsPublished: true
        Replace the Results > Day 2 / Final placeholder with the real

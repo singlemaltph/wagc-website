@@ -4,7 +4,7 @@
   var config = window.NF_CONFIG || {};
   var DIVISIONS = ["A", "B", "C", "D", "E"];
   var ROSTER_DIVISIONS = DIVISIONS.concat(["PENDING"]);
-  var roster = window.NF_PLAYERS || []; // real published roster (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp/day1CourseHcp)
+  var roster = window.NF_PLAYERS || []; // real published roster (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp)
 
   function esc(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
@@ -36,15 +36,41 @@
     });
   }
 
+  /* Shared "Player Handicap Information" card — placed after the roster
+     summary and before the division filters/search, on both production
+     and national-finals/results-test/. Approved copy; do not paraphrase.
+     Paula's number is approved for public display as a clickable sms:
+     link. */
+  function handicapInfoHtml() {
+    return '<div class="handicap-info">' +
+      '<div class="handicap-info-title">Player Handicap Information</div>' +
+      '<div class="handicap-info-section">' +
+        "<h4>Tournament Index</h4>" +
+        "<p>For the 2026 WAGC Philippines National Finals, a player's Tournament Index is based on the player's Low Index recorded and verified by the Tournament Committee.</p>" +
+        "<p>Under the World Handicap System (WHS), the Low Handicap Index is the lowest Handicap Index calculated for a player during the 365-day period preceding the most recent score in the player's scoring record. It serves as a reference point against which the player's current Handicap Index is compared.</p>" +
+      "</div>" +
+      '<div class="handicap-info-section">' +
+        "<h4>Roster &amp; Handicap Verification</h4>" +
+        "<p>The player roster and handicap information shown on this page are still subject to change while the Tournament Committee completes final handicap verification. Any updates identified during the verification process may be reflected on this page.</p>" +
+      "</div>" +
+      '<div class="handicap-info-section">' +
+        "<h4>Handicap Questions</h4>" +
+        '<p>If you have any questions or concerns regarding your handicap, please message Paula at <a href="sms:+639176734653">0917 673 4653</a>. Your concern will be brought to the Tournament Committee for review.</p>' +
+      "</div>" +
+    "</div>";
+  }
+
   /* ---------------- ROSTER ----------------
      rosterPublished: true — roster rendering ported from the reference
      implementation at national-finals/results-test/app.js buildRoster().
      Real, sanitized roster data lives in data.js as window.NF_PLAYERS
-     (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp/
-     day1CourseHcp only — see that file's header for the sanitization
-     rules). Palmer/Marsh/Day1 Course HCP are taken as-is from the
-     Players tab, never recalculated; null renders as "—" and a real 0
-     or negative HCP renders as-is. */
+     (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp only
+     — see that file's header for the sanitization rules). Palmer/Marsh
+     Course HCP are taken as-is from the Players tab, never recalculated;
+     null renders as "—" and a real 0 or negative HCP renders as-is.
+     day1CourseHcp is intentionally NOT part of the roster — a player's
+     actual Course HCP for a given round is published with that day's
+     flight pairing instead (see buildFlights() below). */
   function buildRoster() {
     var wrap = document.getElementById("roster-panel");
     if (!wrap) return;
@@ -71,6 +97,7 @@
         '<div class="roster-clarify-title">Current National Finals Player Roster</div>' +
         "<p>Roster information reflects the current National Finals player list (" + totalCount + " players, " + (totalCount - pendingCount) + " assigned to a division, " + pendingCount + " pending division assignment).</p>" +
       "</div>" +
+      handicapInfoHtml() +
       '<div class="toolbar">' +
         '<div class="filter-pills" id="roster-filter" data-target="division"></div>' +
         '<div class="search-box">' +
@@ -120,10 +147,10 @@
         html += '<div class="division-heading">' + badge + " " + heading + '<span class="division-count">' + group.length + " player" + (group.length === 1 ? "" : "s") + "</span></div>";
 
         html += '<table class="nf-table nf-table-desktop nf-table-roster"><thead><tr>' +
-          "<th>Player</th><th>Tournament Index</th><th>Palmer HCP</th><th>Marsh HCP</th><th>Day 1 HCP</th>" +
+          "<th>Player</th><th>Tournament Index</th><th>Palmer HCP</th><th>Marsh HCP</th>" +
           "</tr></thead><tbody>";
         group.forEach(function (p) {
-          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.palmerCourseHcp) + "</td><td>" + fmtHcp(p.marshCourseHcp) + "</td><td>" + fmtHcp(p.day1CourseHcp) + "</td></tr>";
+          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.palmerCourseHcp) + "</td><td>" + fmtHcp(p.marshCourseHcp) + "</td></tr>";
         });
         html += "</tbody></table>";
 
@@ -131,11 +158,10 @@
         group.forEach(function (p) {
           html += '<div class="nf-card">' +
             '<div class="nf-card-top"><span class="player-name">' + esc(p.name) + "</span></div>" +
-            '<div class="nf-card-stats nf-card-stats-roster">' +
+            '<div class="nf-card-stats">' +
               '<div class="stat"><span class="stat-label">Tournament Index</span><span class="stat-value">' + fmtIndex(p.tournamentIndex) + "</span></div>" +
               '<div class="stat"><span class="stat-label">Palmer HCP</span><span class="stat-value">' + fmtHcp(p.palmerCourseHcp) + "</span></div>" +
               '<div class="stat"><span class="stat-label">Marsh HCP</span><span class="stat-value">' + fmtHcp(p.marshCourseHcp) + "</span></div>" +
-              '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + fmtHcp(p.day1CourseHcp) + "</span></div>" +
             "</div>" +
           "</div>";
         });
@@ -161,15 +187,29 @@
     renderRoster();
   }
 
-  /* ---------------- FLIGHTS ---------------- */
-  /* day1FlightsPublished / day2FlightsPublished: both false — no flight
-     data file is loaded on this page. When Day 1 flights are ready, add
-     the real pairing data + Day 1/Day 2 selector UI (mirroring
-     national-finals/results-test/flights.js and app.js) in the same
-     change that flips day1FlightsPublished. Day 2 flights must stay
-     unpublished (and physically absent from this repo) until Day 1 is
-     complete and verified — see the championship-flight-last rule in the
-     test implementation. */
+  /* ---------------- FLIGHTS ----------------
+     day1FlightsPublished / day2FlightsPublished: both false — no flight
+     data file exists on production yet, so this renderer is prepared but
+     unused (window.NF_FLIGHTS/window.NF_COURSE_ROTATION are undefined
+     and default to empty below). When Day 1 flights are ready, add the
+     real pairing data file (mirroring the shape of
+     national-finals/results-test/flights.js) in the SAME change that
+     flips day1FlightsPublished — do not commit real pairing data ahead
+     of that flag.
+
+     Flight-player schema: { name, division, courseHcp }. courseHcp is
+     the player's official Course HCP for THAT ROUND — taken as-is, never
+     recalculated:
+       Day 1 source: Players tab, "Day 1 Course HCP" (column K).
+       Day 2 source: "Handicap Adjustment" tab, "R2 Course Handicap" —
+         the player's official adjusted Course HCP for Round 2. Never use
+         the original Palmer/Marsh HCP, "Day 2 Base Course HCP" alone, or
+         a locally recomputed adjustment.
+     null renders as "—"; a real 0 or negative Course HCP renders as-is.
+     Column label is always "COURSE HCP" (not "Playing HCP"/"CH"/etc). Do
+     NOT publish Day 2 flights before Day 1 is finalized and the R2
+     Course Handicap is confirmed — see the championship-flight-last rule
+     in national-finals/results-test/flights.js. */
   function buildFlights() {
     var wrap = document.getElementById("flights-panel");
     if (!wrap) return;
@@ -180,7 +220,121 @@
       ]);
       return;
     }
-    // Real flights rendering goes here once a flights flag is true.
+
+    var flightsByDay = window.NF_FLIGHTS || { day1: [], day2: [] };
+    var courseRotation = window.NF_COURSE_ROTATION || { day1: [], day2: [] };
+
+    wrap.innerHTML =
+      '<div class="day-select" id="flights-day-select">' +
+        '<button type="button" class="pill active" data-day="day1">Day 1</button>' +
+        '<button type="button" class="pill" data-day="day2">Day 2</button>' +
+      "</div>" +
+      '<div class="course-rotation-note" id="course-rotation-note"></div>' +
+      '<div class="toolbar" id="flights-toolbar">' +
+        '<div class="search-box">' +
+          '<i class="fas fa-search"></i>' +
+          '<input type="search" id="flight-search" placeholder="Find your flight — search your name..." aria-label="Search for a player to find their flight" />' +
+        "</div>" +
+      "</div>" +
+      '<div id="flights-results"></div>';
+
+    var searchInput = document.getElementById("flight-search");
+    var toolbar = document.getElementById("flights-toolbar");
+    var state = { day: "day1", query: "" };
+
+    function renderRotationNote() {
+      var rows = courseRotation[state.day] || [];
+      var label = state.day === "day1" ? "Day 1" : "Day 2";
+      var html = '<div class="course-rotation-title">' + label + " Course Rotation</div>";
+      rows.forEach(function (r) {
+        html += '<div class="course-rotation-row"><span>' + esc(r.divisions) + "</span><span>" + esc(r.course) + "</span></div>";
+      });
+      document.getElementById("course-rotation-note").innerHTML = html;
+    }
+
+    function fmtFlightHcp(n) {
+      return n === null || n === undefined ? "—" : String(n);
+    }
+
+    function renderFlights() {
+      if (state.day === "day1" && !config.day1FlightsPublished) {
+        toolbar.hidden = true;
+        document.getElementById("flights-results").innerHTML = lockedPanel("DAY 1 FLIGHT SCHEDULE", [
+          "Day 1 flight pairings and tee times have not been published yet."
+        ]);
+        return;
+      }
+      if (state.day === "day2" && !config.day2FlightsPublished) {
+        toolbar.hidden = true;
+        document.getElementById("flights-results").innerHTML = lockedPanel("DAY 2 FLIGHT SCHEDULE", [
+          "Day 2 flight pairings and tee times will be announced after the completion of Day 1.",
+          "Please check back after Day 1 results have been finalized."
+        ]);
+        return;
+      }
+      toolbar.hidden = false;
+
+      var q = state.query.trim().toLowerCase();
+      var all = flightsByDay[state.day] || [];
+      var list = all;
+
+      if (q) {
+        list = all.filter(function (f) {
+          return f.players.some(function (pl) { return pl.name.toLowerCase().indexOf(q) !== -1; });
+        });
+      }
+
+      if (!list.length) {
+        document.getElementById("flights-results").innerHTML = '<p class="empty-state">No flight found for that player.</p>';
+        return;
+      }
+
+      var html = '<div class="flight-grid">';
+      list.forEach(function (f) {
+        var flightNumber = all.indexOf(f) + 1;
+        var hasMatch = q && f.players.some(function (pl) { return pl.name.toLowerCase().indexOf(q) !== -1; });
+        html += '<div class="flight-card' + (hasMatch ? " flight-match" : "") + '">' +
+          '<div class="flight-card-head">' +
+            '<span class="flight-num">Flight ' + flightNumber + "</span>" +
+            '<span class="flight-meta">' + esc(f.teeTime) + " · Hole " + f.startingHole + "</span>" +
+          "</div>" +
+          '<div class="flight-course">' + esc(f.course) + "</div>" +
+          '<div class="flight-players">';
+        f.players.forEach(function (pl) {
+          var isMatch = q && pl.name.toLowerCase().indexOf(q) !== -1;
+          html += '<div class="flight-player-row' + (isMatch ? " player-match" : "") + '">' +
+            '<span class="fp-name">' + esc(pl.name) + "</span>" +
+            '<span class="div-chip">' + esc(pl.division) + "</span>" +
+            '<span class="fp-hcp">' + fmtFlightHcp(pl.courseHcp) + "</span>" +
+          "</div>";
+        });
+        html += "</div></div>";
+      });
+      html += "</div>";
+
+      document.getElementById("flights-results").innerHTML = html;
+    }
+
+    document.getElementById("flights-day-select").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-day]");
+      if (!btn) return;
+      state.day = btn.getAttribute("data-day");
+      state.query = "";
+      searchInput.value = "";
+      document.querySelectorAll("#flights-day-select .pill").forEach(function (p) {
+        p.classList.toggle("active", p === btn);
+      });
+      renderRotationNote();
+      renderFlights();
+    });
+
+    searchInput.addEventListener("input", function () {
+      state.query = searchInput.value;
+      renderFlights();
+    });
+
+    renderRotationNote();
+    renderFlights();
   }
 
   /* ---------------- RESULTS ---------------- */

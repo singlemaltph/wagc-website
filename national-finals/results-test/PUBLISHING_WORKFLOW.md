@@ -143,6 +143,30 @@ ahead of setting the flag.
 
 ## Public fields — what's allowed
 
+**Roster publishes:** Player, Tournament Index, Palmer HCP, Marsh HCP.
+**Roster does NOT publish Day 1 HCP** — a player's actual Course HCP for
+a given round belongs with that day's flight pairing instead, not the
+roster (see below). Palmer HCP / Marsh HCP are each player's base Course
+HCP for the two courses, taken as-is from the Players tab (columns G/H);
+never recalculated.
+
+**Day 1 Flights publish:** Player, Division, Course HCP. Source for Course
+HCP: Players tab → **Day 1 Course HCP** (column K), taken as-is, never
+recalculated.
+
+**Day 2 Flights publish:** Player, Division, Course HCP. Source for Course
+HCP: Handicap Adjustment tab → **R2 Course Handicap** — the player's
+official adjusted Course HCP for Round 2. Never use the original
+Palmer/Marsh HCP, "Day 2 Base Course HCP" alone, or a locally recomputed
+adjustment. Day 2 flights are generated only after Day 1 is finalized,
+official standings are set, and R2 Course Handicap is confirmed — see
+the pairing rule below.
+
+The public flight-player column is always labeled **"COURSE HCP"** (not
+"Playing HCP", "CH", "Adjusted HCP", "Handicap", or "Day HCP"). `null`
+renders as "—"; a real `0` or a negative Course HCP is valid and renders
+as-is — never treat those as missing.
+
 **Day 1 Results:** Position, Player, Division, Gross, Day 1 HCP, Net,
 Handicap Adjustment, Day 2 HCP.
 

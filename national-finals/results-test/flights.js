@@ -75,14 +75,30 @@
     };
   }
 
-  function p(name, division) {
-    return { name: name, division: division };
+  /* courseHcp is OPTIONAL and defaults to null (renders as "—" in the UI)
+     — this is the player's Course HCP for THAT ROUND, not their roster
+     Palmer/Marsh HCP. For REAL Day 1 flights this must come directly
+     from the Players tab's "Day 1 Course HCP" (column K); for REAL Day 2
+     flights it must come from the "Handicap Adjustment" tab's official
+     "R2 Course Handicap" — never recalculated, never the roster's
+     Palmer/Marsh HCP, never "Day 2 Base Course HCP" alone. See
+     PUBLISHING_WORKFLOW.md.
+
+     Only the first two flights on each course below carry an ILLUSTRATIVE
+     sample courseHcp (chosen to demonstrate a positive, a zero, and a
+     negative value rendering correctly) purely to validate the PLAYER /
+     DIV / COURSE HCP UI contract on this test page. Every other test
+     flight intentionally leaves courseHcp unset (null/"—") — do not
+     backfill the rest with invented numbers; that is not real Day 1/Day 2
+     data and must never be mistaken for it. */
+  function p(name, division, courseHcp) {
+    return { name: name, division: division, courseHcp: courseHcp === undefined ? null : courseHcp };
   }
 
   var DAY1_FLIGHTS = [
     // ── ARNOLD PALMER COURSE — Divisions A / B / C ──
-    flight("AP", 1, "7:00 AM", [p("Randy Sulpico Someros", "A"), p("GERARDO DE CHAVEZ", "A"), p("Raymund James Lachica", "A"), p("Ian Davin Rosales", "A")]),
-    flight("AP", 2, "7:10 AM", [p("Richard (Ricky) Delos Santos", "A"), p("John Paul Gutierrez", "A"), p("Htein Lin Aung", "B"), p("Mohd Yussof B Ishak", "B")]),
+    flight("AP", 1, "7:00 AM", [p("Randy Sulpico Someros", "A", 3), p("GERARDO DE CHAVEZ", "A", 4), p("Raymund James Lachica", "A", 2), p("Ian Davin Rosales", "A", 0)]),
+    flight("AP", 2, "7:10 AM", [p("Richard (Ricky) Delos Santos", "A", 4), p("John Paul Gutierrez", "A", 4), p("Htein Lin Aung", "B", 9), p("Mohd Yussof B Ishak", "B", -1)]),
     flight("AP", 3, "7:20 AM", [p("Ma Victoria Herrera", "B"), p("Philip Ouano", "B"), p("Wendell Lucido", "B"), p("Lyndon Theodore D Pamintuan", "B")]),
     flight("AP", 4, "7:30 AM", [p("Mark Stephen Villegas", "B"), p("Eugene Unabia", "B"), p("Leo Gerald de Castro", "B"), p("Elvin Panliboton", "B")]),
     flight("AP", 5, "7:40 AM", [p("Clover Arangote", "B"), p("Neil Ruelan", "B"), p("Roberto A. Umali", "B"), p("Paolo Obaniana", "B")]),
@@ -97,8 +113,8 @@
     flight("AP", 14, "9:10 AM", [p("Espie Espinosa", "C"), p("Raymond Dabao", "C"), p("Kristian Herrera", "C")]),
 
     // ── GRAHAM MARSH COURSE — Divisions D / E ──
-    flight("GM", 1, "7:00 AM", [p("Kimberly Duenas", "D"), p("Xavier Faurens", "D"), p("Abbhi Akshaya", "D"), p("Hoang Minh Duc", "D")]),
-    flight("GM", 2, "7:10 AM", [p("Yi Lwin", "D"), p("Jay Dizon", "D"), p("NELSON CHAN", "D"), p("JOSEPH BARNIE (BANG) GUMALO", "D")]),
+    flight("GM", 1, "7:00 AM", [p("Kimberly Duenas", "D", 13), p("Xavier Faurens", "D", 16), p("Abbhi Akshaya", "D", 18), p("Hoang Minh Duc", "D", 17)]),
+    flight("GM", 2, "7:10 AM", [p("Yi Lwin", "D", 17), p("Jay Dizon", "D", 20), p("NELSON CHAN", "D", 15), p("JOSEPH BARNIE (BANG) GUMALO", "D", 17)]),
     flight("GM", 3, "7:20 AM", [p("Raffy Tamayo", "D"), p("Virgilio R. Villaescusa", "D"), p("Andrew Tan", "D"), p("Marilyn L. Del Rosario", "D")]),
     flight("GM", 4, "7:30 AM", [p("RICHARD DALILIS", "D"), p("Augusto Anthony Buendia Jr.", "D"), p("Peter Nacion", "D"), p("Mary Carlene Navarro", "D")]),
     flight("GM", 5, "7:40 AM", [p("Nicole Jennice Aguilar", "D"), p("Meynard Gelindon", "D"), p("Joan Arangote", "D"), p("Patricia Valencia", "D")]),
@@ -117,7 +133,13 @@
 
   /* Day 2: same players, same order, same tee times — only the course
      swaps (Arnold Palmer <-> Graham Marsh) per the tournament's course
-     rotation. Generated here so pairing data is never duplicated. */
+     rotation. Generated here so pairing data is never duplicated.
+     courseHcp carries over unchanged from Day 1 (players: f.players is a
+     reference copy) — this is a TEST-ONLY convenience, not a stand-in
+     for the real process. Real Day 2 courseHcp must come from the
+     "Handicap Adjustment" tab's official "R2 Course Handicap" once Day 1
+     is finalized (see PUBLISHING_WORKFLOW.md), never simply reused from
+     Day 1. */
   var SWAP_COURSE = { AP: "GM", GM: "AP" };
 
   var DAY2_FLIGHTS = DAY1_FLIGHTS.map(function (f) {

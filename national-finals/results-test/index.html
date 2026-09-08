@@ -554,6 +554,40 @@
     }
     .roster-clarify p { font-size: 0.82rem; color: #4b5666; line-height: 1.6; }
 
+    /* ── PLAYER HANDICAP INFORMATION (Roster tab) ── */
+    .handicap-info {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--gold);
+    }
+    .handicap-info-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 14px;
+    }
+    .handicap-info-section { margin-bottom: 14px; }
+    .handicap-info-section:last-child { margin-bottom: 0; }
+    .handicap-info-section h4 {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      margin-bottom: 4px;
+    }
+    .handicap-info-section p { font-size: 0.85rem; color: #4b5666; line-height: 1.6; }
+    .handicap-info-section p + p { margin-top: 8px; }
+    .handicap-info-section a { color: var(--navy); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
     /* ── DIVISION BLOCKS ── */
     .division-block { margin-bottom: 36px; }
     .division-heading {
@@ -659,10 +693,6 @@
     }
     .pos-badge i { color: var(--gold); font-size: 0.85rem; }
     .nf-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    /* Roster cards show 4 stats (Tournament Index, Palmer HCP, Marsh HCP,
-       Day 1 HCP) — always lay these out 2 x 2 rather than falling back to
-       the general 3-column grid used by Day 1/Final result cards. */
-    .nf-card-stats-roster { grid-template-columns: repeat(2, 1fr); }
     .stat { display: flex; flex-direction: column; }
     .stat-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 2px; }
     .stat-value { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--navy); }
@@ -713,10 +743,14 @@
       font-weight: 600;
     }
     .flight-players { display: flex; flex-direction: column; gap: 7px; }
+    /* PLAYER | DIV | COURSE HCP — player gets the remaining width, DIV and
+       Course HCP stay compact. Course HCP is intentionally plain (not
+       colored/bolded like a leaderboard score) — it's a fixed round
+       assignment, not a competitive result. */
     .flight-player-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: 1fr auto auto;
       align-items: center;
-      justify-content: space-between;
       gap: 10px;
       font-size: 0.9rem;
       color: #374151;
@@ -726,6 +760,13 @@
     .flight-player-row.player-match { background: #FFF1C2; font-weight: 700; color: var(--navy); }
     .flight-player-row .fp-name { font-weight: 600; }
     .flight-player-row.player-match .fp-name { font-weight: 800; }
+    .flight-player-row .fp-hcp {
+      font-family: var(--font-head);
+      font-weight: 700;
+      color: var(--navy);
+      min-width: 22px;
+      text-align: right;
+    }
 
     /* ── LOCKED PANEL ── */
     .locked-panel {

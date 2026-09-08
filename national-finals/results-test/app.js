@@ -3,7 +3,7 @@
 
   var DIVISIONS = ["A", "B", "C", "D", "E"];
   var ROSTER_DIVISIONS = DIVISIONS.concat(["PENDING"]);
-  var roster = window.NF_PLAYERS || [];       // real current roster (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp/day1CourseHcp)
+  var roster = window.NF_PLAYERS || [];       // real current roster (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp)
   var testScores = window.NF_TEST_SCORES || []; // fictitious players, Day 1/Final leaderboards only
   var flightsByDay = window.NF_FLIGHTS || { day1: [], day2: [] };
   var courseRotation = window.NF_COURSE_ROTATION || { day1: [], day2: [] };
@@ -72,6 +72,29 @@
 
   /* ---------------- ROSTER ---------------- */
 
+  /* Shared "Player Handicap Information" card — placed after the roster
+     summary and before the division filters/search, on both production
+     and this test page. Approved copy; do not paraphrase. Paula's number
+     is approved for public display as a clickable sms: link. */
+  function handicapInfoHtml() {
+    return '<div class="handicap-info">' +
+      '<div class="handicap-info-title">Player Handicap Information</div>' +
+      '<div class="handicap-info-section">' +
+        "<h4>Tournament Index</h4>" +
+        "<p>For the 2026 WAGC Philippines National Finals, a player's Tournament Index is based on the player's Low Index recorded and verified by the Tournament Committee.</p>" +
+        "<p>Under the World Handicap System (WHS), the Low Handicap Index is the lowest Handicap Index calculated for a player during the 365-day period preceding the most recent score in the player's scoring record. It serves as a reference point against which the player's current Handicap Index is compared.</p>" +
+      "</div>" +
+      '<div class="handicap-info-section">' +
+        "<h4>Roster &amp; Handicap Verification</h4>" +
+        "<p>The player roster and handicap information shown on this page are still subject to change while the Tournament Committee completes final handicap verification. Any updates identified during the verification process may be reflected on this page.</p>" +
+      "</div>" +
+      '<div class="handicap-info-section">' +
+        "<h4>Handicap Questions</h4>" +
+        '<p>If you have any questions or concerns regarding your handicap, please message Paula at <a href="sms:+639176734653">0917 673 4653</a>. Your concern will be brought to the Tournament Committee for review.</p>' +
+      "</div>" +
+    "</div>";
+  }
+
   function buildRoster() {
     var wrap = document.getElementById("roster-panel");
     if (!config.rosterPublished) {
@@ -94,6 +117,7 @@
         '<div class="roster-clarify-title">Current National Finals Player Roster</div>' +
         "<p>Roster information reflects the current National Finals player list (" + totalCount + " players, " + (totalCount - pendingCount) + " assigned to a division, " + pendingCount + " pending division assignment). Tournament scoring shown elsewhere on this test page may still use test data.</p>" +
       "</div>" +
+      handicapInfoHtml() +
       '<div class="toolbar">' +
         '<div class="filter-pills" id="roster-filter" data-target="division"></div>' +
         '<div class="search-box">' +
@@ -143,10 +167,10 @@
         html += '<div class="division-heading">' + badge + " " + heading + '<span class="division-count">' + group.length + " player" + (group.length === 1 ? "" : "s") + "</span></div>";
 
         html += '<table class="nf-table nf-table-desktop nf-table-roster"><thead><tr>' +
-          "<th>Player</th><th>Tournament Index</th><th>Palmer HCP</th><th>Marsh HCP</th><th>Day 1 HCP</th>" +
+          "<th>Player</th><th>Tournament Index</th><th>Palmer HCP</th><th>Marsh HCP</th>" +
           "</tr></thead><tbody>";
         group.forEach(function (p) {
-          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.palmerCourseHcp) + "</td><td>" + fmtHcp(p.marshCourseHcp) + "</td><td>" + fmtHcp(p.day1CourseHcp) + "</td></tr>";
+          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.palmerCourseHcp) + "</td><td>" + fmtHcp(p.marshCourseHcp) + "</td></tr>";
         });
         html += "</tbody></table>";
 
@@ -154,11 +178,10 @@
         group.forEach(function (p) {
           html += '<div class="nf-card">' +
             '<div class="nf-card-top"><span class="player-name">' + esc(p.name) + "</span></div>" +
-            '<div class="nf-card-stats nf-card-stats-roster">' +
+            '<div class="nf-card-stats">' +
               '<div class="stat"><span class="stat-label">Tournament Index</span><span class="stat-value">' + fmtIndex(p.tournamentIndex) + "</span></div>" +
               '<div class="stat"><span class="stat-label">Palmer HCP</span><span class="stat-value">' + fmtHcp(p.palmerCourseHcp) + "</span></div>" +
               '<div class="stat"><span class="stat-label">Marsh HCP</span><span class="stat-value">' + fmtHcp(p.marshCourseHcp) + "</span></div>" +
-              '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + fmtHcp(p.day1CourseHcp) + "</span></div>" +
             "</div>" +
           "</div>";
         });
@@ -480,9 +503,11 @@
           '<div class="flight-players">';
         f.players.forEach(function (pl) {
           var isMatch = q && pl.name.toLowerCase().indexOf(q) !== -1;
+          var hcpText = (pl.courseHcp === null || pl.courseHcp === undefined) ? "—" : String(pl.courseHcp);
           html += '<div class="flight-player-row' + (isMatch ? " player-match" : "") + '">' +
             '<span class="fp-name">' + esc(pl.name) + "</span>" +
             '<span class="div-chip">' + esc(pl.division) + "</span>" +
+            '<span class="fp-hcp">' + hcpText + "</span>" +
           "</div>";
         });
         html += "</div></div>";
