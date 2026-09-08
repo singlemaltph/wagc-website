@@ -27,11 +27,16 @@
        Awards Ceremony — even if the flag is still false, because "flag is
        false" does not make committed data private.
 
-   CURRENT STATE — roster released, pre-tournament otherwise:
-     rosterPublished: true (data.js added — see that file's header for the
-     sanitization rules), day1FlightsPublished: false,
+   CURRENT STATE — pre-tournament, roster UNPUBLISHED again:
+     rosterPublished: false, day1FlightsPublished: false,
      day2FlightsPublished: false, day1ResultsPublished: false,
      finalResultsPublished: false
+
+   ROSTER WAS RE-UNPUBLISHED: the roster was briefly published, then
+   pulled back at WAGC's request before formal authorization. data.js
+   (the real roster dataset) and its <script> tag in index.html have
+   both been removed from this branch — do not re-add either until
+   STEP 1 below is followed again in full, with fresh authorization.
 
    NAVIGATION MODEL: the primary tabs — INFO / ROSTER / FLIGHTS / RESULTS —
    are ALWAYS visible on this page, regardless of these flags. Flags gate
@@ -44,20 +49,34 @@
    one step at a time, only once WAGC approves each step). The tabs stay
    the same throughout — only each panel's content changes:
 
-     STEP 1 — rosterPublished: true — DONE
-       Roster rendering (mirroring national-finals/results-test/) and the
-       sanitized public roster data file (data.js) have been added.
-       Public-safe roster fields: name, division, tournamentIndex,
-       palmerCourseHcp, marshCourseHcp — taken as-is from the Players tab
-       (columns B, C, E, G, H respectively), never recalculated. Still
-       never IDs, WHS Index (raw), TEE, contact info, payment/status, or
-       notes. Desktop table columns: PLAYER / TOURNAMENT INDEX / PALMER
-       HCP / MARSH HCP. The roster deliberately does NOT publish Day 1
-       Course HCP — a player's actual Course HCP for a given round is
-       published with that day's flight pairing instead (see STEP 2/3
-       below). To refresh the roster later, re-pull the Players tab and
-       replace data.js's array in the SAME change that updates
-       national-finals/results-test/data.js from the same snapshot.
+     STEP 1 — rosterPublished: true — NOT YET (re-authorization required)
+       Roster rendering already exists in app.js's buildRoster() (mirrors
+       national-finals/results-test/) and is ready to go the moment real
+       data is added — but do NOT flip this flag until WAGC explicitly
+       authorizes publication again. Required process for the next
+       release, every step in the SAME commit as step 8:
+         1. Read the latest NF Scoring → Players tab (live, not a cached
+            export).
+         2. Complete/confirm handicap verification with the Tournament
+            Committee.
+         3. Generate a fresh sanitized production roster snapshot.
+         4. Verify every row's Player, Division, Tournament Index,
+            Palmer HCP, Marsh HCP against the Players tab (columns B, C,
+            E, G, H respectively) — taken as-is, never recalculated.
+            Still never IDs, WHS Index (raw), TEE, contact info,
+            payment/status, or notes. The roster deliberately does NOT
+            publish Day 1 Course HCP — that belongs to that day's flight
+            pairing instead (see STEP 2/3 below).
+         5. Add national-finals/data.js with the verified snapshot.
+         6. Confirm the "Player Handicap Information" section (see
+            handicapInfoHtml() in app.js) still renders above the
+            division filters/search.
+         7. Set rosterPublished: true below.
+         8. Commit the roster data file + this flag change together —
+            never flip the flag ahead of the data.
+         9. Push.
+       Desktop table columns: PLAYER / TOURNAMENT INDEX / PALMER HCP /
+       MARSH HCP.
 
      STEP 2 — day1FlightsPublished: true
        Add a real Day 1 flight-pairing data file (mirroring the shape of
@@ -93,7 +112,7 @@
    in the same change.
    ========================================================================== */
 window.NF_CONFIG = {
-  rosterPublished: true,
+  rosterPublished: false,
   day1FlightsPublished: false,
   day2FlightsPublished: false,
   day1ResultsPublished: false,

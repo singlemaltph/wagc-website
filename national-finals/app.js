@@ -38,47 +38,60 @@
 
   /* Shared "Player Handicap Information" card — placed after the roster
      summary and before the division filters/search, on both production
-     and national-finals/results-test/. Approved copy; do not paraphrase.
-     Paula's number is approved for public display as a clickable sms:
-     link. */
+     (including beneath the unpublished-roster notice, per explicit
+     instruction — the copy itself is already approved for public
+     display) and national-finals/results-test/. Approved copy; do not
+     paraphrase. Paula's number is approved for public display as a
+     clickable sms: link. */
   function handicapInfoHtml() {
     return '<div class="handicap-info">' +
       '<div class="handicap-info-title">Player Handicap Information</div>' +
       '<div class="handicap-info-section">' +
-        "<h4>Tournament Index</h4>" +
-        "<p>For the 2026 WAGC Philippines National Finals, a player's Tournament Index is based on the player's Low Index recorded and verified by the Tournament Committee.</p>" +
-        "<p>Under the World Handicap System (WHS), the Low Handicap Index is the lowest Handicap Index calculated for a player during the 365-day period preceding the most recent score in the player's scoring record. It serves as a reference point against which the player's current Handicap Index is compared.</p>" +
+        "<h4>How Your Tournament Index Is Determined</h4>" +
+        "<p>For the 2026 WAGC Philippines National Finals, your Tournament Index is based on your Low Handicap Index recorded in your WHS handicap record and verified by the Tournament Committee.</p>" +
+        "<p>Under the World Handicap System (WHS), the Low Handicap Index is the lowest Handicap Index calculated for a player during the 365-day period preceding the most recent score in the player's scoring record.</p>" +
+        "<p>This means your Tournament Index for the National Finals may be lower than your current Handicap Index. The Low Handicap Index is used as a reference to help ensure that a player's demonstrated playing ability over the previous year is properly reflected in the competition.</p>" +
       "</div>" +
       '<div class="handicap-info-section">' +
-        "<h4>Roster &amp; Handicap Verification</h4>" +
-        "<p>The player roster and handicap information shown on this page are still subject to change while the Tournament Committee completes final handicap verification. Any updates identified during the verification process may be reflected on this page.</p>" +
+        "<h4>Handicap Verification In Progress</h4>" +
+        "<p>The player roster, Tournament Index, division assignment, and Course Handicap information are still subject to change while the Tournament Committee completes final handicap verification.</p>" +
+        "<p>If any updates are identified during the verification process, they will be reflected in the official player roster and tournament records.</p>" +
       "</div>" +
       '<div class="handicap-info-section">' +
-        "<h4>Handicap Questions</h4>" +
-        '<p>If you have any questions or concerns regarding your handicap, please message Paula at <a href="sms:+639176734653">0917 673 4653</a>. Your concern will be brought to the Tournament Committee for review.</p>' +
+        "<h4>Questions or Concerns?</h4>" +
+        '<p>If you have any questions or concerns regarding your handicap, please message Paula at <a href="sms:+639176734653">0917 673 4653</a>.</p>' +
+        "<p>Your concern will be brought to the Tournament Committee for review.</p>" +
       "</div>" +
     "</div>";
   }
 
   /* ---------------- ROSTER ----------------
-     rosterPublished: true — roster rendering ported from the reference
+     rosterPublished: false — the roster was briefly published and has
+     been pulled back until WAGC explicitly re-authorizes release (see
+     config.js's STEP 1 for the required re-publication process). No
+     roster data file is loaded on this page while the flag is false —
+     `roster` above resolves to [] since window.NF_PLAYERS is undefined
+     (data.js and its <script> tag were removed from index.html), so
+     nothing below can accidentally expose player data even if this
+     function were called incorrectly.
+
+     Once re-published, roster rendering mirrors the reference
      implementation at national-finals/results-test/app.js buildRoster().
-     Real, sanitized roster data lives in data.js as window.NF_PLAYERS
-     (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp only
-     — see that file's header for the sanitization rules). Palmer/Marsh
-     Course HCP are taken as-is from the Players tab, never recalculated;
-     null renders as "—" and a real 0 or negative HCP renders as-is.
-     day1CourseHcp is intentionally NOT part of the roster — a player's
-     actual Course HCP for a given round is published with that day's
-     flight pairing instead (see buildFlights() below). */
+     Public-safe roster fields: name/division/tournamentIndex/
+     palmerCourseHcp/marshCourseHcp only. Palmer/Marsh Course HCP are
+     taken as-is from the Players tab, never recalculated; null renders
+     as "—" and a real 0 or negative HCP renders as-is. day1CourseHcp is
+     intentionally NOT part of the roster — a player's actual Course HCP
+     for a given round is published with that day's flight pairing
+     instead (see buildFlights() below). */
   function buildRoster() {
     var wrap = document.getElementById("roster-panel");
     if (!wrap) return;
     if (!config.rosterPublished) {
       wrap.innerHTML = lockedPanel("PLAYER ROSTER", [
-        "The official 2026 WAGC Philippines National Finals player roster will be published here once finalized.",
-        "Please check back for updates."
-      ]);
+        "The official 2026 WAGC Philippines National Finals player roster is currently being finalized as the Tournament Committee completes handicap verification.",
+        "Please check back for the official player roster."
+      ]) + handicapInfoHtml();
       return;
     }
 
