@@ -659,6 +659,10 @@
     }
     .pos-badge i { color: var(--gold); font-size: 0.85rem; }
     .nf-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    /* Roster cards show 4 stats (Tournament Index, Palmer HCP, Marsh HCP,
+       Day 1 HCP) — always lay these out 2 x 2 rather than falling back to
+       the general 3-column grid used by Day 1/Final result cards. */
+    .nf-card-stats-roster { grid-template-columns: repeat(2, 1fr); }
     .stat { display: flex; flex-direction: column; }
     .stat-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 2px; }
     .stat-value { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--navy); }

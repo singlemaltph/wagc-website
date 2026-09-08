@@ -3,7 +3,7 @@
 
   var DIVISIONS = ["A", "B", "C", "D", "E"];
   var ROSTER_DIVISIONS = DIVISIONS.concat(["PENDING"]);
-  var roster = window.NF_PLAYERS || [];       // real current roster (name/division/tournamentIndex/day1CourseHcp)
+  var roster = window.NF_PLAYERS || [];       // real current roster (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp/day1CourseHcp)
   var testScores = window.NF_TEST_SCORES || []; // fictitious players, Day 1/Final leaderboards only
   var flightsByDay = window.NF_FLIGHTS || { day1: [], day2: [] };
   var courseRotation = window.NF_COURSE_ROTATION || { day1: [], day2: [] };
@@ -142,11 +142,11 @@
         html += '<div class="division-block">';
         html += '<div class="division-heading">' + badge + " " + heading + '<span class="division-count">' + group.length + " player" + (group.length === 1 ? "" : "s") + "</span></div>";
 
-        html += '<table class="nf-table nf-table-desktop"><thead><tr>' +
-          "<th>Player</th><th>Tournament Index</th><th>Day 1 Course HCP</th>" +
+        html += '<table class="nf-table nf-table-desktop nf-table-roster"><thead><tr>' +
+          "<th>Player</th><th>Tournament Index</th><th>Palmer HCP</th><th>Marsh HCP</th><th>Day 1 HCP</th>" +
           "</tr></thead><tbody>";
         group.forEach(function (p) {
-          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.day1CourseHcp) + "</td></tr>";
+          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.palmerCourseHcp) + "</td><td>" + fmtHcp(p.marshCourseHcp) + "</td><td>" + fmtHcp(p.day1CourseHcp) + "</td></tr>";
         });
         html += "</tbody></table>";
 
@@ -154,8 +154,10 @@
         group.forEach(function (p) {
           html += '<div class="nf-card">' +
             '<div class="nf-card-top"><span class="player-name">' + esc(p.name) + "</span></div>" +
-            '<div class="nf-card-stats">' +
+            '<div class="nf-card-stats nf-card-stats-roster">' +
               '<div class="stat"><span class="stat-label">Tournament Index</span><span class="stat-value">' + fmtIndex(p.tournamentIndex) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Palmer HCP</span><span class="stat-value">' + fmtHcp(p.palmerCourseHcp) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Marsh HCP</span><span class="stat-value">' + fmtHcp(p.marshCourseHcp) + "</span></div>" +
               '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + fmtHcp(p.day1CourseHcp) + "</span></div>" +
             "</div>" +
           "</div>";

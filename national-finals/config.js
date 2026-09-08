@@ -47,8 +47,14 @@
      STEP 1 — rosterPublished: true
        Replace the Roster placeholder with real roster rendering
        (mirroring national-finals/results-test/) and add a sanitized
-       public roster data file (name/division/tournament index/day1
-       course HCP only — never IDs, contact info, or notes).
+       public roster data file. Public-safe roster fields: name,
+       division, tournamentIndex, palmerCourseHcp, marshCourseHcp,
+       day1CourseHcp — taken as-is from the Players tab (columns B, C,
+       E, G, H, K respectively), never recalculated. Still never IDs,
+       WHS Index (raw), TEE, contact info, payment/status, or notes.
+       Desktop table columns: PLAYER / TOURNAMENT INDEX / PALMER HCP /
+       MARSH HCP / DAY 1 HCP (see national-finals/results-test/app.js
+       buildRoster() for the reference implementation).
 
      STEP 2 — day1FlightsPublished: true
        Replace the Flights placeholder with the real, approved Day 1

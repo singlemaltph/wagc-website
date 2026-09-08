@@ -20,9 +20,22 @@
   /* ---------------- ROSTER ---------------- */
   /* rosterPublished: false — no roster data file is loaded on this page at
      all. When the roster is ready to publish, add a sanitized public
-     roster data script (name/division/tournament index/day1 course HCP
-     only — mirroring national-finals/results-test/data.js) alongside the
-     real render logic here, in the SAME change that flips the flag. */
+     roster data script (mirroring national-finals/results-test/data.js)
+     alongside the real render logic here, in the SAME change that flips
+     the flag.
+
+     Public-safe roster fields/schema: name, division, tournamentIndex,
+     palmerCourseHcp, marshCourseHcp, day1CourseHcp. Palmer/Marsh Course
+     HCP come directly from the Players tab's columns G/H — never
+     recalculated or derived from Low Index/TEE. null renders as "—";
+     a real 0 or negative HCP is valid and renders as-is. Still never
+     Player ID, WHS ID, raw WHS Index, TEE, Notes, Source/Reference, or
+     any other internal/administrative column.
+
+     Desktop table: PLAYER / TOURNAMENT INDEX / PALMER HCP / MARSH HCP /
+     DAY 1 HCP. Mobile cards: same four stat values as a 2x2 grid. See
+     national-finals/results-test/app.js buildRoster() for the reference
+     implementation to mirror here. */
   function buildRoster() {
     var wrap = document.getElementById("roster-panel");
     if (!wrap) return;
