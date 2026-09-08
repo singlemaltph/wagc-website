@@ -1,0 +1,11 @@
+/national-finals
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/national-finals/*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/National-Finals
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
+
+/National-Finals/*
+  Cache-Control: no-store, no-cache, must-revalidate, max-age=0
