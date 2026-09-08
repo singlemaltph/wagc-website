@@ -1,10 +1,12 @@
 /* ==========================================================================
-   NATIONAL FINALS — CURRENT PLAYER ROSTER
+   NATIONAL FINALS — PUBLISHED PLAYER ROSTER (PRODUCTION)
    --------------------------------------------------------------------------
    This is the REAL, current National Finals player roster, sourced from
    the "Players" tab of the private "2026 WAGC NF Scoring" Google Sheet
    (NOT the "Test Players" tab). It is a sanitized, PUBLIC-SAFE snapshot —
-   only fields appropriate for public display are included below.
+   only fields appropriate for public display are included below. This is
+   the live, authorized public roster — loaded only when
+   config.js's rosterPublished is true.
 
    Public-safe roster fields (approved for public display): Player Name,
    Division, Tournament Index / Low Index, Palmer Course HCP, Marsh Course
@@ -18,12 +20,6 @@
    this file are readable by anyone regardless of any publication flag, so
    nothing internal belongs here even if the UI never renders it.
 
-   This roster snapshot is separate from Day 1/Final SCORING data on
-   purpose: scoring/results remain TEST DATA under the existing publishing
-   workflow (see config.js + PUBLISHING_WORKFLOW.md) and live in
-   test-scores.js as window.NF_TEST_SCORES, using a fictitious set of
-   players. Do NOT merge real roster entries with fake scores.
-
    Field reference:
      name           - player full name, as entered in the Players tab
      division       - "A" | "B" | "C" | "D" | "E" | "PENDING"
@@ -33,31 +29,25 @@
      tournamentIndex - the sheet's "Low Index": the index used for
                        National Finals division placement. Labeled
                        "Tournament Index" in the UI. null when the sheet's
-                       Low Index is itself blank/PENDING/Unknown (all such
-                       cases are currently PENDING-division players) — this
-                       is never fabricated.
+                       Low Index is itself blank/PENDING/Unknown — this is
+                       never fabricated.
      palmerCourseHcp - the sheet's "Palmer Course HCP" (column G), taken
                        as-is — never recalculated or derived here. null
-                       when blank in the sheet, or when the existing
-                       website player could not be uniquely matched to a
-                       current Players-tab row by exact name (see the
-                       unmatched-player list in the roster-refresh task
-                       notes). The UI renders null as "—". A real value of
-                       0 or a negative number is valid and renders as-is.
+                       when blank in the sheet. The UI renders null as
+                       "—". A real value of 0 or a negative number is
+                       valid and renders as-is.
      marshCourseHcp  - the sheet's "Marsh Course HCP" (column H). Same
                        rules as palmerCourseHcp above.
      day1CourseHcp   - the sheet's "Day 1 Course HCP". null when not yet
-                       finalized in the sheet (currently blank for every
-                       player) — the UI renders this as "—", never a
-                       made-up number.
+                       finalized in the sheet — the UI renders this as
+                       "—", never a made-up number.
 
    To refresh: re-pull the Players tab, re-run the same sanitization
    (drop every excluded column above, sort A→E→PENDING then alphabetical
-   by name), match each existing website player to the current Players
-   tab by exact name, and replace the array below. Do not hand-edit
-   scores or divisions here — the sheet is the source of truth. Do not
-   silently substitute a similarly-named player for one that can't be
-   uniquely matched — leave palmerCourseHcp/marshCourseHcp null instead.
+   by name), and replace the array below in the SAME change that also
+   updates national-finals/results-test/data.js from the same snapshot.
+   Do not hand-edit scores or divisions here — the sheet is the source
+   of truth.
    ========================================================================== */
 window.NF_PLAYERS = [
   { name: "Gerardo De Chavez", division: "A", tournamentIndex: 5.1, palmerCourseHcp: 4, marshCourseHcp: 3, day1CourseHcp: null },

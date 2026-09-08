@@ -27,34 +27,35 @@
        Awards Ceremony — even if the flag is still false, because "flag is
        false" does not make committed data private.
 
-   CURRENT STATE — pre-tournament release:
-     rosterPublished: false, day1FlightsPublished: false,
+   CURRENT STATE — roster released, pre-tournament otherwise:
+     rosterPublished: true (data.js added — see that file's header for the
+     sanitization rules), day1FlightsPublished: false,
      day2FlightsPublished: false, day1ResultsPublished: false,
      finalResultsPublished: false
 
    NAVIGATION MODEL: the primary tabs — INFO / ROSTER / FLIGHTS / RESULTS —
    are ALWAYS visible on this page, regardless of these flags. Flags gate
-   the CONTENT inside a tab, never the tab's existence. With everything
-   above false, Roster/Flights/Results each show a simple "not yet
-   published, check back" placeholder (see app.js) and load no data files
-   at all — there is nothing unpublished sitting in the DOM or in public
-   JS to find.
+   the CONTENT inside a tab, never the tab's existence. Flights/Results
+   still show a simple "not yet published, check back" placeholder (see
+   app.js) and load no data files while their flags are false — there is
+   nothing unpublished sitting in the DOM or in public JS to find.
 
    ROLLOUT SEQUENCE (update this page's markup + this file together,
    one step at a time, only once WAGC approves each step). The tabs stay
    the same throughout — only each panel's content changes:
 
-     STEP 1 — rosterPublished: true
-       Replace the Roster placeholder with real roster rendering
-       (mirroring national-finals/results-test/) and add a sanitized
-       public roster data file. Public-safe roster fields: name,
-       division, tournamentIndex, palmerCourseHcp, marshCourseHcp,
-       day1CourseHcp — taken as-is from the Players tab (columns B, C,
-       E, G, H, K respectively), never recalculated. Still never IDs,
-       WHS Index (raw), TEE, contact info, payment/status, or notes.
-       Desktop table columns: PLAYER / TOURNAMENT INDEX / PALMER HCP /
-       MARSH HCP / DAY 1 HCP (see national-finals/results-test/app.js
-       buildRoster() for the reference implementation).
+     STEP 1 — rosterPublished: true — DONE
+       Roster rendering (mirroring national-finals/results-test/) and the
+       sanitized public roster data file (data.js) have been added.
+       Public-safe roster fields: name, division, tournamentIndex,
+       palmerCourseHcp, marshCourseHcp, day1CourseHcp — taken as-is from
+       the Players tab (columns B, C, E, G, H, K respectively), never
+       recalculated. Still never IDs, WHS Index (raw), TEE, contact info,
+       payment/status, or notes. Desktop table columns: PLAYER /
+       TOURNAMENT INDEX / PALMER HCP / MARSH HCP / DAY 1 HCP. To refresh
+       the roster later, re-pull the Players tab and replace data.js's
+       array in the SAME change that updates
+       national-finals/results-test/data.js from the same snapshot.
 
      STEP 2 — day1FlightsPublished: true
        Replace the Flights placeholder with the real, approved Day 1
@@ -77,7 +78,7 @@
    in the same change.
    ========================================================================== */
 window.NF_CONFIG = {
-  rosterPublished: false,
+  rosterPublished: true,
   day1FlightsPublished: false,
   day2FlightsPublished: false,
   day1ResultsPublished: false,

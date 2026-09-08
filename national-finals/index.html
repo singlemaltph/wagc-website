@@ -306,6 +306,157 @@
     .results-sub-panel { display: none; }
     .results-sub-panel.active { display: block; }
 
+    /* ── ROSTER — ported from national-finals/results-test/index.html
+       (toolbar/filter/search, division blocks, desktop table, mobile
+       cards). Only what the roster needs; results/flights-only variants
+       (leader rows, position badges, etc.) are not needed here. ── */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      position: sticky;
+      top: 112px;
+      background: var(--white);
+      padding: 10px 0;
+      z-index: 90;
+    }
+    .toolbar[hidden] { display: none; }
+    .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1.5px solid #d8dee8;
+      background: var(--white);
+      color: var(--navy);
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      min-height: 40px;
+    }
+    .pill:hover { border-color: var(--gold); }
+    .pill.active { background: var(--navy); border-color: var(--navy); color: var(--gold); }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--light);
+      border-radius: 8px;
+      padding: 0 14px;
+      min-height: 44px;
+      flex: 1 1 220px;
+      max-width: 320px;
+    }
+    .search-box i { color: var(--gray); font-size: 0.85rem; }
+    .search-box input {
+      border: none;
+      background: none;
+      outline: none;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      width: 100%;
+      color: var(--navy);
+      padding: 10px 0;
+    }
+
+    .roster-clarify {
+      background: var(--light);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+    }
+    .roster-clarify-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .roster-clarify p { font-size: 0.82rem; color: #4b5666; line-height: 1.6; }
+
+    .division-block { margin-bottom: 36px; }
+    .division-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--navy);
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--gold);
+      margin-bottom: 12px;
+    }
+    .division-count { margin-left: auto; font-family: var(--font-body); font-size: 0.78rem; font-weight: 600; color: var(--gray); text-transform: none; letter-spacing: 0; }
+    .div-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--navy);
+      color: var(--gold);
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 900;
+      border-radius: 6px;
+    }
+
+    .nf-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .nf-table thead { background: var(--navy); color: var(--white); }
+    .nf-table thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+    .nf-table tbody tr { border-bottom: 1px solid #e5e9f0; }
+    .nf-table tbody tr:nth-child(even) { background: var(--light); }
+    .nf-table tbody td { padding: 12px 14px; color: #374151; }
+    .nf-table .player-name { font-weight: 700; color: var(--navy); }
+    .pending-badge {
+      display: inline-block;
+      background: #e5e9f0;
+      color: var(--gray);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 999px;
+    }
+
+    .nf-cards-mobile { display: none; }
+    .nf-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      border-left: 4px solid #d8dee8;
+    }
+    .nf-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .nf-card-top .player-name { font-weight: 800; color: var(--navy); font-size: 1rem; }
+    .nf-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    /* Roster cards show 4 stats (Tournament Index, Palmer HCP, Marsh HCP,
+       Day 1 HCP) — always lay these out 2 x 2. */
+    .nf-card-stats-roster { grid-template-columns: repeat(2, 1fr); }
+    .stat { display: flex; flex-direction: column; }
+    .stat-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 2px; }
+    .stat-value { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--navy); }
+
+    .empty-state { color: var(--gray); font-size: 0.9rem; padding: 24px 0; text-align: center; }
+
     /* ── PLACEHOLDER / LOCKED PANEL ── */
     .locked-panel {
       text-align: center;
@@ -353,11 +504,15 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .toolbar { top: 104px; }
+      .nf-table-desktop { display: none; }
+      .nf-cards-mobile { display: block; }
     }
     @media (max-width: 480px) {
       .nf-tab { font-size: 0.76rem; padding: 13px 6px; min-width: 76px; }
       .nf-tab i { margin-right: 3px; }
       .info-grid { grid-template-columns: 1fr 1fr; }
+      .nf-card-stats { grid-template-columns: repeat(2, 1fr); }
       footer { flex-direction: column; align-items: flex-start; }
     }
   </style>
@@ -991,6 +1146,7 @@
 </footer>
 
 <script src="config.js"></script>
+<script src="data.js"></script>
 <script src="app.js"></script>
 
 </body>

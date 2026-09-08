@@ -2,6 +2,9 @@
   "use strict";
 
   var config = window.NF_CONFIG || {};
+  var DIVISIONS = ["A", "B", "C", "D", "E"];
+  var ROSTER_DIVISIONS = DIVISIONS.concat(["PENDING"]);
+  var roster = window.NF_PLAYERS || []; // real published roster (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp/day1CourseHcp)
 
   function esc(str) {
     return String(str).replace(/[&<>"']/g, function (c) {
@@ -17,25 +20,31 @@
     "</div>";
   }
 
-  /* ---------------- ROSTER ---------------- */
-  /* rosterPublished: false — no roster data file is loaded on this page at
-     all. When the roster is ready to publish, add a sanitized public
-     roster data script (mirroring national-finals/results-test/data.js)
-     alongside the real render logic here, in the SAME change that flips
-     the flag.
+  function buildFilterPills(containerId, active, divisions) {
+    var container = document.getElementById(containerId);
+    var options = ["all"].concat(divisions || DIVISIONS);
+    container.innerHTML = options.map(function (opt) {
+      var label = opt === "all" ? "All" : opt;
+      return '<button type="button" class="pill' + (opt === active ? " active" : "") + '" data-value="' + opt + '">' + label + "</button>";
+    }).join("");
+  }
 
-     Public-safe roster fields/schema: name, division, tournamentIndex,
-     palmerCourseHcp, marshCourseHcp, day1CourseHcp. Palmer/Marsh Course
-     HCP come directly from the Players tab's columns G/H — never
-     recalculated or derived from Low Index/TEE. null renders as "—";
-     a real 0 or negative HCP is valid and renders as-is. Still never
-     Player ID, WHS ID, raw WHS Index, TEE, Notes, Source/Reference, or
-     any other internal/administrative column.
+  function setActivePill(containerId, value) {
+    var container = document.getElementById(containerId);
+    container.querySelectorAll(".pill").forEach(function (btn) {
+      btn.classList.toggle("active", btn.getAttribute("data-value") === value);
+    });
+  }
 
-     Desktop table: PLAYER / TOURNAMENT INDEX / PALMER HCP / MARSH HCP /
-     DAY 1 HCP. Mobile cards: same four stat values as a 2x2 grid. See
-     national-finals/results-test/app.js buildRoster() for the reference
-     implementation to mirror here. */
+  /* ---------------- ROSTER ----------------
+     rosterPublished: true — roster rendering ported from the reference
+     implementation at national-finals/results-test/app.js buildRoster().
+     Real, sanitized roster data lives in data.js as window.NF_PLAYERS
+     (name/division/tournamentIndex/palmerCourseHcp/marshCourseHcp/
+     day1CourseHcp only — see that file's header for the sanitization
+     rules). Palmer/Marsh/Day1 Course HCP are taken as-is from the
+     Players tab, never recalculated; null renders as "—" and a real 0
+     or negative HCP renders as-is. */
   function buildRoster() {
     var wrap = document.getElementById("roster-panel");
     if (!wrap) return;
@@ -46,7 +55,110 @@
       ]);
       return;
     }
-    // Real roster rendering goes here once rosterPublished = true.
+
+    var totalCount = roster.length;
+    var pendingCount = roster.filter(function (p) { return p.division === "PENDING"; }).length;
+
+    /* Division order A→E→PENDING falls out of plain string comparison
+       here since "PENDING" sorts after "E" alphabetically. */
+    var sorted = roster.slice().sort(function (a, b) {
+      if (a.division !== b.division) return a.division.localeCompare(b.division);
+      return a.name.localeCompare(b.name);
+    });
+
+    wrap.innerHTML =
+      '<div class="roster-clarify">' +
+        '<div class="roster-clarify-title">Current National Finals Player Roster</div>' +
+        "<p>Roster information reflects the current National Finals player list (" + totalCount + " players, " + (totalCount - pendingCount) + " assigned to a division, " + pendingCount + " pending division assignment).</p>" +
+      "</div>" +
+      '<div class="toolbar">' +
+        '<div class="filter-pills" id="roster-filter" data-target="division"></div>' +
+        '<div class="search-box">' +
+          '<i class="fas fa-search"></i>' +
+          '<input type="search" id="roster-search" placeholder="Search player name..." aria-label="Search player name" />' +
+        "</div>" +
+      "</div>" +
+      '<div id="roster-results"></div>';
+
+    buildFilterPills("roster-filter", "all", ROSTER_DIVISIONS);
+
+    var searchInput = document.getElementById("roster-search");
+    var state = { division: "all", query: "" };
+
+    function fmtIndex(n) {
+      return n === null || n === undefined ? "—" : n.toFixed(1);
+    }
+    function fmtHcp(n) {
+      return n === null || n === undefined ? "—" : String(n);
+    }
+
+    function renderRoster() {
+      var filtered = sorted.filter(function (p) {
+        var matchesDivision = state.division === "all" || p.division === state.division;
+        var matchesQuery = p.name.toLowerCase().indexOf(state.query) !== -1;
+        return matchesDivision && matchesQuery;
+      });
+
+      var grouped = {};
+      filtered.forEach(function (p) {
+        grouped[p.division] = grouped[p.division] || [];
+        grouped[p.division].push(p);
+      });
+
+      var divisionsToShow = state.division === "all" ? ROSTER_DIVISIONS : [state.division];
+      var html = "";
+
+      divisionsToShow.forEach(function (div) {
+        var group = grouped[div] || [];
+        if (!group.length) return;
+
+        var isPending = div === "PENDING";
+        var badge = isPending ? '<span class="pending-badge">Pending</span>' : '<span class="div-badge">' + div + "</span>";
+        var heading = isPending ? "Division Pending" : "Division " + div;
+
+        html += '<div class="division-block">';
+        html += '<div class="division-heading">' + badge + " " + heading + '<span class="division-count">' + group.length + " player" + (group.length === 1 ? "" : "s") + "</span></div>";
+
+        html += '<table class="nf-table nf-table-desktop nf-table-roster"><thead><tr>' +
+          "<th>Player</th><th>Tournament Index</th><th>Palmer HCP</th><th>Marsh HCP</th><th>Day 1 HCP</th>" +
+          "</tr></thead><tbody>";
+        group.forEach(function (p) {
+          html += "<tr><td class=\"player-name\">" + esc(p.name) + "</td><td>" + fmtIndex(p.tournamentIndex) + "</td><td>" + fmtHcp(p.palmerCourseHcp) + "</td><td>" + fmtHcp(p.marshCourseHcp) + "</td><td>" + fmtHcp(p.day1CourseHcp) + "</td></tr>";
+        });
+        html += "</tbody></table>";
+
+        html += '<div class="nf-cards nf-cards-mobile">';
+        group.forEach(function (p) {
+          html += '<div class="nf-card">' +
+            '<div class="nf-card-top"><span class="player-name">' + esc(p.name) + "</span></div>" +
+            '<div class="nf-card-stats nf-card-stats-roster">' +
+              '<div class="stat"><span class="stat-label">Tournament Index</span><span class="stat-value">' + fmtIndex(p.tournamentIndex) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Palmer HCP</span><span class="stat-value">' + fmtHcp(p.palmerCourseHcp) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Marsh HCP</span><span class="stat-value">' + fmtHcp(p.marshCourseHcp) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + fmtHcp(p.day1CourseHcp) + "</span></div>" +
+            "</div>" +
+          "</div>";
+        });
+        html += "</div></div>";
+      });
+
+      if (!html) html = '<p class="empty-state">No players match your search.</p>';
+      document.getElementById("roster-results").innerHTML = html;
+    }
+
+    document.getElementById("roster-filter").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-value]");
+      if (!btn) return;
+      state.division = btn.getAttribute("data-value");
+      setActivePill("roster-filter", state.division);
+      renderRoster();
+    });
+    searchInput.addEventListener("input", function () {
+      state.query = searchInput.value.trim().toLowerCase();
+      renderRoster();
+    });
+
+    renderRoster();
   }
 
   /* ---------------- FLIGHTS ---------------- */
