@@ -361,6 +361,62 @@
       .data-table th, .data-table td { padding: 8px 8px; }
     }
 
+    /* ── FAQ (Info sub-tab) ── */
+    .faq-intro { margin-bottom: 18px; }
+    .faq-intro p { font-size: 0.9rem; color: #4b5666; line-height: 1.6; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; }
+    .faq-item {
+      background: var(--light);
+      border-radius: 10px;
+      border: 1px solid #e5e9f0;
+      overflow: hidden;
+    }
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.92rem;
+      line-height: 1.4;
+      color: var(--navy);
+    }
+    .faq-question:hover { color: var(--gold2); }
+    .faq-question:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+    .faq-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      transition: transform 0.2s;
+    }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer[hidden] { display: none; }
+    .faq-answer-inner {
+      padding: 0 16px 16px;
+      margin-top: -2px;
+      border-top: 1px solid #e5e9f0;
+      padding-top: 12px;
+    }
+    .faq-answer-inner p { font-size: 0.88rem; color: #374151; line-height: 1.7; }
+    .faq-answer-inner p + p { margin-top: 10px; }
+    .faq-answer-inner a { color: var(--navy); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+    .faq-answer-inner .data-table,
+    .faq-answer-inner .course-rotation-note { margin-top: 10px; }
+
     /* ── TOOLBAR: filter pills + search ── */
     .toolbar {
       display: flex;
@@ -834,6 +890,11 @@
       .nf-tab i { margin-right: 3px; }
       .info-grid { grid-template-columns: 1fr 1fr; }
       .btn-viber.btn-lg { width: 100%; }
+      /* Info sub-nav now has 3 pills (Schedule / Conditions / FAQ) — on
+         narrow phones let them wrap into 2 + 1 rather than shrinking the
+         label text to force one row. */
+      #info-subnav { flex-wrap: wrap; }
+      #info-subnav .pill { flex: 1 1 45%; }
     }
   </style>
 </head>
@@ -911,6 +972,7 @@
     <div class="day-select" id="info-subnav">
       <button type="button" class="pill active" data-info="schedule">Schedule of Events</button>
       <button type="button" class="pill" data-info="conditions">Tournament Conditions</button>
+      <button type="button" class="pill" data-info="faq">FAQ</button>
     </div>
 
     <div class="info-sub-panel active" id="info-schedule-outer">
@@ -1416,6 +1478,175 @@
           </ul>
         </div>
       </section>
+    </div>
+
+    <!-- Frequently Asked Questions — approved player-facing copy, do not
+         materially rewrite. Static accordion markup; interactivity in
+         app.js's initFaq(). -->
+    <div class="info-sub-panel" id="info-faq-outer">
+      <div class="faq-intro">
+        <div class="info-section-title">Frequently Asked Questions</div>
+        <p>Find answers to common questions about handicaps, divisions, course assignments, and National Finals event arrangements.</p>
+      </div>
+
+      <div class="faq-list" id="faq-list">
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-1" aria-expanded="false" aria-controls="faq-a-1">
+            <span class="faq-question-text">Why is my Tournament Index lower than my current Handicap Index?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-1" role="region" aria-labelledby="faq-q-1" hidden>
+            <div class="faq-answer-inner">
+              <p>For the 2026 WAGC Philippines National Finals, your Tournament Index is based on your Low Handicap Index, as recorded in your WHS handicap record and verified by the Tournament Committee.</p>
+              <p>Because your Low Handicap Index reflects your demonstrated playing ability over the preceding year, it may be lower than your current Handicap Index.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-2" aria-expanded="false" aria-controls="faq-a-2">
+            <span class="faq-question-text">What is a Low Handicap Index?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-2" role="region" aria-labelledby="faq-q-2" hidden>
+            <div class="faq-answer-inner">
+              <p>Under the World Handicap System (WHS), the Low Handicap Index is the lowest Handicap Index calculated for a player during the 365-day period preceding the most recent score in the player's scoring record.</p>
+              <p>It is used as a reference point when evaluating changes in a player's Handicap Index.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-3" aria-expanded="false" aria-controls="faq-a-3">
+            <span class="faq-question-text">Is the Tournament Index shown on the roster final?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-3" role="region" aria-labelledby="faq-q-3" hidden>
+            <div class="faq-answer-inner">
+              <p>Not yet.</p>
+              <p>The player roster, Tournament Index, division assignment, and Course Handicap information are still subject to change while the Tournament Committee completes final handicap verification.</p>
+              <p>Any verified updates will be reflected in the official tournament records and player roster.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-4" aria-expanded="false" aria-controls="faq-a-4">
+            <span class="faq-question-text">What should I do if I believe my handicap or Tournament Index is incorrect?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-4" role="region" aria-labelledby="faq-q-4" hidden>
+            <div class="faq-answer-inner">
+              <p>Please message Paula at <a href="sms:+639176734653">0917 673 4653</a> with your concern.</p>
+              <p>Your concern will be forwarded to the Tournament Committee for review and verification.</p>
+              <p>We encourage players to raise any questions as early as possible so they can be properly reviewed before competition.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-5" aria-expanded="false" aria-controls="faq-a-5">
+            <span class="faq-question-text">How are the WAGC divisions determined?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-5" role="region" aria-labelledby="faq-q-5" hidden>
+            <div class="faq-answer-inner">
+              <p>Players are assigned to divisions based on their verified Tournament Index:</p>
+              <table class="data-table">
+                <thead><tr><th>Division</th><th>Tournament Index</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="division-badge">A</span></td><td>5.4 and below</td></tr>
+                  <tr><td><span class="division-badge">B</span></td><td>5.5–10.4</td></tr>
+                  <tr><td><span class="division-badge">C</span></td><td>10.5–15.4</td></tr>
+                  <tr><td><span class="division-badge">D</span></td><td>15.5–20.4</td></tr>
+                  <tr><td><span class="division-badge">E</span></td><td>20.5 and above</td></tr>
+                </tbody>
+              </table>
+              <p>Division assignments may still change if a player's handicap information is updated during final verification.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-6" aria-expanded="false" aria-controls="faq-a-6">
+            <span class="faq-question-text">Why do I have different Course Handicaps for the Palmer and Marsh courses?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-6" role="region" aria-labelledby="faq-q-6" hidden>
+            <div class="faq-answer-inner">
+              <p>Each golf course has its own Course Rating and Slope Rating.</p>
+              <p>Because the Arnold Palmer Course and Graham Marsh Course have different ratings, the same Tournament Index can result in a different Course Handicap on each course.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-7" aria-expanded="false" aria-controls="faq-a-7">
+            <span class="faq-question-text">Which Course Handicap do I actually play with?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-7" role="region" aria-labelledby="faq-q-7" hidden>
+            <div class="faq-answer-inner">
+              <p>Your official Course HCP for that round will be shown beside your name in the published Flight Pairing.</p>
+              <p>Please use the Course HCP shown in the official pairing for that day rather than relying only on the Palmer or Marsh HCP displayed on the roster.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-8" aria-expanded="false" aria-controls="faq-a-8">
+            <span class="faq-question-text">Can my Course Handicap change for Day 2?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-8" role="region" aria-labelledby="faq-q-8" hidden>
+            <div class="faq-answer-inner">
+              <p>Yes.</p>
+              <p>A player's Day 2 Course Handicap may be adjusted in accordance with the Tournament Committee's final handicap-adjustment procedure following Day 1.</p>
+              <p>Your official Day 2 Course HCP will be shown together with your Day 2 Flight Pairing once Day 1 scores, standings, and any applicable handicap adjustments have been finalized.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-9" aria-expanded="false" aria-controls="faq-a-9">
+            <span class="faq-question-text">Which course will I play each day?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-9" role="region" aria-labelledby="faq-q-9" hidden>
+            <div class="faq-answer-inner">
+              <p>The current course rotation is:</p>
+              <div class="course-rotation-note">
+                <div class="course-rotation-title">Day 1</div>
+                <div class="course-rotation-row"><span>A / B / C</span><span>Arnold Palmer Course</span></div>
+                <div class="course-rotation-row"><span>D / E</span><span>Graham Marsh Course</span></div>
+              </div>
+              <div class="course-rotation-note">
+                <div class="course-rotation-title">Day 2</div>
+                <div class="course-rotation-row"><span>A / B / C</span><span>Graham Marsh Course</span></div>
+                <div class="course-rotation-row"><span>D / E</span><span>Arnold Palmer Course</span></div>
+              </div>
+              <p>Course assignments remain subject to Tournament Committee changes if operationally necessary.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button type="button" class="faq-question" id="faq-q-10" aria-expanded="false" aria-controls="faq-a-10">
+            <span class="faq-question-text">Can I bring a guest to the dinner ceremonies?</span>
+            <span class="faq-icon" aria-hidden="true"><i class="fas fa-plus"></i></span>
+          </button>
+          <div class="faq-answer" id="faq-a-10" role="region" aria-labelledby="faq-q-10" hidden>
+            <div class="faq-answer-inner">
+              <p>Yes.</p>
+              <p>Players may bring guests to the dinner ceremonies, but all guests must be registered in advance so we can maintain an accurate headcount for food and event arrangements.</p>
+              <div class="callout"><span class="callout-title">Guest Fee</span><strong>₱2,000 per person, per day</strong>, which includes food and entertainment.</div>
+              <p>To register your guest, please contact Paula at <a href="sms:+639176734653">0917 673 4653</a>.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </div>

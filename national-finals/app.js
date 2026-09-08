@@ -393,7 +393,8 @@
     var buttons = container.querySelectorAll("[data-info]");
     var panels = {
       schedule: document.getElementById("info-schedule-outer"),
-      conditions: document.getElementById("info-conditions-outer")
+      conditions: document.getElementById("info-conditions-outer"),
+      faq: document.getElementById("info-faq-outer")
     };
 
     buttons.forEach(function (btn) {
@@ -415,8 +416,45 @@
     });
     var scheduleOuter = document.getElementById("info-schedule-outer");
     var conditionsOuter = document.getElementById("info-conditions-outer");
+    var faqOuter = document.getElementById("info-faq-outer");
     if (scheduleOuter) scheduleOuter.classList.add("active");
     if (conditionsOuter) conditionsOuter.classList.remove("active");
+    if (faqOuter) faqOuter.classList.remove("active");
+  }
+
+  /* ---------------- FAQ ACCORDION ----------------
+     Static markup lives in index.html (approved copy — see the FAQ
+     panel's own comment). Only one answer open at a time; each question
+     is a real <button> with aria-expanded/aria-controls for keyboard and
+     screen-reader accessibility. */
+  function initFaq() {
+    var list = document.getElementById("faq-list");
+    if (!list) return;
+    var items = list.querySelectorAll(".faq-item");
+
+    function closeAll() {
+      items.forEach(function (item) {
+        var btn = item.querySelector(".faq-question");
+        var answer = item.querySelector(".faq-answer");
+        item.classList.remove("open");
+        btn.setAttribute("aria-expanded", "false");
+        answer.hidden = true;
+      });
+    }
+
+    items.forEach(function (item) {
+      var btn = item.querySelector(".faq-question");
+      var answer = item.querySelector(".faq-answer");
+      btn.addEventListener("click", function () {
+        var isOpen = btn.getAttribute("aria-expanded") === "true";
+        closeAll();
+        if (!isOpen) {
+          item.classList.add("open");
+          btn.setAttribute("aria-expanded", "true");
+          answer.hidden = false;
+        }
+      });
+    });
   }
 
   /* ---------------- RESULTS SECONDARY SELECTOR ---------------- */
@@ -463,6 +501,7 @@
   document.addEventListener("DOMContentLoaded", function () {
     initTabs();
     initInfoSubnav();
+    initFaq();
     initResultsSelect();
     buildRoster();
     buildFlights();
