@@ -1,67 +1,61 @@
 /* ==========================================================================
-   NATIONAL FINALS — CURRENT PLAYER ROSTER
+   NATIONAL FINALS — PRODUCTION PLAYER ROSTER
    --------------------------------------------------------------------------
-   This is the REAL, current National Finals player roster, sourced from
-   the "Players" tab of the private "2026 WAGC NF Scoring" Google Sheet
-   (NOT the "Test Players" tab). It is a sanitized, PUBLIC-SAFE snapshot —
-   only fields appropriate for public display are included below.
+   This is the REAL, current National Finals player roster, published live
+   to the public production page. It is sourced from the "_Website
+   Publishing" tab of the private "2026 WAGC NF Scoring" Google Sheet — a
+   sanitized, public-safe handoff layer that is auto-linked to the
+   authoritative "Players" tab. Only fields appropriate for public display
+   are included below.
 
    Public-safe roster fields (approved for public display): Player Name,
    Division, Tournament Index / Low Index, Palmer Course HCP, and Marsh
    Course HCP. The roster shows each player's Tournament Index and base
    Course HCP for both courses only — a player's actual Course HCP for a
    given round is shown with that day's FLIGHT PAIRING instead (see
-   flights.js's flight-player schema), not on the roster.
+   flights.js's flight-player schema, once flights are published), not on
+   the roster.
 
    Fields deliberately EXCLUDED (present in the private sheet, never to be
-   committed here): Player ID, WHS ID, raw WHS Index, TEE, Notes,
-   Source/Reference, ROSTER STATUS, "Probably Joining"/"Backed Out" notes,
-   WHS friend-request info, internal scorer comments, or any other
-   internal/administrative column. This repository is public — GitHub and
-   this file are readable by anyone regardless of any publication flag, so
-   nothing internal belongs here even if the UI never renders it.
+   committed here): Player ID, WHS ID, raw WHS Index, TEE, contact number,
+   email, payment status, Notes, Source/Reference, ROSTER STATUS, Player
+   Status, follow-up status, scorer comments, Day 1 Course HCP, Day 2 Base
+   Course HCP, or any other internal/administrative column. This repository
+   is public — GitHub and this file are readable by anyone regardless of
+   any publication flag, so nothing internal belongs here even if the UI
+   never renders it.
 
-   This roster snapshot is separate from Day 1/Final SCORING data on
-   purpose: scoring/results remain TEST DATA under the existing publishing
-   workflow (see config.js + PUBLISHING_WORKFLOW.md) and live in
-   test-scores.js as window.NF_TEST_SCORES, using a fictitious set of
-   players. Do NOT merge real roster entries with fake scores.
+   This roster is published independently of Day 1/Final SCORING data —
+   flights and results remain unpublished under the existing publishing
+   workflow (see config.js) until separately authorized.
 
    Field reference:
      name           - player full name, as entered in the Players tab
      division       - "A" | "B" | "C" | "D" | "E" | "PENDING"
                        ("PENDING" = division not yet assigned in the sheet;
                        never guessed/derived here — taken as-is from the
-                       sheet's DIV column being blank)
+                       source)
      tournamentIndex - the sheet's "Low Index": the index used for
                        National Finals division placement. Labeled
-                       "Tournament Index" in the UI. null when the sheet's
-                       Low Index is itself blank/PENDING/Unknown (all such
-                       cases are currently PENDING-division players) — this
-                       is never fabricated.
-     palmerCourseHcp - the sheet's "Palmer Course HCP" (column G), taken
-                       as-is — never recalculated or derived here. null
-                       when blank in the sheet, or when the existing
-                       website player could not be uniquely matched to a
-                       current Players-tab row by exact name (see the
-                       unmatched-player list in the roster-refresh task
-                       notes). The UI renders null as "—". A real value of
+                       "Tournament Index" in the UI. null when the source
+                       value is itself blank/PENDING/nonnumeric — this is
+                       never fabricated.
+     palmerCourseHcp - the sheet's "Palmer Course HCP", taken as-is — never
+                       recalculated or derived here. null when blank in the
+                       source. The UI renders null as "—". A real value of
                        0 or a negative number is valid and renders as-is.
-     marshCourseHcp  - the sheet's "Marsh Course HCP" (column H). Same
-                       rules as palmerCourseHcp above.
+     marshCourseHcp  - the sheet's "Marsh Course HCP". Same rules as
+                       palmerCourseHcp above.
 
    day1CourseHcp is intentionally NOT part of this roster schema — a
    player's actual Course HCP for a given round is published with that
    day's flight pairing (see flights.js's { name, division, courseHcp }
    schema), not on the roster.
 
-   To refresh: re-pull the Players tab, re-run the same sanitization
-   (drop every excluded column above, sort A→E→PENDING then alphabetical
-   by name), match each existing website player to the current Players
-   tab by exact name, and replace the array below. Do not hand-edit
-   scores or divisions here — the sheet is the source of truth. Do not
-   silently substitute a similarly-named player for one that can't be
-   uniquely matched — leave palmerCourseHcp/marshCourseHcp null instead.
+   To refresh: re-pull the "_Website Publishing" tab, re-run the same
+   sanitization (sort A→E→PENDING then alphabetical by name), and replace
+   the array below. Do not hand-edit scores or divisions here — the sheet
+   is the source of truth.
    ========================================================================== */
 window.NF_PLAYERS = [
   { name: "Gerardo De Chavez", division: "A", tournamentIndex: 5.1, palmerCourseHcp: 4, marshCourseHcp: 3 },

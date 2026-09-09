@@ -112,7 +112,7 @@
    in the same change.
    ========================================================================== */
 window.NF_CONFIG = {
-  rosterPublished: false,
+  rosterPublished: true,
   day1FlightsPublished: false,
   day2FlightsPublished: false,
   day1ResultsPublished: false,

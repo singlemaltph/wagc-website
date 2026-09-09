@@ -66,17 +66,15 @@
   }
 
   /* ---------------- ROSTER ----------------
-     rosterPublished: false — the roster was briefly published and has
-     been pulled back until WAGC explicitly re-authorizes release (see
-     config.js's STEP 1 for the required re-publication process). No
-     roster data file is loaded on this page while the flag is false —
-     `roster` above resolves to [] since window.NF_PLAYERS is undefined
-     (data.js and its <script> tag were removed from index.html), so
-     nothing below can accidentally expose player data even if this
-     function were called incorrectly.
+     rosterPublished: true — the roster is live, sourced from data.js
+     (window.NF_PLAYERS), which is generated from the "_Website Publishing"
+     tab of the private "2026 WAGC NF Scoring" Google Sheet. If this flag
+     is ever set back to false, `roster` above still resolves to [] safely
+     even with data.js loaded, since buildRoster() below returns early on
+     the locked-panel branch and never touches `roster`.
 
-     Once re-published, roster rendering mirrors the reference
-     implementation at national-finals/results-test/app.js buildRoster().
+     Roster rendering mirrors the reference implementation at
+     national-finals/results-test/app.js buildRoster().
      Public-safe roster fields: name/division/tournamentIndex/
      palmerCourseHcp/marshCourseHcp only. Palmer/Marsh Course HCP are
      taken as-is from the Players tab, never recalculated; null renders
