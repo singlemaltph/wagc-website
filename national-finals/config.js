@@ -113,7 +113,7 @@
    ========================================================================== */
 window.NF_CONFIG = {
   rosterPublished: true,
-  day1FlightsPublished: false,
+  day1FlightsPublished: true,
   day2FlightsPublished: false,
   day1ResultsPublished: false,
   finalResultsPublished: false
