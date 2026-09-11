@@ -163,7 +163,7 @@ window.NF_DAY1_RESULTS = [
   { name: "Greg Reyes", division: "B", day1Hcp: 9, day1Gross: 85, day1Net: 76 },
   { name: "Roberto A. Umali", division: "B", day1Hcp: 10, day1Gross: 93, day1Net: 83 },
   { name: "Mark Stephen Villegas", division: "B", day1Hcp: 8, day1Gross: 95, day1Net: 87 },
-  { name: "Ariel Araja", division: "D", day1Hcp: 15, day1Gross: 83, day1Net: 68 },
+  { name: "Ariel Araja", division: "D", day1Hcp: 15, day1Gross: 85, day1Net: 70 },
   { name: "Kimberly Duenas", division: "D", day1Hcp: 17, day1Gross: 94, day1Net: 77 },
   { name: "Janiree Dacles", division: "D", day1Hcp: 19, day1Gross: 93, day1Net: 74 },
   { name: "Arnel Marasigan S.", division: "D", day1Hcp: 16, day1Gross: 87, day1Net: 71 },
