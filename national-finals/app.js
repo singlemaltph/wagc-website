@@ -443,7 +443,11 @@
           return;
         }
 
-        var ranked = rankGroup(group);
+        /* DNF players never enter numeric ranking; they render after all
+           ranked numeric players in their division with pos "DNF". */
+        var numeric = group.filter(function (r) { return r.status !== "DNF"; });
+        var dnfs = group.filter(function (r) { return r.status === "DNF"; });
+        var ranked = rankGroup(numeric).concat(dnfs.map(function (r) { return { player: r, pos: "DNF" }; }));
 
         html += '<table class="nf-table nf-table-desktop nf-table-roster"><thead><tr>' +
           "<th>Pos</th><th>Player</th><th>Gross</th><th>Day 1 HCP</th><th>Net</th>" +
