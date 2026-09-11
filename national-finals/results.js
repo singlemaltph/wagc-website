@@ -43,7 +43,7 @@
 
 // Publication timestamp for the "Last updated" label shown on the Day 1
 // Results panel. Update this every time a new verified batch is published.
-window.NF_DAY1_RESULTS_UPDATED_AT = "2026-09-11T16:58:00+08:00";
+window.NF_DAY1_RESULTS_UPDATED_AT = "2026-09-11T17:10:00+08:00";
 
 window.NF_DAY1_RESULTS = [
   { name: "Alvie G. Barrios", division: "C", day1Hcp: 8, day1Gross: 85, day1Net: 77 },
@@ -173,5 +173,33 @@ window.NF_DAY1_RESULTS = [
   { name: "Raffy Tamayo", division: "D", day1Hcp: 16, day1Gross: 83, day1Net: 67 },
   { name: "Nicole Jennice Aguilar", division: "D", day1Hcp: 17, day1Gross: 99, day1Net: 82 },
   { name: "Vanessa Grace Saring", division: "D", day1Hcp: 20, day1Gross: 85, day1Net: 65 },
+  { name: "Miguel Lucas Barretto", division: "A", day1Hcp: 4, day1Gross: 93, day1Net: 89 },
+  { name: "Philip Ouano", division: "A", day1Hcp: 4, day1Gross: 87, day1Net: 83 },
+  { name: "Raymund James Lachica", division: "A", day1Hcp: 2, day1Gross: 85, day1Net: 83 },
+  { name: "John Paul Gutierrez", division: "A", day1Hcp: 4, day1Gross: 84, day1Net: 80 },
+  { name: "Jerome Chua", division: "D", day1Hcp: 15, day1Gross: 98, day1Net: 83 },
+  { name: "Michelle Dabao", division: "D", day1Hcp: 16, day1Gross: 94, day1Net: 78 },
+  { name: "Patricia Claire Botardo", division: "D", day1Hcp: 19, day1Gross: 114, day1Net: 95 },
+  { name: "Alan Algodon", division: "D", day1Hcp: 20, day1Gross: 95, day1Net: 75 },
+  { name: "Ruben Javier A.", division: "D", day1Hcp: 20, day1Gross: 93, day1Net: 73 },
+  { name: "Mary Carlene Navarro", division: "D", day1Hcp: 19, day1Gross: 99, day1Net: 80 },
+  { name: "Nelson Chan", division: "D", day1Hcp: 15, day1Gross: 88, day1Net: 73 },
+  { name: "Marilyn L. Del Rosario", division: "D", day1Hcp: 18, day1Gross: 80, day1Net: 62 },
+  { name: "Augusto Anthony Buendia Jr.", division: "D", day1Hcp: 15, day1Gross: 83, day1Net: 68 },
+  { name: "Neil Darrell Sanchez", division: "D", day1Hcp: 18, day1Gross: 94, day1Net: 76 },
+  { name: "Ruth Castro", division: "D", day1Hcp: 20, day1Gross: 89, day1Net: 69 },
+  { name: "Joan Arangote", division: "D", day1Hcp: 18, day1Gross: 96, day1Net: 78 },
+  { name: "Generoso “Gene” Ponio", division: "D", day1Hcp: 16, day1Gross: 84, day1Net: 68 },
+  { name: "Justin Bilbao", division: "D", day1Hcp: 16, day1Gross: 93, day1Net: 77 },
+  { name: "Hoang Minh Duc", division: "D", day1Hcp: 16, day1Gross: 88, day1Net: 72 },
+  { name: "Domingo Mestiola", division: "D", day1Hcp: 17, day1Gross: 99, day1Net: 82 },
+  { name: "Roy Amurao", division: "D", day1Hcp: 17, day1Gross: 86, day1Net: 69 },
+  { name: "Arnold John Mesias", division: "D", day1Hcp: 18, day1Gross: 81, day1Net: 63 },
+  { name: "Richard Dalilis", division: "D", day1Hcp: 15, day1Gross: 83, day1Net: 68 },
+  { name: "Abbhi Akshaya", division: "D", day1Hcp: 17, day1Gross: 89, day1Net: 72 },
+  { name: "Cesar Areza", division: "D", day1Hcp: 17, day1Gross: 92, day1Net: 75 },
+  { name: "Joseph Barnie (Bang) Gumalo", division: "D", day1Hcp: 17, day1Gross: 96, day1Net: 79 },
+  { name: "Virgilio Cadang", division: "D", day1Hcp: 17, day1Gross: 90, day1Net: 73 },
+  { name: "Rainier Sison", division: "D", day1Hcp: 16, day1Gross: 90, day1Net: 74 },
   { name: "Jose Panganiban, Jr", division: "C", day1Hcp: 14, day1Gross: null, day1Net: null, status: "DNF" },
 ];
