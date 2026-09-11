@@ -19,10 +19,12 @@
 
    Day 2 courseHcp is the player's official "R2 Course Handicap" from the
    Handicap Adjustment tab — taken as-is, never recalculated. null renders
-   as "—". Jasmine Velu's R2 Course Handicap is unresolved upstream (her
-   Day 1 Net of 58 falls below the published adjustment table's start of
-   59-60); her courseHcp is left null/omitted here rather than guessed —
-   do not invent or backfill it.
+   as "—". Jasmine Velu's R2 Course Handicap (7) has since been confirmed
+   upstream and is published as-is below.
+
+   Non-championship Day 2 flights were deliberately remixed so players are
+   not grouped with their Day 1 flight-mates again — this is intentional,
+   including the mixed C/A regular flight D2-GM-13.
    ========================================================================== */
 (function () {
   "use strict";
@@ -111,19 +113,19 @@
 
   var DAY2_FLIGHTS = [
     // ── GRAHAM MARSH COURSE ── Divisions A / B / C ──
-    flight2("GM", 1, "7:00 AM", 1, [p("Alvie G. Barrios", "C", 13), p("Evangeline Bradley", "C", 13), p("Aung Kyaw Oo", "C", 19), p("Oliver T. Asna", "C", 11)]),
-    flight2("GM", 2, "7:00 AM", 10, [p("Andrew Tan", "B", 9), p("Htein Lin Aung", "B", 11), p("Milbert Oliveros", "B", 9), p("Victor Vital", "B", 12)]),
-    flight2("GM", 3, "7:09 AM", 1, [p("Natasha Martina Bantug", "C", 14), p("Albert Lasac", "C", 15), p("Duke Ng", "C", 14), p("John Vicar Valdez", "C", 12)]),
-    flight2("GM", 4, "7:09 AM", 10, [p("Clover Arangote", "B", 11), p("Eugene Unabia", "B", 8), p("Mark Stephen Villegas", "B", 10), p("Roberto A. Umali", "B", 11)]),
-    flight2("GM", 5, "7:18 AM", 1, [p("Albert Teoxon", "C", 13), p("Benjamin Diaz Jr", "C", 16), p("Eric Nicholis Goetz", "C", 17), p("Raymond Dabao", "C", 11)]),
-    flight2("GM", 6, "7:18 AM", 10, [p("Elvin Panliboton", "B", 9), p("Jaybee Pasayan", "B", 10), p("Mohd Yussof B Ishak", "B", 6), p("Wendell Lucido", "B", 8)]),
-    flight2("GM", 7, "7:27 AM", 1, [p("Alvin Hipolito", "C", 13), p("Edmundo Barrios", "C", 13), p("Exequiel P. Longares", "C", 14), p("LEONIDES MARFA PARAGSA", "C", 14)]),
-    flight2("GM", 8, "7:27 AM", 10, [p("Kevin Andre Montealto", "B", 9), p("Raymond Monterde Lazaro", "B", 9), p("Richard Lao", "B", 10)]),
-    flight2("GM", 9, "7:36 AM", 1, [p("Aurelio Marasigan S.", "C", 12), p("Efren Ian Alvez", "C", 13), p("Gen Bonnevie", "C", 14), p("Rosven Lasac", "C", 15)]),
-    flight2("GM", 10, "7:36 AM", 10, [p("Espie Espinosa", "C", 17), p("Gunal Kanna Moorthy Kannan", "C", 16), p("Jeter Clerigo", "C", 14), p("Tomas L Olfato", "C", 15)]),
-    flight2("GM", 11, "7:45 AM", 1, [p("Jefferson G Robles", "C", 14), p("Joel Respeto", "C", 12), p("Malvin James Ching", "C", 15), p("Vic Roel Ferrer", "C", 13)]),
-    flight2("GM", 12, "7:45 AM", 10, [p("Jose Panganiban, Jr", "C", 13), p("Marceliano V. Teofilo", "C", 13), p("Miguel Lucas Barretto", "A", 6)]),
-    flight2("GM", 13, "7:54 AM", 1, [p("Kristian Herrera", "C", 12), p("Rodel T. Paderayon", "C", 14), p("Shaminder Singh Rahil", "C", 16)]),
+    flight2("GM", 1, "7:00 AM", 1, [p("Alvie G. Barrios", "C", 13), p("Eric Nicholis Goetz", "C", 17), p("Albert Lasac", "C", 15), p("Alvin Hipolito", "C", 13)]),
+    flight2("GM", 2, "7:00 AM", 10, [p("Htein Lin Aung", "B", 11), p("Eugene Unabia", "B", 8), p("Richard Lao", "B", 10), p("Clover Arangote", "B", 11)]),
+    flight2("GM", 3, "7:09 AM", 1, [p("Evangeline Bradley", "C", 13), p("Natasha Martina Bantug", "C", 14), p("Aurelio Marasigan S.", "C", 12), p("Benjamin Diaz Jr", "C", 16)]),
+    flight2("GM", 4, "7:09 AM", 10, [p("Andrew Tan", "B", 9), p("Kevin Andre Montealto", "B", 9), p("Milbert Oliveros", "B", 9), p("Raymond Monterde Lazaro", "B", 9)]),
+    flight2("GM", 5, "7:18 AM", 1, [p("Aung Kyaw Oo", "C", 19), p("Oliver T. Asna", "C", 11), p("Gunal Kanna Moorthy Kannan", "C", 16), p("Duke Ng", "C", 14)]),
+    flight2("GM", 6, "7:18 AM", 10, [p("Jaybee Pasayan", "B", 10), p("Elvin Panliboton", "B", 9), p("Mohd Yussof B Ishak", "B", 6), p("Mark Stephen Villegas", "B", 10)]),
+    flight2("GM", 7, "7:27 AM", 1, [p("Joel Respeto", "C", 12), p("Raymond Dabao", "C", 11), p("Shaminder Singh Rahil", "C", 16), p("Edmundo Barrios", "C", 13)]),
+    flight2("GM", 8, "7:27 AM", 10, [p("Wendell Lucido", "B", 8), p("Roberto A. Umali", "B", 11), p("Victor Vital", "B", 12)]),
+    flight2("GM", 9, "7:36 AM", 1, [p("John Vicar Valdez", "C", 12), p("Malvin James Ching", "C", 15), p("Efren Ian Alvez", "C", 13), p("Exequiel P. Longares", "C", 14)]),
+    flight2("GM", 10, "7:36 AM", 10, [p("Gen Bonnevie", "C", 14), p("Jefferson G Robles", "C", 14), p("Jeter Clerigo", "C", 14), p("Espie Espinosa", "C", 17)]),
+    flight2("GM", 11, "7:45 AM", 1, [p("Jose Panganiban, Jr", "C", 13), p("Tomas L Olfato", "C", 15), p("Kristian Herrera", "C", 12), p("Albert Teoxon", "C", 13)]),
+    flight2("GM", 12, "7:45 AM", 10, [p("Marceliano V. Teofilo", "C", 13), p("LEONIDES MARFA PARAGSA", "C", 14), p("Rosven Lasac", "C", 15)]),
+    flight2("GM", 13, "7:54 AM", 1, [p("Vic Roel Ferrer", "C", 13), p("Rodel T. Paderayon", "C", 14), p("Miguel Lucas Barretto", "A", 6)]),
     // --- CHAMPIONSHIP BLOCK ---
     flight2("GM", 14, "8:03 AM", 1, [p("Edilberto Esguerra", "C", 13), p("Joshua Reynes", "C", 12), p("Raymond Palomares", "C", 10), p("Audi Noel Capellan", "C", 10)]),
     flight2("GM", 15, "8:12 AM", 1, [p("Rogelio Ramirez", "C", 10), p("Renan Vincent Gustilo", "C", 10), p("Rwin Pagkalinawan", "C", 12), p("Jing Barretto", "C", 12)]),
@@ -133,30 +135,30 @@
     flight2("GM", 19, "8:48 AM", 1, [p("Richard (Ricky) Delos Santos", "A", 0), p("Randy Sulpico Someros", "A", 2), p("Gerardo De Chavez", "A", 4), p("John Paul Gutierrez", "A", 5)]),
 
     // ── ARNOLD PALMER COURSE ── Divisions D / E ──
-    flight2("AP", 1, "7:00 AM", 1, [p("Agnes Priest", "E", 21), p("Jenny Vi M. Paderayon", "E", 21), p("Amado Concepcion Jr.", "E", 28), p("Johan Wahlen Pangilinan", "E", 25)]),
-    flight2("AP", 2, "7:00 AM", 10, [p("Angela Mae 'Divino' Susi", "D", 14), p("Michelle Dabao", "D", 13), p("Abbhi Akshaya", "D", 18), p("Roy Amurao", "D", 16)]),
-    flight2("AP", 3, "7:09 AM", 1, [p("Aiza Lipit", "E", 20), p("Maria Barbara Kathleen L. Evangelista (Lynne)", "E", 19), p("Bogki Min", "E", 26), p("Joseph Reylan Reyes", "E", 27)]),
-    flight2("AP", 4, "7:09 AM", 10, [p("Dolly De Gala", "D", 11), p("Nicole Jennice Aguilar", "D", 15), p("Alan Algodon", "D", 21), p("Joseph Barnie (Bang) Gumalo", "D", 19)]),
-    flight2("AP", 5, "7:18 AM", 1, [p("Divina Lapasaran", "E", 18), p("Maritess Uy", "E", 23), p("Cedric Mark Urera", "E", 24), p("Lwin Min Paing", "E", 27)]),
-    flight2("AP", 6, "7:18 AM", 10, [p("Glenda Aguto", "D", 13), p("Patricia Claire Botardo", "D", 18), p("Amor Laguilles", "D", 18), p("Oliver James Matias", "D", 19)]),
-    flight2("AP", 7, "7:27 AM", 1, [p("Erica Esteves", "E", 20), p("Marjorie Jalosjos", "E", 21), p("Daniel De Gala", "E", 22), p("Melvin Alit Gialolo", "E", 26)]),
-    flight2("AP", 8, "7:27 AM", 10, [p("Janiree Dacles", "D", 14), p("Patricia Valencia", "D", 11), p("Ariel Araja", "D", 15), p("Generoso “Gene” Ponio", "D", 15)]),
-    flight2("AP", 9, "7:36 AM", 1, [p("Erisa Joyce D. Min", "E", 20), p("Miela Gian Marquez", "E", 24), p("Jayrold E. Bautista", "E", 25), p("Owen Ajero Rosal", "E", 26)]),
-    flight2("AP", 10, "7:36 AM", 10, [p("Joan Arangote", "D", 15), p("Ruth Castro", "D", 14), p("Arnel Marasigan S.", "D", 16), p("Rainier Sison", "D", 17)]),
-    flight2("AP", 11, "7:45 AM", 1, [p("Janelle Lim-Kanna", "E", 22), p("Pearl Grace Rodrigo Agdeppa", "E", 21), p("Jt Trinidad", "E", 29), p("Philip Martin Esteban", "E", 22)]),
-    flight2("AP", 12, "7:45 AM", 10, [p("Kimberly Duenas", "D", 14), p("Mary Carlene Navarro", "D", 17), p("Cesar Areza", "D", 19), p("Peter Nacion", "D", 15)]),
-    flight2("AP", 13, "7:54 AM", 1, [p("Jennyson Macaraig", "E", 20), p("Rosette Maureen C. Reyes", "E", 24), p("Charito Lauron", "E", 27), p("Ricardo Carpio III", "E", 25)]),
-    flight2("AP", 14, "7:54 AM", 10, [p("Domingo Mestiola", "D", 20), p("Jerome Chua", "D", 18), p("Nelson Chan", "D", 16), p("Virgilio R. Villaescusa", "D", 16)]),
-    flight2("AP", 15, "8:03 AM", 1, [p("Rowena Victorino", "E", 24), p("Shiela Teoxon", "E", 18), p("Amy Lauron", "E", 27), p("Ronald Rezani", "E", 25)]),
-    flight2("AP", 16, "8:03 AM", 10, [p("Hoang Minh Duc", "D", 17), p("Marlo Dela Peña", "D", 22), p("Victor Frias", "D", 20)]),
-    flight2("AP", 17, "8:12 AM", 1, [p("Julius Michael Lachica", "E", 24), p("Rustico Ramirez", "E", 24), p("Sherwin Gregorio Uy", "E", 27), p("Toshiki Koyama", "E", 27)]),
-    flight2("AP", 18, "8:12 AM", 10, [p("Jay Dizon", "D", 21), p("Neil Darrell Sanchez", "D", 19), p("Yi Lwin", "D", 20)]),
-    flight2("AP", 19, "8:21 AM", 1, [p("Justin Bilbao", "D", 18), p("Ruben Javier A.", "D", 21), p("Virgilio Cadang", "D", 18)]),
+    flight2("AP", 1, "7:00 AM", 1, [p("Agnes Priest", "E", 21), p("Aiza Lipit", "E", 20), p("Amy Lauron", "E", 27), p("Jt Trinidad", "E", 29)]),
+    flight2("AP", 2, "7:00 AM", 10, [p("Glenda Aguto", "D", 13), p("Dolly De Gala", "D", 11), p("Ariel Araja", "D", 15), p("Victor Frias", "D", 20)]),
+    flight2("AP", 3, "7:09 AM", 1, [p("Divina Lapasaran", "E", 18), p("Erica Esteves", "E", 20), p("Joseph Reylan Reyes", "E", 27), p("Cedric Mark Urera", "E", 24)]),
+    flight2("AP", 4, "7:09 AM", 10, [p("Angela Mae 'Divino' Susi", "D", 14), p("Janiree Dacles", "D", 14), p("Neil Darrell Sanchez", "D", 19), p("Nelson Chan", "D", 16)]),
+    flight2("AP", 5, "7:18 AM", 1, [p("Erisa Joyce D. Min", "E", 20), p("Janelle Lim-Kanna", "E", 22), p("Daniel De Gala", "E", 22), p("Bogki Min", "E", 26)]),
+    flight2("AP", 6, "7:18 AM", 10, [p("Kimberly Duenas", "D", 14), p("Patricia Valencia", "D", 11), p("Jerome Chua", "D", 18), p("Cesar Areza", "D", 19)]),
+    flight2("AP", 7, "7:27 AM", 1, [p("Maria Barbara Kathleen L. Evangelista (Lynne)", "E", 19), p("Jennyson Macaraig", "E", 20), p("Jayrold E. Bautista", "E", 25), p("Philip Martin Esteban", "E", 22)]),
+    flight2("AP", 8, "7:27 AM", 10, [p("Joan Arangote", "D", 15), p("Mary Carlene Navarro", "D", 17), p("Alan Algodon", "D", 21), p("Abbhi Akshaya", "D", 18)]),
+    flight2("AP", 9, "7:36 AM", 1, [p("Marjorie Jalosjos", "E", 21), p("Maritess Uy", "E", 23), p("Charito Lauron", "E", 27), p("Lwin Min Paing", "E", 27)]),
+    flight2("AP", 10, "7:36 AM", 10, [p("Ruth Castro", "D", 14), p("Michelle Dabao", "D", 13), p("Oliver James Matias", "D", 19), p("Generoso “Gene” Ponio", "D", 15)]),
+    flight2("AP", 11, "7:45 AM", 1, [p("Shiela Teoxon", "E", 18), p("Miela Gian Marquez", "E", 24), p("Sherwin Gregorio Uy", "E", 27), p("Julius Michael Lachica", "E", 24)]),
+    flight2("AP", 12, "7:45 AM", 10, [p("Patricia Claire Botardo", "D", 18), p("Nicole Jennice Aguilar", "D", 15), p("Amor Laguilles", "D", 18), p("Roy Amurao", "D", 16)]),
+    flight2("AP", 13, "7:54 AM", 1, [p("Pearl Grace Rodrigo Agdeppa", "E", 21), p("Rosette Maureen C. Reyes", "E", 24), p("Amado Concepcion Jr.", "E", 28), p("Owen Ajero Rosal", "E", 26)]),
+    flight2("AP", 14, "7:54 AM", 10, [p("Jay Dizon", "D", 21), p("Marlo Dela Peña", "D", 22), p("Arnel Marasigan S.", "D", 16), p("Ruben Javier A.", "D", 21)]),
+    flight2("AP", 15, "8:03 AM", 1, [p("Rowena Victorino", "E", 24), p("Jenny Vi M. Paderayon", "E", 21), p("Ricardo Carpio III", "E", 25), p("Ronald Rezani", "E", 25)]),
+    flight2("AP", 16, "8:03 AM", 10, [p("Domingo Mestiola", "D", 20), p("Joseph Barnie (Bang) Gumalo", "D", 19), p("Virgilio R. Villaescusa", "D", 16)]),
+    flight2("AP", 17, "8:12 AM", 1, [p("Johan Wahlen Pangilinan", "E", 25), p("Melvin Alit Gialolo", "E", 26), p("Rustico Ramirez", "E", 24), p("Toshiki Koyama", "E", 27)]),
+    flight2("AP", 18, "8:12 AM", 10, [p("Justin Bilbao", "D", 18), p("Rainier Sison", "D", 17), p("Yi Lwin", "D", 20)]),
+    flight2("AP", 19, "8:21 AM", 1, [p("Hoang Minh Duc", "D", 17), p("Virgilio Cadang", "D", 18), p("Peter Nacion", "D", 15)]),
     // --- CHAMPIONSHIP BLOCK ---
     flight2("AP", 20, "8:30 AM", 1, [p("Roberto Cruz Lazaro", "E", 20), p("Lorenzo A Javier", "E", 21), p("Jan Kero Batallones", "E", 25), p("Dennis Chavez Atienza", "E", 25)]),
     flight2("AP", 21, "8:39 AM", 1, [p("Manolo Besa", "E", 18), p("Oliver Balita", "E", 18), p("Allen Macaraig", "E", 19), p("Jericho Fullante", "E", 21)]),
     flight2("AP", 22, "8:48 AM", 1, [p("Hannah Bella Lazaro", "D", 12), p("Raffy Tamayo", "D", 15), p("Richard Dalilis", "D", 14), p("Augusto Anthony Buendia Jr.", "D", 14)]),
-    flight2("AP", 23, "8:57 AM", 1, [p("Jasmine Velu", "D"), p("Marilyn L. Del Rosario", "D", 9), p("Arnold John Mesias", "D", 15), p("Vanessa Grace Saring", "D", 12)])
+    flight2("AP", 23, "8:57 AM", 1, [p("Jasmine Velu", "D", 7), p("Marilyn L. Del Rosario", "D", 9), p("Arnold John Mesias", "D", 15), p("Vanessa Grace Saring", "D", 12)])
   ];
 
   window.NF_FLIGHTS = {
