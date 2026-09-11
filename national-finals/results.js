@@ -43,7 +43,7 @@
 
 // Publication timestamp for the "Last updated" label shown on the Day 1
 // Results panel. Update this every time a new verified batch is published.
-window.NF_DAY1_RESULTS_UPDATED_AT = "2026-09-11T17:10:00+08:00";
+window.NF_DAY1_RESULTS_UPDATED_AT = "2026-09-11T18:11:33+08:00";
 
 window.NF_DAY1_RESULTS = [
   { name: "Alvie G. Barrios", division: "C", day1Hcp: 8, day1Gross: 85, day1Net: 77 },
@@ -201,5 +201,8 @@ window.NF_DAY1_RESULTS = [
   { name: "Joseph Barnie (Bang) Gumalo", division: "D", day1Hcp: 17, day1Gross: 96, day1Net: 79 },
   { name: "Virgilio Cadang", division: "D", day1Hcp: 17, day1Gross: 90, day1Net: 73 },
   { name: "Rainier Sison", division: "D", day1Hcp: 16, day1Gross: 90, day1Net: 74 },
+  { name: "Yi Lwin", division: "D", day1Hcp: 17, day1Gross: 98, day1Net: 81 },
+  { name: "Peter Nacion", division: "D", day1Hcp: 16, day1Gross: 85, day1Net: 69 },
+  { name: "Virgilio R. Villaescusa", division: "D", day1Hcp: 17, day1Gross: 85, day1Net: 68 },
   { name: "Jose Panganiban, Jr", division: "C", day1Hcp: 14, day1Gross: null, day1Net: null, status: "DNF" },
 ];
