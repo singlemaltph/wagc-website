@@ -383,6 +383,19 @@
       return n === null || n === undefined ? "—" : String(n);
     }
 
+    function fmtLastUpdated(iso) {
+      if (!iso) return "";
+      var d = new Date(iso);
+      if (isNaN(d.getTime())) return "";
+      var timeStr = d.toLocaleTimeString("en-US", {
+        timeZone: "Asia/Manila",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+      });
+      return "Last updated: " + timeStr + " PHT";
+    }
+
     /* Standard competition ranking (1, T2, T2, 4) by day1Net ascending.
        Alphabetical order only stabilizes display order between players
        who remain tied — it never breaks the tie itself. */
@@ -408,6 +421,7 @@
       '<div class="roster-clarify">' +
         '<div class="roster-clarify-title">Live Day 1 Results</div>' +
         "<p>Only verified scorecards are shown. Results will update throughout the round as additional scorecards are received and verified.</p>" +
+        "<p>" + fmtLastUpdated(window.NF_DAY1_RESULTS_UPDATED_AT) + "</p>" +
       "</div>" +
       '<div class="toolbar">' +
         '<div class="filter-pills" id="day1-results-filter" data-target="division"></div>' +
