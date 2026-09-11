@@ -349,12 +349,23 @@
   }
 
   /* ---------------- RESULTS ---------------- */
-  /* day1ResultsPublished / finalResultsPublished: both false — no scoring
-     data file is loaded on this page. Each flag gates its own panel
-     independently; add the real, cleared-for-release data + render logic
-     (mirroring national-finals/results-test/) in the same change that
-     flips the matching flag. Real Final Results must stay absent from
-     this repo until after the Awards Ceremony. */
+  /* finalResultsPublished: false — no Final Results data file is loaded on
+     this page; that panel stays locked until after the Awards Ceremony.
+
+     day1ResultsPublished: true — window.NF_DAY1_RESULTS (from results.js)
+     is a PROGRESSIVE, VERIFIED-ONLY leaderboard: a player appears here
+     only once their scorecard has passed the official verification gate
+     upstream (see results.js's header comment) — this file never guesses
+     or back-fills unverified players. Public-safe fields only: name,
+     division, day1Hcp, day1Gross, day1Net.
+
+     Ranking is standard competition ranking (1, T2, T2, 4) computed
+     client-side from day1Net, ascending, lowest net first. This is
+     intentionally NOT the official countback tie-break — ties share the
+     same provisional "T"-prefixed position, and alphabetical order is
+     used only to keep tied players in a stable display order, never to
+     break the tie itself. Positions are provisional and will shift as
+     more verified scorecards are added. */
   function buildResultsDay1() {
     var wrap = document.getElementById("day1-panel");
     if (!wrap) return;
@@ -365,7 +376,110 @@
       ]);
       return;
     }
-    // Real Day 1 leaderboard rendering goes here once day1ResultsPublished = true.
+
+    var results = window.NF_DAY1_RESULTS || [];
+
+    function fmtNum(n) {
+      return n === null || n === undefined ? "—" : String(n);
+    }
+
+    /* Standard competition ranking (1, T2, T2, 4) by day1Net ascending.
+       Alphabetical order only stabilizes display order between players
+       who remain tied — it never breaks the tie itself. */
+    function rankGroup(group) {
+      var sorted = group.slice().sort(function (a, b) {
+        if (a.day1Net !== b.day1Net) return a.day1Net - b.day1Net;
+        return a.name.localeCompare(b.name);
+      });
+      var ranked = [];
+      var i = 0;
+      while (i < sorted.length) {
+        var j = i;
+        while (j < sorted.length && sorted[j].day1Net === sorted[i].day1Net) j++;
+        var isTie = (j - i) > 1;
+        var posLabel = (isTie ? "T" : "") + (i + 1);
+        for (var k = i; k < j; k++) ranked.push({ player: sorted[k], pos: posLabel });
+        i = j;
+      }
+      return ranked;
+    }
+
+    wrap.innerHTML =
+      '<div class="roster-clarify">' +
+        '<div class="roster-clarify-title">Live Day 1 Results</div>' +
+        "<p>Only verified scorecards are shown. Results will update throughout the round as additional scorecards are received and verified.</p>" +
+      "</div>" +
+      '<div class="toolbar">' +
+        '<div class="filter-pills" id="day1-results-filter" data-target="division"></div>' +
+      "</div>" +
+      '<div id="day1-results-results"></div>';
+
+    buildFilterPills("day1-results-filter", "all", DIVISIONS);
+
+    var state = { division: "all" };
+
+    function renderResults() {
+      var grouped = {};
+      results.forEach(function (r) {
+        grouped[r.division] = grouped[r.division] || [];
+        grouped[r.division].push(r);
+      });
+
+      var divisionsToShow = state.division === "all"
+        ? DIVISIONS.filter(function (d) { return (grouped[d] || []).length > 0; })
+        : [state.division];
+
+      var html = "";
+
+      divisionsToShow.forEach(function (div) {
+        var group = grouped[div] || [];
+
+        html += '<div class="division-block">';
+        html += '<div class="division-heading"><span class="div-badge">' + div + "</span> Division " + div + "</div>";
+
+        if (!group.length) {
+          html += '<p class="empty-state">No verified Day 1 scores have been published for this division yet.</p>';
+          html += "</div>";
+          return;
+        }
+
+        var ranked = rankGroup(group);
+
+        html += '<table class="nf-table nf-table-desktop nf-table-roster"><thead><tr>' +
+          "<th>Pos</th><th>Player</th><th>Gross</th><th>Day 1 HCP</th><th>Net</th>" +
+          "</tr></thead><tbody>";
+        ranked.forEach(function (r) {
+          html += "<tr><td><span class=\"div-badge\">" + esc(r.pos) + "</span></td><td class=\"player-name\">" + esc(r.player.name) + "</td><td>" + fmtNum(r.player.day1Gross) + "</td><td>" + fmtNum(r.player.day1Hcp) + "</td><td>" + fmtNum(r.player.day1Net) + "</td></tr>";
+        });
+        html += "</tbody></table>";
+
+        html += '<div class="nf-cards nf-cards-mobile">';
+        ranked.forEach(function (r) {
+          html += '<div class="nf-card">' +
+            '<div class="nf-card-top"><span class="div-badge">' + esc(r.pos) + '</span><span class="player-name">' + esc(r.player.name) + "</span></div>" +
+            '<div class="nf-card-stats">' +
+              '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + fmtNum(r.player.day1Gross) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Day 1 HCP</span><span class="stat-value">' + fmtNum(r.player.day1Hcp) + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + fmtNum(r.player.day1Net) + "</span></div>" +
+            "</div>" +
+          "</div>";
+        });
+        html += "</div></div>";
+      });
+
+      if (!html) html = '<p class="empty-state">No verified Day 1 scores have been published yet.</p>';
+      document.getElementById("day1-results-results").innerHTML = html;
+    }
+
+    document.getElementById("day1-results-filter").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-value]");
+      if (!btn) return;
+      state.division = btn.getAttribute("data-value");
+      setActivePill("day1-results-filter", state.division);
+      renderResults();
+    });
+
+    renderResults();
   }
 
   function buildResultsFinal() {
