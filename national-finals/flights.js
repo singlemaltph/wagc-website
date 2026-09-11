@@ -12,30 +12,17 @@
    column K) — taken as-is, never recalculated. null renders as "—"; a
    real 0 or negative value renders as-is.
 
-   DAY 2 IS INTENTIONALLY EMPTY until the real Day 2 pairing generator
-   (ranking-based, championship-flight-last) is built and Day 1 has
-   actually finished and been verified. See config.js's
-   day2FlightsPublished flag, which must remain false until then.
+   DAY 2 FLIGHT PAIRINGS — official, from the "2026 WAGC NF Scoring" sheet,
+   "Day 2 Flight Pairings" tab. Championship flights (each division's Day 1
+   positions 1-4) are the LAST flight for that division/course, so the
+   division winner stays undecided until the final group finishes.
 
-   Real Day 2 pairing rule (for when that generator is built):
-     - Pair players within their division according to Day 1 ranking.
-     - The leading players tee off later — the championship flight
-       (positions 1-4) MUST be the LAST flight for that division, so the
-       division winner stays undecided until the final group finishes.
-     - Per division, working backward from the last flight:
-         LAST / CHAMPIONSHIP flight = Day 1 positions 1-4
-         second-to-last             = positions 5-8
-         third-to-last              = positions 9-12
-         ...continue backward through the standings
-     - NON-DIVISIBLE counts: protect the championship end of the sequence.
-       Do NOT break apart positions 1-4 — let an earlier/lower-ranked
-       flight carry fewer than 4 players instead.
-     - This competitive-ranking rule takes PRIORITY over any pairing
-       preference — never move a top-4 player out of the championship
-       flight to satisfy another preference. Do not infer gender from
-       player names.
-   Do not guess or publish real Day 2 pairings before that generator is
-   built and Day 1 has actually finished and been verified.
+   Day 2 courseHcp is the player's official "R2 Course Handicap" from the
+   Handicap Adjustment tab — taken as-is, never recalculated. null renders
+   as "—". Jasmine Velu's R2 Course Handicap is unresolved upstream (her
+   Day 1 Net of 58 falls below the published adjustment table's start of
+   59-60); her courseHcp is left null/omitted here rather than guessed —
+   do not invent or backfill it.
    ========================================================================== */
 (function () {
   "use strict";
@@ -52,6 +39,17 @@
       courseCode: courseCode,
       teeTime: teeTime,
       startingHole: 1,
+      players: players
+    };
+  }
+
+  function flight2(courseCode, num, teeTime, startingHole, players) {
+    return {
+      id: "D2-" + courseCode + "-" + String(num).padStart(2, "0"),
+      course: COURSE[courseCode],
+      courseCode: courseCode,
+      teeTime: teeTime,
+      startingHole: startingHole,
       players: players
     };
   }
@@ -111,9 +109,59 @@
     flight("GM", 23, "10:18 AM", [p("Virgilio R. Villaescusa", "D", 17), p("Yi Lwin", "D", 17), p("Peter Nacion", "D", 16)])
   ];
 
+  var DAY2_FLIGHTS = [
+    // ── GRAHAM MARSH COURSE ── Divisions A / B / C ──
+    flight2("GM", 1, "7:00 AM", 1, [p("Alvie G. Barrios", "C", 13), p("Evangeline Bradley", "C", 13), p("Aung Kyaw Oo", "C", 19), p("Oliver T. Asna", "C", 11)]),
+    flight2("GM", 2, "7:00 AM", 10, [p("Andrew Tan", "B", 9), p("Htein Lin Aung", "B", 11), p("Milbert Oliveros", "B", 9), p("Victor Vital", "B", 12)]),
+    flight2("GM", 3, "7:09 AM", 1, [p("Natasha Martina Bantug", "C", 14), p("Albert Lasac", "C", 15), p("Duke Ng", "C", 14), p("John Vicar Valdez", "C", 12)]),
+    flight2("GM", 4, "7:09 AM", 10, [p("Clover Arangote", "B", 11), p("Eugene Unabia", "B", 8), p("Mark Stephen Villegas", "B", 10), p("Roberto A. Umali", "B", 11)]),
+    flight2("GM", 5, "7:18 AM", 1, [p("Albert Teoxon", "C", 13), p("Benjamin Diaz Jr", "C", 16), p("Eric Nicholis Goetz", "C", 17), p("Raymond Dabao", "C", 11)]),
+    flight2("GM", 6, "7:18 AM", 10, [p("Elvin Panliboton", "B", 9), p("Jaybee Pasayan", "B", 10), p("Mohd Yussof B Ishak", "B", 6), p("Wendell Lucido", "B", 8)]),
+    flight2("GM", 7, "7:27 AM", 1, [p("Alvin Hipolito", "C", 13), p("Edmundo Barrios", "C", 13), p("Exequiel P. Longares", "C", 14), p("LEONIDES MARFA PARAGSA", "C", 14)]),
+    flight2("GM", 8, "7:27 AM", 10, [p("Kevin Andre Montealto", "B", 9), p("Raymond Monterde Lazaro", "B", 9), p("Richard Lao", "B", 10)]),
+    flight2("GM", 9, "7:36 AM", 1, [p("Aurelio Marasigan S.", "C", 12), p("Efren Ian Alvez", "C", 13), p("Gen Bonnevie", "C", 14), p("Rosven Lasac", "C", 15)]),
+    flight2("GM", 10, "7:36 AM", 10, [p("Espie Espinosa", "C", 17), p("Gunal Kanna Moorthy Kannan", "C", 16), p("Jeter Clerigo", "C", 14), p("Tomas L Olfato", "C", 15)]),
+    flight2("GM", 11, "7:45 AM", 1, [p("Jefferson G Robles", "C", 14), p("Joel Respeto", "C", 12), p("Malvin James Ching", "C", 15), p("Vic Roel Ferrer", "C", 13)]),
+    flight2("GM", 12, "7:45 AM", 10, [p("Jose Panganiban, Jr", "C", 13), p("Marceliano V. Teofilo", "C", 13), p("Miguel Lucas Barretto", "A", 6)]),
+    flight2("GM", 13, "7:54 AM", 1, [p("Kristian Herrera", "C", 12), p("Rodel T. Paderayon", "C", 14), p("Shaminder Singh Rahil", "C", 16)]),
+    // --- CHAMPIONSHIP BLOCK ---
+    flight2("GM", 14, "8:03 AM", 1, [p("Edilberto Esguerra", "C", 13), p("Joshua Reynes", "C", 12), p("Raymond Palomares", "C", 10), p("Audi Noel Capellan", "C", 10)]),
+    flight2("GM", 15, "8:12 AM", 1, [p("Rogelio Ramirez", "C", 10), p("Renan Vincent Gustilo", "C", 10), p("Rwin Pagkalinawan", "C", 12), p("Jing Barretto", "C", 12)]),
+    flight2("GM", 16, "8:21 AM", 1, [p("Ma Victoria Herrera", "B", 7), p("Neil Ruelan", "B", 6), p("Paolo Obaniana", "B", 10), p("Lyndon Theodore D Pamintuan", "B", 5)]),
+    flight2("GM", 17, "8:30 AM", 1, [p("Aaron Arvin Sorbito", "B", 7), p("Romeo Lopez", "B", 5), p("Greg Reyes", "B", 8), p("Leo Gerald De Castro", "B", 5)]),
+    flight2("GM", 18, "8:39 AM", 1, [p("Ian Davin Rosales", "A", 1), p("Philip Ouano", "A", 5), p("Raymund James Lachica", "A", 4), p("Ronald Andal", "A", 6)]),
+    flight2("GM", 19, "8:48 AM", 1, [p("Richard (Ricky) Delos Santos", "A", 0), p("Randy Sulpico Someros", "A", 2), p("Gerardo De Chavez", "A", 4), p("John Paul Gutierrez", "A", 5)]),
+
+    // ── ARNOLD PALMER COURSE ── Divisions D / E ──
+    flight2("AP", 1, "7:00 AM", 1, [p("Agnes Priest", "E", 21), p("Jenny Vi M. Paderayon", "E", 21), p("Amado Concepcion Jr.", "E", 28), p("Johan Wahlen Pangilinan", "E", 25)]),
+    flight2("AP", 2, "7:00 AM", 10, [p("Angela Mae 'Divino' Susi", "D", 14), p("Michelle Dabao", "D", 13), p("Abbhi Akshaya", "D", 18), p("Roy Amurao", "D", 16)]),
+    flight2("AP", 3, "7:09 AM", 1, [p("Aiza Lipit", "E", 20), p("Maria Barbara Kathleen L. Evangelista (Lynne)", "E", 19), p("Bogki Min", "E", 26), p("Joseph Reylan Reyes", "E", 27)]),
+    flight2("AP", 4, "7:09 AM", 10, [p("Dolly De Gala", "D", 11), p("Nicole Jennice Aguilar", "D", 15), p("Alan Algodon", "D", 21), p("Joseph Barnie (Bang) Gumalo", "D", 19)]),
+    flight2("AP", 5, "7:18 AM", 1, [p("Divina Lapasaran", "E", 18), p("Maritess Uy", "E", 23), p("Cedric Mark Urera", "E", 24), p("Lwin Min Paing", "E", 27)]),
+    flight2("AP", 6, "7:18 AM", 10, [p("Glenda Aguto", "D", 13), p("Patricia Claire Botardo", "D", 18), p("Amor Laguilles", "D", 18), p("Oliver James Matias", "D", 19)]),
+    flight2("AP", 7, "7:27 AM", 1, [p("Erica Esteves", "E", 20), p("Marjorie Jalosjos", "E", 21), p("Daniel De Gala", "E", 22), p("Melvin Alit Gialolo", "E", 26)]),
+    flight2("AP", 8, "7:27 AM", 10, [p("Janiree Dacles", "D", 14), p("Patricia Valencia", "D", 11), p("Ariel Araja", "D", 15), p("Generoso “Gene” Ponio", "D", 15)]),
+    flight2("AP", 9, "7:36 AM", 1, [p("Erisa Joyce D. Min", "E", 20), p("Miela Gian Marquez", "E", 24), p("Jayrold E. Bautista", "E", 25), p("Owen Ajero Rosal", "E", 26)]),
+    flight2("AP", 10, "7:36 AM", 10, [p("Joan Arangote", "D", 15), p("Ruth Castro", "D", 14), p("Arnel Marasigan S.", "D", 16), p("Rainier Sison", "D", 17)]),
+    flight2("AP", 11, "7:45 AM", 1, [p("Janelle Lim-Kanna", "E", 22), p("Pearl Grace Rodrigo Agdeppa", "E", 21), p("Jt Trinidad", "E", 29), p("Philip Martin Esteban", "E", 22)]),
+    flight2("AP", 12, "7:45 AM", 10, [p("Kimberly Duenas", "D", 14), p("Mary Carlene Navarro", "D", 17), p("Cesar Areza", "D", 19), p("Peter Nacion", "D", 15)]),
+    flight2("AP", 13, "7:54 AM", 1, [p("Jennyson Macaraig", "E", 20), p("Rosette Maureen C. Reyes", "E", 24), p("Charito Lauron", "E", 27), p("Ricardo Carpio III", "E", 25)]),
+    flight2("AP", 14, "7:54 AM", 10, [p("Domingo Mestiola", "D", 20), p("Jerome Chua", "D", 18), p("Nelson Chan", "D", 16), p("Virgilio R. Villaescusa", "D", 16)]),
+    flight2("AP", 15, "8:03 AM", 1, [p("Rowena Victorino", "E", 24), p("Shiela Teoxon", "E", 18), p("Amy Lauron", "E", 27), p("Ronald Rezani", "E", 25)]),
+    flight2("AP", 16, "8:03 AM", 10, [p("Hoang Minh Duc", "D", 17), p("Marlo Dela Peña", "D", 22), p("Victor Frias", "D", 20)]),
+    flight2("AP", 17, "8:12 AM", 1, [p("Julius Michael Lachica", "E", 24), p("Rustico Ramirez", "E", 24), p("Sherwin Gregorio Uy", "E", 27), p("Toshiki Koyama", "E", 27)]),
+    flight2("AP", 18, "8:12 AM", 10, [p("Jay Dizon", "D", 21), p("Neil Darrell Sanchez", "D", 19), p("Yi Lwin", "D", 20)]),
+    flight2("AP", 19, "8:21 AM", 1, [p("Justin Bilbao", "D", 18), p("Ruben Javier A.", "D", 21), p("Virgilio Cadang", "D", 18)]),
+    // --- CHAMPIONSHIP BLOCK ---
+    flight2("AP", 20, "8:30 AM", 1, [p("Roberto Cruz Lazaro", "E", 20), p("Lorenzo A Javier", "E", 21), p("Jan Kero Batallones", "E", 25), p("Dennis Chavez Atienza", "E", 25)]),
+    flight2("AP", 21, "8:39 AM", 1, [p("Manolo Besa", "E", 18), p("Oliver Balita", "E", 18), p("Allen Macaraig", "E", 19), p("Jericho Fullante", "E", 21)]),
+    flight2("AP", 22, "8:48 AM", 1, [p("Hannah Bella Lazaro", "D", 12), p("Raffy Tamayo", "D", 15), p("Richard Dalilis", "D", 14), p("Augusto Anthony Buendia Jr.", "D", 14)]),
+    flight2("AP", 23, "8:57 AM", 1, [p("Jasmine Velu", "D"), p("Marilyn L. Del Rosario", "D", 9), p("Arnold John Mesias", "D", 15), p("Vanessa Grace Saring", "D", 12)])
+  ];
+
   window.NF_FLIGHTS = {
     day1: DAY1_FLIGHTS,
-    day2: []
+    day2: DAY2_FLIGHTS
   };
 
   window.NF_COURSE_ROTATION = {
