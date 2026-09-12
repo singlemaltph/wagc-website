@@ -340,6 +340,13 @@
       return;
     }
 
+    /* TEST-ONLY: rankByDivision() below recomputes rank client-side from
+       finalNet because this simulated dataset has no official position.
+       For the REAL production Final Results, official Position must be
+       supplied by the private Final Results scoring sheet and must
+       override any client-side ranking/tie computation here — the
+       website must NOT recompute the official tournament countback from
+       public data. */
     var ranked = rankByDivision(testScores, "finalNet");
 
     wrap.innerHTML =

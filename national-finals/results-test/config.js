@@ -60,7 +60,7 @@ window.NF_CONFIG = {
   day1FlightsPublished: true,
   day1ResultsPublished: false,
   day2FlightsPublished: false,
-  finalResultsPublished: false,
+  finalResultsPublished: true,
 
   // This is a test page with simulated data — keep true until removed.
   isTestData: true
