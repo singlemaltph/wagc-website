@@ -406,18 +406,19 @@
               '<span class="pos-badge">' + finalPositionLabel(p, group) + (leader ? ' <i class="fas fa-trophy"></i>' : "") + "</span>" +
               '<span class="player-name">' + esc(p.name) + "</span>" +
             "</div>" +
-            '<div class="stat-group-label">Round 1</div>' +
-            '<div class="nf-card-stats">' +
+            '<div class="stat-group-label">Day 1</div>' +
+            '<div class="nf-card-stats nf-card-stats-3col">' +
               '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + p.day1Gross + "</span></div>" +
               '<div class="stat"><span class="stat-label">HCP</span><span class="stat-value">' + p.day1Hcp + "</span></div>" +
               '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + p.day1Net + "</span></div>" +
             "</div>" +
-            '<div class="stat-group-label">Round 2</div>' +
-            '<div class="nf-card-stats">' +
+            '<div class="stat-group-label">Day 2</div>' +
+            '<div class="nf-card-stats nf-card-stats-3col">' +
               '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + p.day2Gross + "</span></div>" +
               '<div class="stat"><span class="stat-label">HCP</span><span class="stat-value">' + p.day2Hcp + "</span></div>" +
               '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + p.day2Net + "</span></div>" +
             "</div>" +
+            '<div class="stat-group-label">Final</div>' +
             '<div class="nf-card-stats nf-card-stats-total">' +
               '<div class="stat stat-highlight"><span class="stat-label">2-Day Total</span><span class="stat-value">' + p.finalNet + "</span></div>" +
             "</div>" +
