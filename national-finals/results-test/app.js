@@ -340,17 +340,25 @@
       return;
     }
 
-    /* TEST-ONLY: rankByDivision() below recomputes rank client-side from
-       finalNet because this simulated dataset has no official position.
-       For the REAL production Final Results, official Position must be
-       supplied by the private Final Results scoring sheet and must
-       override any client-side ranking/tie computation here — the
-       website must NOT recompute the official tournament countback from
-       public data. */
-    var ranked = rankByDivision(testScores, "finalNet");
+    /* Final Results here use window.NF_FINAL_RESULTS, NOT the fake
+       testScores/rankByDivision path. Position is the OFFICIAL value
+       supplied directly by the private Final Results scoring sheet — it
+       is displayed exactly as provided and is never recomputed, re-ranked,
+       or tie-broken client-side. Duplicate positions within a division
+       are intentional (a genuine tie) and must be preserved as supplied.
+       The production website must NOT calculate the official tournament
+       countback itself — this test page does not either. */
+    var finalResults = window.NF_FINAL_RESULTS || [];
+
+    function finalIsTied(list, div, position) {
+      return list.filter(function (p) { return p.division === div && p.position === position; }).length > 1;
+    }
+    function finalPositionLabel(p, list) {
+      return (finalIsTied(list, p.division, p.position) ? "T" : "") + p.position;
+    }
 
     wrap.innerHTML =
-      (config.isTestData ? '<div class="sample-banner"><i class="fas fa-flask-vial"></i>SIMULATED FINAL RESULTS — TEST DATA</div>' : "") +
+      '<div class="sample-banner"><i class="fas fa-triangle-exclamation"></i>LIVE FINAL RESULTS PREVIEW — CURRENT SCORING DATA — TEST PAGE</div>' +
       '<div class="toolbar">' +
         '<div class="filter-pills" id="final-filter" data-target="division"></div>' +
       "</div>" +
@@ -364,8 +372,8 @@
       var html = "";
 
       divisionsToShow.forEach(function (div) {
-        var group = ranked.filter(function (p) { return p.division === div; })
-          .sort(function (a, b) { return a._rank - b._rank || a.name.localeCompare(b.name); });
+        var group = finalResults.filter(function (p) { return p.division === div; })
+          .sort(function (a, b) { return a.position - b.position || a.name.localeCompare(b.name); });
         if (!group.length) return;
 
         html += '<div class="division-block">';
@@ -375,9 +383,9 @@
           "<th>Pos</th><th>Player</th><th>R1 Gross</th><th>R1 HCP</th><th>R1 Net</th><th>R2 Gross</th><th>R2 HCP</th><th>R2 Net</th><th>2-Day Total</th>" +
           "</tr></thead><tbody>";
         group.forEach(function (p) {
-          var leader = p._rank === 1;
+          var leader = p.position === 1;
           html += "<tr class=\"" + (leader ? "leader-row" : "") + "\">" +
-            "<td class=\"pos-cell\">" + positionLabel(p, ranked) + (leader ? ' <i class="fas fa-trophy leader-icon"></i>' : "") + "</td>" +
+            "<td class=\"pos-cell\">" + finalPositionLabel(p, group) + (leader ? ' <i class="fas fa-trophy leader-icon"></i>' : "") + "</td>" +
             "<td class=\"player-name\">" + esc(p.name) + "</td>" +
             "<td>" + p.day1Gross + "</td>" +
             "<td>" + p.day1Hcp + "</td>" +
@@ -392,10 +400,10 @@
 
         html += '<div class="nf-cards nf-cards-mobile">';
         group.forEach(function (p) {
-          var leader = p._rank === 1;
+          var leader = p.position === 1;
           html += '<div class="nf-card' + (leader ? " nf-card-leader" : "") + '">' +
             '<div class="nf-card-top">' +
-              '<span class="pos-badge">' + positionLabel(p, ranked) + (leader ? ' <i class="fas fa-trophy"></i>' : "") + "</span>" +
+              '<span class="pos-badge">' + finalPositionLabel(p, group) + (leader ? ' <i class="fas fa-trophy"></i>' : "") + "</span>" +
               '<span class="player-name">' + esc(p.name) + "</span>" +
             "</div>" +
             '<div class="stat-group-label">Round 1</div>' +
