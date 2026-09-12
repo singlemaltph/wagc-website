@@ -372,13 +372,15 @@
         html += '<div class="division-heading"><span class="div-badge">' + div + "</span> Division " + div + "</div>";
 
         html += '<table class="nf-table nf-table-desktop"><thead><tr>' +
-          "<th>Pos</th><th>Player</th><th>R1 Net</th><th>R2 Gross</th><th>R2 HCP</th><th>R2 Net</th><th>2-Day Total</th>" +
+          "<th>Pos</th><th>Player</th><th>R1 Gross</th><th>R1 HCP</th><th>R1 Net</th><th>R2 Gross</th><th>R2 HCP</th><th>R2 Net</th><th>2-Day Total</th>" +
           "</tr></thead><tbody>";
         group.forEach(function (p) {
           var leader = p._rank === 1;
           html += "<tr class=\"" + (leader ? "leader-row" : "") + "\">" +
             "<td class=\"pos-cell\">" + positionLabel(p, ranked) + (leader ? ' <i class="fas fa-trophy leader-icon"></i>' : "") + "</td>" +
             "<td class=\"player-name\">" + esc(p.name) + "</td>" +
+            "<td>" + p.day1Gross + "</td>" +
+            "<td>" + p.day1Hcp + "</td>" +
             "<td>" + p.day1Net + "</td>" +
             "<td>" + p.day2Gross + "</td>" +
             "<td>" + p.day2Hcp + "</td>" +
@@ -396,11 +398,19 @@
               '<span class="pos-badge">' + positionLabel(p, ranked) + (leader ? ' <i class="fas fa-trophy"></i>' : "") + "</span>" +
               '<span class="player-name">' + esc(p.name) + "</span>" +
             "</div>" +
+            '<div class="stat-group-label">Round 1</div>' +
             '<div class="nf-card-stats">' +
-              '<div class="stat"><span class="stat-label">R1 Net</span><span class="stat-value">' + p.day1Net + "</span></div>" +
-              '<div class="stat"><span class="stat-label">R2 Gross</span><span class="stat-value">' + p.day2Gross + "</span></div>" +
-              '<div class="stat"><span class="stat-label">R2 HCP</span><span class="stat-value">' + p.day2Hcp + "</span></div>" +
-              '<div class="stat"><span class="stat-label">R2 Net</span><span class="stat-value">' + p.day2Net + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + p.day1Gross + "</span></div>" +
+              '<div class="stat"><span class="stat-label">HCP</span><span class="stat-value">' + p.day1Hcp + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + p.day1Net + "</span></div>" +
+            "</div>" +
+            '<div class="stat-group-label">Round 2</div>' +
+            '<div class="nf-card-stats">' +
+              '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + p.day2Gross + "</span></div>" +
+              '<div class="stat"><span class="stat-label">HCP</span><span class="stat-value">' + p.day2Hcp + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + p.day2Net + "</span></div>" +
+            "</div>" +
+            '<div class="nf-card-stats nf-card-stats-total">' +
               '<div class="stat stat-highlight"><span class="stat-label">2-Day Total</span><span class="stat-value">' + p.finalNet + "</span></div>" +
             "</div>" +
           "</div>";

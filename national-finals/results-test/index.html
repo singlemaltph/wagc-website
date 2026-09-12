@@ -763,7 +763,10 @@
     }
     .pos-badge i { color: var(--gold); font-size: 0.85rem; }
     .nf-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .nf-card-stats + .stat-group-label { margin-top: 10px; }
+    .nf-card-stats-total { grid-template-columns: 1fr; margin-top: 10px; }
     .stat { display: flex; flex-direction: column; }
+    .stat-group-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 4px; }
     .stat-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 2px; }
     .stat-value { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--navy); }
     .stat-highlight .stat-value { color: var(--navy); text-decoration: underline 2px var(--gold); text-underline-offset: 3px; }
