@@ -494,6 +494,10 @@
     .nf-table tbody tr:nth-child(even) { background: var(--light); }
     .nf-table tbody td { padding: 12px 14px; color: #374151; }
     .nf-table .player-name { font-weight: 700; color: var(--navy); }
+    .nf-table .pos-cell { font-family: var(--font-head); font-weight: 900; font-size: 1rem; color: var(--navy); }
+    .nf-table .net-cell { font-weight: 800; color: var(--navy); }
+    .leader-row { background: #FFF8E7 !important; }
+    .leader-icon { color: var(--gold); font-size: 0.8rem; }
     .pending-badge {
       display: inline-block;
       background: #e5e9f0;
@@ -515,12 +519,33 @@
       margin-bottom: 10px;
       border-left: 4px solid #d8dee8;
     }
+    .nf-card-leader { border-left-color: var(--gold); background: #FFF8E7; }
     .nf-card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
     .nf-card-top .player-name { font-weight: 800; color: var(--navy); font-size: 1rem; }
+    .pos-badge {
+      font-family: var(--font-head);
+      font-weight: 900;
+      font-size: 1.05rem;
+      color: var(--navy);
+      background: var(--white);
+      border-radius: 6px;
+      padding: 3px 10px;
+      flex-shrink: 0;
+    }
+    .pos-badge i { color: var(--gold); font-size: 0.85rem; }
     .nf-card-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-    .stat { display: flex; flex-direction: column; }
+    .nf-card-stats + .stat-group-label { margin-top: 10px; }
+    .nf-card-stats-total { grid-template-columns: 1fr; margin-top: 10px; }
+    /* Final Results Day 1 / Day 2 rows: always 3 equal columns, even at
+       narrow widths — never collapse to 2 like the generic .nf-card-stats
+       breakpoint below does for other cards (roster, Day 1 results). */
+    .nf-card-stats-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+    .nf-card-stats-3col .stat-value { font-size: 1rem; }
+    .stat { display: flex; flex-direction: column; min-width: 0; }
+    .stat-group-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 4px; }
     .stat-label { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray); margin-bottom: 2px; }
     .stat-value { font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--navy); }
+    .stat-highlight .stat-value { color: var(--navy); text-decoration: underline 2px var(--gold); text-underline-offset: 3px; }
 
     .empty-state { color: var(--gray); font-size: 0.9rem; padding: 24px 0; text-align: center; }
 
@@ -723,6 +748,9 @@
       .nf-tab i { margin-right: 3px; }
       .info-grid { grid-template-columns: 1fr 1fr; }
       .nf-card-stats { grid-template-columns: repeat(2, 1fr); }
+      /* Keep Final Results Day 1 / Day 2 rows at 3 equal columns even at
+         this narrowest breakpoint — never collapse to 2 like the rule above. */
+      .nf-card-stats-3col { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       footer { flex-direction: column; align-items: flex-start; }
       /* Info sub-nav now has 3 pills (Schedule / Conditions / FAQ) — on
          narrow phones let them wrap into 2 + 1 rather than shrinking the
@@ -1559,6 +1587,7 @@
 <script src="data.js"></script>
 <script src="flights.js"></script>
 <script src="results.js"></script>
+<script src="final-results.js"></script>
 <script src="app.js"></script>
 
 </body>

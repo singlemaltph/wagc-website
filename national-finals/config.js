@@ -116,5 +116,5 @@ window.NF_CONFIG = {
   day1FlightsPublished: true,
   day2FlightsPublished: true,
   day1ResultsPublished: true,
-  finalResultsPublished: false
+  finalResultsPublished: true
 };

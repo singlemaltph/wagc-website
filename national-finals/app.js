@@ -500,6 +500,12 @@
     renderResults();
   }
 
+  /* window.NF_FINAL_RESULTS (from final-results.js) is the OFFICIAL final
+     leaderboard, published after the Awards Ceremony. position is the
+     OFFICIAL value supplied directly by the private Final Results scoring
+     sheet — it is displayed exactly as provided and is NEVER recomputed,
+     re-ranked, or tie-broken client-side. This site must not calculate
+     the official tournament countback itself. */
   function buildResultsFinal() {
     var wrap = document.getElementById("final-panel");
     if (!wrap) return;
@@ -510,7 +516,98 @@
       ]);
       return;
     }
-    // Real final leaderboard rendering goes here once finalResultsPublished = true.
+
+    var finalResults = window.NF_FINAL_RESULTS || [];
+
+    function finalIsTied(list, div, position) {
+      return list.filter(function (p) { return p.division === div && p.position === position; }).length > 1;
+    }
+    function finalPositionLabel(p, list) {
+      return (finalIsTied(list, p.division, p.position) ? "T" : "") + p.position;
+    }
+
+    wrap.innerHTML =
+      '<div class="toolbar">' +
+        '<div class="filter-pills" id="final-filter" data-target="division"></div>' +
+      "</div>" +
+      '<div id="final-results"></div>';
+
+    buildFilterPills("final-filter", "all", DIVISIONS);
+    var state = { division: "all" };
+
+    function renderFinal() {
+      var divisionsToShow = state.division === "all" ? DIVISIONS : [state.division];
+      var html = "";
+
+      divisionsToShow.forEach(function (div) {
+        var group = finalResults.filter(function (p) { return p.division === div; })
+          .sort(function (a, b) { return a.position - b.position || a.name.localeCompare(b.name); });
+        if (!group.length) return;
+
+        html += '<div class="division-block">';
+        html += '<div class="division-heading"><span class="div-badge">' + div + "</span> Division " + div + "</div>";
+
+        html += '<table class="nf-table nf-table-desktop"><thead><tr>' +
+          "<th>Pos</th><th>Player</th><th>R1 Gross</th><th>R1 HCP</th><th>R1 Net</th><th>R2 Gross</th><th>R2 HCP</th><th>R2 Net</th><th>2-Day Total</th>" +
+          "</tr></thead><tbody>";
+        group.forEach(function (p) {
+          var leader = p.position === 1;
+          html += "<tr class=\"" + (leader ? "leader-row" : "") + "\">" +
+            "<td class=\"pos-cell\">" + finalPositionLabel(p, group) + (leader ? ' <i class="fas fa-trophy leader-icon"></i>' : "") + "</td>" +
+            "<td class=\"player-name\">" + esc(p.name) + "</td>" +
+            "<td>" + p.day1Gross + "</td>" +
+            "<td>" + p.day1Hcp + "</td>" +
+            "<td>" + p.day1Net + "</td>" +
+            "<td>" + p.day2Gross + "</td>" +
+            "<td>" + p.day2Hcp + "</td>" +
+            "<td>" + p.day2Net + "</td>" +
+            "<td class=\"net-cell\">" + p.finalNet + "</td>" +
+          "</tr>";
+        });
+        html += "</tbody></table>";
+
+        html += '<div class="nf-cards nf-cards-mobile">';
+        group.forEach(function (p) {
+          var leader = p.position === 1;
+          html += '<div class="nf-card' + (leader ? " nf-card-leader" : "") + '">' +
+            '<div class="nf-card-top">' +
+              '<span class="pos-badge">' + finalPositionLabel(p, group) + (leader ? ' <i class="fas fa-trophy"></i>' : "") + "</span>" +
+              '<span class="player-name">' + esc(p.name) + "</span>" +
+            "</div>" +
+            '<div class="stat-group-label">Day 1</div>' +
+            '<div class="nf-card-stats nf-card-stats-3col">' +
+              '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + p.day1Gross + "</span></div>" +
+              '<div class="stat"><span class="stat-label">HCP</span><span class="stat-value">' + p.day1Hcp + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + p.day1Net + "</span></div>" +
+            "</div>" +
+            '<div class="stat-group-label">Day 2</div>' +
+            '<div class="nf-card-stats nf-card-stats-3col">' +
+              '<div class="stat"><span class="stat-label">Gross</span><span class="stat-value">' + p.day2Gross + "</span></div>" +
+              '<div class="stat"><span class="stat-label">HCP</span><span class="stat-value">' + p.day2Hcp + "</span></div>" +
+              '<div class="stat"><span class="stat-label">Net</span><span class="stat-value">' + p.day2Net + "</span></div>" +
+            "</div>" +
+            '<div class="stat-group-label">Final</div>' +
+            '<div class="nf-card-stats nf-card-stats-total">' +
+              '<div class="stat stat-highlight"><span class="stat-label">2-Day Total</span><span class="stat-value">' + p.finalNet + "</span></div>" +
+            "</div>" +
+          "</div>";
+        });
+        html += "</div></div>";
+      });
+
+      if (!html) html = '<p class="empty-state">No results for this division.</p>';
+      document.getElementById("final-results").innerHTML = html;
+    }
+
+    document.getElementById("final-filter").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-value]");
+      if (!btn) return;
+      state.division = btn.getAttribute("data-value");
+      setActivePill("final-filter", state.division);
+      renderFinal();
+    });
+
+    renderFinal();
   }
 
   /* ---------------- INFO SECONDARY SELECTOR ----------------
