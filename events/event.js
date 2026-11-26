@@ -6,12 +6,12 @@
   const demo = query.get("demo") === "1";
   // Synthetic UI fixture only; no private sheet row is committed.
   const example = {
-    name: "Sample Qualifier", course: "Sample Golf Club", region: "Cavite",
+    name: "Eagle Ridge Qualifier", course: "Eagle Ridge Golf & Country Club", region: "Cavite",
     date: "Feb 6, 2027", teeTime: "7:00 AM", fee: "₱3,000.00", capacity: 40,
     deadline: "Feb 4, 2027 5:00 PM", status: "Open",
     inclusions: "Green fee, shared golf cart and tournament fee",
     description: "Compete in a WAGC Philippines qualifying tournament and take your first step toward the 2027 National Finals. Flights are assigned by the tournament committee.",
-    image: ""
+    image: "/images/sample-eagle-ridge-flyer.png"
   };
   const statuses = {
     "Coming Soon": "Registration opens soon.",
@@ -50,8 +50,11 @@
     el("deadline-block").hidden = !data.deadline;
     const photo = safeImage(data.image);
     if (photo) {
-      el("event-image").addEventListener("error", () => { el("event-image").hidden = true; }, {once:true});
-      el("event-image").src = photo; el("event-image").hidden = false;
+      el("event-image").addEventListener("error", () => { el("flyer-block").hidden = true; }, {once:true});
+      el("event-image").alt = data.name + " tournament flyer";
+      el("flyer-link").href = photo;
+      el("event-image").src = photo;
+      el("flyer-block").hidden = false;
     }
     const capacity = Number(data.capacity);
     const limit = Number.isSafeInteger(capacity) && capacity > 0 ? "Limited to " + capacity + " players. " : "";

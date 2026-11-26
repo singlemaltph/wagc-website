@@ -27,7 +27,11 @@
     .preview{background:#fff4ce;color:#604c0d;font-weight:600;font-size:.9rem;padding:10px 20px;text-align:center}
     .hero{position:relative;background:var(--navy2);color:#fff;overflow:hidden}
     .hero .wrap{position:relative;padding-top:34px;padding-bottom:36px}
-    .hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.24}
+    .event-flyer{margin:0;max-width:540px;width:100%}
+    .event-flyer a{display:block;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--light)}
+    .event-flyer img{width:100%;height:auto;object-fit:contain}
+    .event-flyer figcaption{margin-top:8px;font-size:.85rem;color:var(--muted);text-align:center}
+    .info{display:grid;gap:28px}
     .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#162240df,#16224080)}
     .hero .wrap{z-index:1}.eyebrow{color:#f2d77c;font-size:.78rem;letter-spacing:.13em;font-weight:700;text-transform:uppercase;margin:0 0 14px}
     .tagline{color:#e4e9f3;font-size:1.02rem;margin-bottom:23px;max-width:520px}
@@ -89,7 +93,6 @@
   <section id="loading" class="loading" role="status" aria-live="polite"><h1>Tournament details</h1><p id="loading-message">Loading event information…</p><noscript><p>JavaScript is required to display the event.</p></noscript></section>
   <div id="event-page" hidden>
     <section class="hero" aria-labelledby="event-title">
-      <img id="event-image" class="hero-photo" alt="" referrerpolicy="no-referrer" hidden>
       <div class="wrap">
         <div>
           <p class="eyebrow" id="event-series">WAGC Philippines Qualifying Series</p>
@@ -116,6 +119,12 @@
           <div id="inclusions-block"><h3>What's included</h3><ul id="inclusions" class="inclusions"></ul></div>
           <div id="deadline-block" class="deadline"><span class="subtle">Registration deadline</span><strong id="event-deadline"></strong><p class="subtle">Late registrations and walk-ins are subject to availability and tournament committee approval.</p></div>
         </section>
+        <figure id="flyer-block" class="event-flyer" hidden>
+          <a id="flyer-link" target="_blank" rel="noopener noreferrer" aria-label="View full-size tournament flyer">
+            <img id="event-image" alt="Tournament flyer" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+          </a>
+          <figcaption>Tap or click to view the full-size flyer.</figcaption>
+        </figure>
         <section aria-labelledby="steps-heading">
           <h2 id="steps-heading">How to register</h2>
           <ol class="steps">
