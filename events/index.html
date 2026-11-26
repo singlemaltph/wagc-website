@@ -16,7 +16,7 @@
     button,input{font:inherit}button,a,input,summary{touch-action:manipulation}
     :focus-visible{outline:3px solid #9b7410;outline-offset:3px}
     h1,h2,h3,p{margin-top:0}h1,h2{line-height:1.05}
-    h1{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-weight:900;font-size:clamp(2.65rem,8.5vw,5rem);margin-bottom:16px}
+    h1{font-family:"Barlow Condensed",sans-serif;text-transform:uppercase;font-weight:900;font-size:clamp(2rem,7vw,3rem);margin-bottom:12px}
     h2{font-family:Outfit,Barlow,sans-serif;font-size:clamp(1.45rem,4vw,2rem);letter-spacing:-.025em;margin-bottom:18px}
     h3{font-size:1.05rem;margin-bottom:4px}
     .wrap{max-width:1120px;padding:0 20px;margin:auto}
@@ -25,35 +25,25 @@
     .logo img{height:42px;width:auto;object-fit:contain}.back{font-weight:600;font-size:.88rem;text-decoration:none;white-space:nowrap}
     .back:hover{text-decoration:underline}
     .preview{background:#fff4ce;color:#604c0d;font-weight:600;font-size:.9rem;padding:10px 20px;text-align:center}
-    .hero{position:relative;background:var(--navy2);color:#fff;overflow:hidden}
-    .hero .wrap{position:relative;padding-top:24px;padding-bottom:24px}
     .event-flyer{margin:0;max-width:540px;width:100%;justify-self:center}
     .event-flyer a{display:block;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--light)}
     .event-flyer img{width:100%;height:auto;object-fit:contain}
     .event-flyer figcaption{margin-top:8px;font-size:.85rem;color:var(--muted);text-align:center}
     .info{display:grid;gap:28px}
-    .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#162240df,#16224080)}
-    .hero .wrap{z-index:1}.eyebrow{color:#f2d77c;font-size:.78rem;letter-spacing:.13em;font-weight:700;text-transform:uppercase;margin:0 0 14px}
-    .tagline{color:#e4e9f3;font-size:1.02rem;margin-bottom:23px;max-width:520px}
     .facts{display:grid;gap:8px;margin:0 0 18px;padding:0;list-style:none}
     .facts li{display:flex;align-items:baseline;gap:12px;line-height:1.35}
-    .fact-label{width:68px;flex:none;color:#d2dcf0;font-size:.74rem;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
+    .fact-label{width:78px;flex:none;color:var(--muted);font-size:.74rem;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
     .fact-value{font-weight:600;min-width:0;overflow-wrap:anywhere}
-    .booking{padding-top:14px;border-top:1px solid #ffffff36;max-width:420px}
-    .price{font-family:Outfit,Barlow,sans-serif;font-size:2rem;font-weight:700;margin:0 0 12px;line-height:1.2}
-    .price small{font-family:Barlow,Arial,sans-serif;font-size:.92rem;font-weight:500;color:#dbe4f4}
+    .price{font-family:Outfit,Barlow,sans-serif;font-size:2rem;font-weight:700;margin:0 0 4px;line-height:1.2}
+    .price small{font-family:Barlow,Arial,sans-serif;font-size:.92rem;font-weight:500;color:var(--muted)}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 24px;background:var(--gold);color:#162240;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:0;border-radius:3px;text-decoration:none;cursor:pointer;text-align:center;width:100%}
     .btn:hover:not(:disabled){background:#dfbd48}.btn:disabled{background:#e2e5eb;color:#657082;cursor:not-allowed}
-    .booking-note{font-size:.87rem;color:#d8e2f4;margin:10px 0 0;text-align:center}
+    .booking-note{font-size:.87rem;color:var(--muted);margin:0 0 16px;text-align:left}
     .content{padding-top:20px;padding-bottom:52px;display:grid;gap:32px}
-    .details p{color:#39485f}.inclusions{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:9px}
+    .details .event-description{color:#39485f;font-size:.95rem}.details .btn{margin-top:6px}.inclusions{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:9px}
     .inclusions li{display:flex;align-items:baseline;gap:10px}.inclusions li::before{content:"✓";color:#316340;font-weight:700}
     .deadline{border-top:1px solid var(--line);padding-top:15px;margin-top:18px}
     .subtle{color:var(--muted);font-size:.91rem}.deadline strong{display:block;font-size:1.06rem;margin-bottom:6px}
-    .steps{list-style:none;counter-reset:step;padding:0;margin:0;display:grid;gap:16px}
-    .steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
-    .steps li::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:34px;height:34px;background:var(--navy);color:#fff;border-radius:50%;font-weight:700}
-    .steps p{color:var(--muted);font-size:.95rem;margin:0}
     .registration{background:var(--light);border:1px solid var(--line);padding:24px 18px;border-radius:6px;min-width:0;scroll-margin-top:82px}
     .registration h2{margin-bottom:8px}.form-intro{font-size:.94rem;color:var(--muted);margin-bottom:20px}
     fieldset{border:0;padding:0;margin:0;min-width:0}
@@ -74,9 +64,7 @@
     .loading{padding:48px 20px;max-width:720px;margin:auto}.loading h1{font-size:2.5rem}
     @media(min-width:850px){
       .wrap{padding-left:36px;padding-right:36px}
-      .hero .wrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(250px,.8fr);align-items:end;gap:50px;padding-top:58px;padding-bottom:58px}
-      .booking{border:1px solid #ffffff44;border-radius:4px;background:#16224080;padding:25px;width:100%;max-width:none}
-      .booking-note{text-align:left}.price{font-size:2.5rem}
+      .price{font-size:2.5rem}
       .content{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:38px 50px;padding-top:46px;align-items:start}
       .info{display:grid;gap:35px}.registration{padding:30px}
       .faq{grid-column:1/-1}.fields{gap:14px}
@@ -92,24 +80,6 @@
 <main id="main">
   <section id="loading" class="loading" role="status" aria-live="polite"><h1>Tournament details</h1><p id="loading-message">Loading event information…</p><noscript><p>JavaScript is required to display the event.</p></noscript></section>
   <div id="event-page" hidden>
-    <section class="hero" aria-labelledby="event-title">
-      <div class="wrap">
-        <div>
-          <p class="eyebrow" id="event-series">WAGC Philippines Qualifying Series</p>
-          <h1 id="event-title"></h1>
-          <ul class="facts">
-            <li><span class="fact-label">Date</span><span class="fact-value" id="event-date"></span></li>
-            <li><span class="fact-label">Venue</span><span class="fact-value" id="event-venue"></span></li>
-            <li id="tee-row"><span class="fact-label">Tee time</span><span class="fact-value" id="event-time"></span></li>
-          </ul>
-        </div>
-        <div class="booking">
-          <p class="price"><span id="event-price"></span> <small id="per-player">per player</small></p>
-          <a id="hero-cta" class="btn" href="#registration">Register now</a>
-          <p id="booking-note" class="booking-note"></p>
-        </div>
-      </div>
-    </section>
     <div class="content wrap">
       <div class="info">
         <figure id="flyer-block" class="event-flyer" hidden>
@@ -119,19 +89,19 @@
           <figcaption>Tap or click to view the full-size flyer.</figcaption>
         </figure>
         <section class="details" aria-labelledby="details-heading">
+          <h1 id="event-title"></h1>
           <h2 id="details-heading">Tournament details</h2>
-          <p id="event-description"></p>
+          <ul class="facts">
+            <li><span class="fact-label">Date</span><span class="fact-value" id="event-date"></span></li>
+            <li><span class="fact-label">Location</span><span class="fact-value" id="event-venue"></span></li>
+            <li id="tee-row"><span class="fact-label">Tee time</span><span class="fact-value" id="event-time"></span></li>
+          </ul>
+          <p class="price"><span id="event-price"></span> <small id="per-player">per player</small></p>
+          <p id="booking-note" class="booking-note"></p>
+          <p id="event-description" class="event-description"></p>
           <div id="inclusions-block"><h3>What's included</h3><ul id="inclusions" class="inclusions"></ul></div>
           <div id="deadline-block" class="deadline"><span class="subtle">Registration deadline</span><strong id="event-deadline"></strong><p class="subtle">Late registrations and walk-ins are subject to availability and tournament committee approval.</p></div>
-          <a id="details-cta" class="btn" href="#registration">Registration information</a>
-        </section>
-        <section aria-labelledby="steps-heading">
-          <h2 id="steps-heading">How to register</h2>
-          <ol class="steps">
-            <li><div><h3>Submit your registration</h3><p>Complete the form. Submit one registration per golfer.</p></div></li>
-            <li><div><h3>Complete your payment</h3><p>Our team will contact you with GCash or bank transfer instructions.</p></div></li>
-            <li><div><h3>Receive your confirmation</h3><p>Your slot is confirmed only after payment has been verified and accepted.</p></div></li>
-          </ol>
+          <a id="hero-cta" class="btn" href="#registration">Registration information</a>
         </section>
       </div>
       <section id="registration" class="registration" aria-labelledby="form-heading">
@@ -173,7 +143,7 @@
       <section class="faq" aria-labelledby="faq-heading">
         <h2 id="faq-heading">Frequently asked questions</h2>
         <details><summary>Can I register on behalf of another golfer?</summary><p>Yes. Submit a separate registration for each golfer. Use their own contact information where possible.</p></details>
-        <details><summary>How do I pay?</summary><p>Our team will contact you with GCash or bank transfer instructions after registration.</p></details>
+        <details><summary>How do I pay?</summary><p>Our team will contact you with GCash or bank transfer instructions after registration. Your slot is confirmed only after payment has been verified and accepted.</p></details>
         <details><summary>Can I choose my flightmates?</summary><p>Flights are assigned by the tournament committee. Requests for specific flightmates are not accommodated.</p></details>
         <details><summary>Do I need a WHS ID?</summary><p>You may register without a WHS ID. Eligibility to qualify for the National Finals is subject to the approved tournament rules.</p></details>
         <details><summary>Can I register on tournament day?</summary><p>Late registrations and walk-ins are subject to availability and committee approval.</p></details>
