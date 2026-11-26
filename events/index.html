@@ -26,8 +26,8 @@
     .back:hover{text-decoration:underline}
     .preview{background:#fff4ce;color:#604c0d;font-weight:600;font-size:.9rem;padding:10px 20px;text-align:center}
     .hero{position:relative;background:var(--navy2);color:#fff;overflow:hidden}
-    .hero .wrap{position:relative;padding-top:34px;padding-bottom:36px}
-    .event-flyer{margin:0;max-width:540px;width:100%}
+    .hero .wrap{position:relative;padding-top:24px;padding-bottom:24px}
+    .event-flyer{margin:0;max-width:540px;width:100%;justify-self:center}
     .event-flyer a{display:block;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--light)}
     .event-flyer img{width:100%;height:auto;object-fit:contain}
     .event-flyer figcaption{margin-top:8px;font-size:.85rem;color:var(--muted);text-align:center}
@@ -35,17 +35,17 @@
     .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#162240df,#16224080)}
     .hero .wrap{z-index:1}.eyebrow{color:#f2d77c;font-size:.78rem;letter-spacing:.13em;font-weight:700;text-transform:uppercase;margin:0 0 14px}
     .tagline{color:#e4e9f3;font-size:1.02rem;margin-bottom:23px;max-width:520px}
-    .facts{display:grid;gap:12px;margin:0 0 26px;padding:0;list-style:none}
+    .facts{display:grid;gap:8px;margin:0 0 18px;padding:0;list-style:none}
     .facts li{display:flex;align-items:baseline;gap:12px;line-height:1.35}
     .fact-label{width:68px;flex:none;color:#d2dcf0;font-size:.74rem;letter-spacing:.08em;font-weight:700;text-transform:uppercase}
     .fact-value{font-weight:600;min-width:0;overflow-wrap:anywhere}
-    .booking{padding-top:20px;border-top:1px solid #ffffff36;max-width:420px}
+    .booking{padding-top:14px;border-top:1px solid #ffffff36;max-width:420px}
     .price{font-family:Outfit,Barlow,sans-serif;font-size:2rem;font-weight:700;margin:0 0 12px;line-height:1.2}
     .price small{font-family:Barlow,Arial,sans-serif;font-size:.92rem;font-weight:500;color:#dbe4f4}
     .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 24px;background:var(--gold);color:#162240;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border:0;border-radius:3px;text-decoration:none;cursor:pointer;text-align:center;width:100%}
     .btn:hover:not(:disabled){background:#dfbd48}.btn:disabled{background:#e2e5eb;color:#657082;cursor:not-allowed}
     .booking-note{font-size:.87rem;color:#d8e2f4;margin:10px 0 0;text-align:center}
-    .content{padding-top:38px;padding-bottom:52px;display:grid;gap:32px}
+    .content{padding-top:20px;padding-bottom:52px;display:grid;gap:32px}
     .details p{color:#39485f}.inclusions{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:9px}
     .inclusions li{display:flex;align-items:baseline;gap:10px}.inclusions li::before{content:"✓";color:#316340;font-weight:700}
     .deadline{border-top:1px solid var(--line);padding-top:15px;margin-top:18px}
@@ -97,7 +97,6 @@
         <div>
           <p class="eyebrow" id="event-series">WAGC Philippines Qualifying Series</p>
           <h1 id="event-title"></h1>
-          <p class="tagline">Play locally. Qualify nationally. Represent the Philippines globally.</p>
           <ul class="facts">
             <li><span class="fact-label">Date</span><span class="fact-value" id="event-date"></span></li>
             <li><span class="fact-label">Venue</span><span class="fact-value" id="event-venue"></span></li>
@@ -113,18 +112,19 @@
     </section>
     <div class="content wrap">
       <div class="info">
+        <figure id="flyer-block" class="event-flyer" hidden>
+          <a id="flyer-link" target="_blank" rel="noopener noreferrer" aria-label="View full-size tournament flyer">
+            <img id="event-image" alt="Tournament flyer" loading="eager" decoding="async" referrerpolicy="no-referrer">
+          </a>
+          <figcaption>Tap or click to view the full-size flyer.</figcaption>
+        </figure>
         <section class="details" aria-labelledby="details-heading">
           <h2 id="details-heading">Tournament details</h2>
           <p id="event-description"></p>
           <div id="inclusions-block"><h3>What's included</h3><ul id="inclusions" class="inclusions"></ul></div>
           <div id="deadline-block" class="deadline"><span class="subtle">Registration deadline</span><strong id="event-deadline"></strong><p class="subtle">Late registrations and walk-ins are subject to availability and tournament committee approval.</p></div>
+          <a class="btn" href="#registration">Registration information</a>
         </section>
-        <figure id="flyer-block" class="event-flyer" hidden>
-          <a id="flyer-link" target="_blank" rel="noopener noreferrer" aria-label="View full-size tournament flyer">
-            <img id="event-image" alt="Tournament flyer" loading="lazy" decoding="async" referrerpolicy="no-referrer">
-          </a>
-          <figcaption>Tap or click to view the full-size flyer.</figcaption>
-        </figure>
         <section aria-labelledby="steps-heading">
           <h2 id="steps-heading">How to register</h2>
           <ol class="steps">
