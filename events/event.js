@@ -9,7 +9,7 @@
     name: "Eagle Ridge Qualifier", course: "Eagle Ridge Golf & Country Club", region: "Cavite",
     date: "Feb 6, 2027", teeTime: "7:00 AM", fee: "₱3,000.00", capacity: 40,
     deadline: "Feb 4, 2027 5:00 PM", status: "Open",
-    inclusions: "Green fee, shared golf cart and tournament fee",
+    inclusions: "Green fee, Shared golf cart, Tournament fee",
     description: "Compete in a WAGC Philippines qualifying tournament and take your first step toward the 2027 National Finals. Flights are assigned by the tournament committee.",
     image: "/images/sample-eagle-ridge-flyer.png"
   };
@@ -63,6 +63,8 @@
       ? "Test the form with fictional information. No submission or payment is processed."
       : statuses[data.status]);
     el("hero-cta").textContent = demo ? "Register now" : "Registration information";
+    const detailsCta = el("details-cta");
+    if (detailsCta) detailsCta.textContent = el("hero-cta").textContent;
     document.title = (demo ? "Preview — " : "") + data.name + " | WAGC Philippines";
     el("loading").hidden = true; el("event-page").hidden = false;
   }
